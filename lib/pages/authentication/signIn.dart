@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/loading.dart';
+import '../../resources/socketMethod.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key, this.toggleView});
@@ -14,9 +14,18 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  
+  final SocketMethods _socketMethods = SocketMethods();
 
-  void signIn() async {
-    Loading(context);
+  void signIn() {
+    _socketMethods.createRoom(emailController.text);
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
