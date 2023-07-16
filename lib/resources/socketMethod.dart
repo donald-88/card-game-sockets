@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'socketClient.dart';
 
 class SocketMethods {
@@ -8,5 +10,12 @@ class SocketMethods {
       _socketClient.emit('createRoom', {
         'creatorId': creatorId});
     }
+  }
+
+  void roomCreatedListener(BuildContext context) {
+    _socketClient.on('roomCreated', (data) {
+      print(data);
+      Navigator.pushNamed(context, '/game');
+    });
   }
 }

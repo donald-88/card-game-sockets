@@ -22,6 +22,13 @@ class _SignInState extends State<SignIn> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _socketMethods.roomCreatedListener(context);
+    
+  }
+
+  @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();

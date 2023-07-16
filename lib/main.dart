@@ -1,4 +1,5 @@
 import 'package:card_game_sockets/pages/authentication/authGate.dart';
+import 'package:card_game_sockets/pages/game.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark),
         useMaterial3: true,
       ),
-      home: const AuthGate()
+      home: const AuthGate(),
+      routes: {
+        '/game': (context) => const GamePage(),
+      },
     );
   }
 }
