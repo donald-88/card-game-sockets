@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/roomDataProvider.dart';
 import '../widgets/backside.dart';
 import '../widgets/playingCard.dart';
 
@@ -14,20 +16,21 @@ class GamePage extends StatelessWidget {
           onPressed: () {},
           child: const Icon(Icons.chat),
         ),
-        body: const Center(
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
+              Text(Provider.of<RoomDataProvider>(context).roomData.toString()),
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   PlayingCard(),
                   PlayingCard(),
                 ],
               ),
-              Backside(),
-              Row(
+              const Backside(),
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   PlayingCard(),

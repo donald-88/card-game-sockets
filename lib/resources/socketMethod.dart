@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/roomDataProvider.dart';
 import 'socketClient.dart';
 
 class SocketMethods {
@@ -13,8 +15,8 @@ class SocketMethods {
   }
 
   void roomCreatedListener(BuildContext context) {
-    _socketClient.on('roomCreated', (data) {
-      print(data);
+    _socketClient.on('roomCreated', (room) {
+      Provider.of<RoomDataProvider>(context, listen: false).updateRoomData(room);
       Navigator.pushNamed(context, '/game');
     });
   }
