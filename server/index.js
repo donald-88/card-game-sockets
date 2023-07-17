@@ -33,6 +33,30 @@ io.on('connection', (socket) => {
         io.to(roomId).emit('roomCreated', room)
     }
     )
+
+    socket.on('joinRoom', async({playerId, roomId}) => {
+        try{
+            if(!roomId.match(/^[0-9a-fA-F]{24}$/)){
+                socket.emit('Error occured, please enter a valid room Id')
+                return
+            }
+            let room = await Room.findById(roomId)
+
+            if(room.canJoin){
+                let player = {
+                    playerId,
+                    roomId: socket.id
+                }
+                socket.join(roomId)
+                room.players.push(player)
+                room = await room.save()
+            } else{
+                socket.emit("Error occured, the game is in progress, try again later.")
+            }
+        } catch (e){
+            console.log(e)
+        }
+    })
 })
 
 
