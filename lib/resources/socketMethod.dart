@@ -1,3 +1,4 @@
+import 'package:card_game_sockets/widgets/mySnackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +29,7 @@ class SocketMethods {
   }
 
   void joinRoomListener(BuildContext context) {
-    _socketClient.on('joinRoomSuccess', (room) {
+    _socketClient.on('roomJoined', (room) {
       Provider.of<RoomDataProvider>(context, listen: false)
           .updateRoomData(room);
       Navigator.pushNamed(context, '/game');
@@ -36,6 +37,15 @@ class SocketMethods {
   }
 
   void errorOcurred(BuildContext context){
-    
+    _socketClient.on('errorOccured', (error){
+      showSnackBar(context, error);
+    });
+  }
+
+  void updatePlayersStateListener(BuildContext context){
+    _socketClient.on('updatePlayersState', (players){
+      Provider.of<RoomDataProvider>(context, listen: false).updatePlayer1(players[0]);
+      Provider.of<RoomDataProvider>(context, listen: false).updatePlayer2(players[1]);
+    });
   }
 }

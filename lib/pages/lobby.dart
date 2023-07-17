@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../resources/socketMethod.dart';
+
 class Lobby extends StatefulWidget {
   const Lobby({super.key});
 
@@ -8,6 +10,18 @@ class Lobby extends StatefulWidget {
 }
 
 class _LobbyState extends State<Lobby> {
+  final SocketMethods _socketMethods = SocketMethods();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _socketMethods.joinRoomListener(context);
+    _socketMethods.roomCreatedListener(context);
+    _socketMethods.errorOcurred(context);
+    _socketMethods.updatePlayersStateListener(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
