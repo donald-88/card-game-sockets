@@ -10,6 +10,7 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(Provider.of<RoomDataProvider>(context).player1.toString());
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         floatingActionButton: FloatingActionButton(
@@ -21,7 +22,7 @@ class GamePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(Provider.of<RoomDataProvider>(context).player1.playerId.toString()),
+              Text(Provider.of<RoomDataProvider>(context).player1.toString()),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
                 socket.emit('errorOccured', 'please enter a valid room Id')
                 return
             }
-            let room = await Room.findById(roomId)
+            let room = await room.findById(roomId)
 
             if(room.canJoin){
                 let player = {
