@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../resources/socketMethod.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key, this.toggleView});
@@ -14,19 +13,12 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  
-  final SocketMethods _socketMethods = SocketMethods();
 
   void signIn() {
-    _socketMethods.createRoom(emailController.text);
+   
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _socketMethods.roomCreatedListener(context);
-    
-  }
+
 
   @override
   void dispose() {

@@ -11,16 +11,40 @@ class Lobby extends StatefulWidget {
 
 class _LobbyState extends State<Lobby> {
   final SocketMethods _socketMethods = SocketMethods();
+  final TextEditingController _roomIdController = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _socketMethods.roomCreatedListener(context);
     _socketMethods.joinRoomListener(context);
     _socketMethods.roomCreatedListener(context);
     _socketMethods.errorOcurred(context);
     _socketMethods.updatePlayersStateListener(context);
   }
+
+  void createRoom(){
+     _socketMethods.createRoom('Mcdonald');
+  }
+
+  void joinRoom(){
+    _socketMethods.joinRoom(_roomIdController.text, 'KoKo');
+  }
+
+  showJoinRoom(){
+    showDialog(context: context, builder: (context)=>AlertDialog(
+      title: const Text('Enter Room ID'),
+      content: TextField(
+        controller: _roomIdController,
+      ),
+      actions: [
+        TextButton(onPressed: joinRoom, child: const Text('Join'))
+      ],
+    ));
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +71,13 @@ class _LobbyState extends State<Lobby> {
             ElevatedButton(
                 style:
                     ElevatedButton.styleFrom(minimumSize: const Size(400, 50)),
-                onPressed: () {},
+                onPressed: createRoom,
                 child: const Text('Create')),
             const SizedBox(height: 16),
             ElevatedButton(
                 style:
                     ElevatedButton.styleFrom(minimumSize: const Size(400, 50)),
-                onPressed: () {},
+                onPressed: showJoinRoom,
                 child: const Text('Join')),
           ],
         ),

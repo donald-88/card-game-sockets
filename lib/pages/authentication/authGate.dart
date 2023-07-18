@@ -13,9 +13,9 @@ class AuthGate extends StatelessWidget {
       stream: null,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return const Lobby();
-        } else {
           return const AuthWrapper();
+        } else {
+          return const Lobby();
         }
       },
     ));

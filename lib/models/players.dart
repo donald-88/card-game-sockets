@@ -10,7 +10,7 @@ class Player {
       };
 
   factory Player.fromMap(Map<String, dynamic> map) => Player(
-        playerId: map['playerId'],
-        roomId: map['roomId'],
+        playerId: map['playerId'] ?? '',
+        roomId: map['roomId'] ?? '',
       );
 }

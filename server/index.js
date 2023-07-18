@@ -40,7 +40,9 @@ io.on('connection', (socket) => {
                 socket.emit('errorOccured', 'please enter a valid room Id')
                 return
             }
-            let room = await Room.findById(roomId)
+            let room = await roomModel.findById(roomId)
+
+            console.log(room)
 
             if(room.canJoin){
                 let player = {
@@ -52,6 +54,7 @@ io.on('connection', (socket) => {
                 room = await room.save()
                 io.to(roomId).emit('roomJoined', room)
                 io.to(roomId).emit('updatePlayers', room.players)
+                io.to(roomId).emit('updateRoom', room.players)
             } else{
                 socket.emit("errorOccured", "the game is in progress, try again later.")
             }

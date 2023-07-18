@@ -14,7 +14,7 @@ class SocketMethods {
     }
   }
 
-  void joinRoom(String roomId, String playerId) {
+  joinRoom(String roomId, String playerId) {
     if (roomId.isNotEmpty && playerId.isNotEmpty) {
       _socketClient.emit('joinRoom', {'roomId': roomId, 'playerId': playerId});
     }
@@ -43,9 +43,15 @@ class SocketMethods {
   }
 
   void updatePlayersStateListener(BuildContext context){
-    _socketClient.on('updatePlayersState', (players){
+    _socketClient.on('updatePlayers', (players){
       Provider.of<RoomDataProvider>(context, listen: false).updatePlayer1(players[0]);
       Provider.of<RoomDataProvider>(context, listen: false).updatePlayer2(players[1]);
+    });
+  }
+
+  void updateRoomListener(BuildContext context){
+    _socketClient.on('updateRoom', (room){
+      Provider.of<RoomDataProvider>(context, listen: false).updateRoomData(room);
     });
   }
 }
