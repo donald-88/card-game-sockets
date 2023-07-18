@@ -1,3 +1,4 @@
+import 'package:card_game_sockets/pages/waitingLobby.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,13 +27,14 @@ class _GamePageState extends State<GamePage> {
   }
   @override
   Widget build(BuildContext context) {
+    RoomDataProvider roomDataProvider = Provider.of<RoomDataProvider>(context);
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           child: const Icon(Icons.chat),
         ),
-        body: Center(
+        body: roomDataProvider.roomData['canJoin'] ? const WaitingLobby(): Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
