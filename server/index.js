@@ -51,6 +51,7 @@ io.on('connection', (socket) => {
                 }
                 socket.join(roomId)
                 room.players.push(player)
+                room.canJoin = false
                 room = await room.save()
                 io.to(roomId).emit('roomJoined', room)
                 io.to(roomId).emit('updatePlayers', room.players)

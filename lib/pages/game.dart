@@ -26,7 +26,6 @@ class _GamePageState extends State<GamePage> {
   }
   @override
   Widget build(BuildContext context) {
-    print(Provider.of<RoomDataProvider>(context).roomData.toString());
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         floatingActionButton: FloatingActionButton(
@@ -38,7 +37,7 @@ class _GamePageState extends State<GamePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(Provider.of<RoomDataProvider>(context).player1.toString()),
+              Text(Provider.of<RoomDataProvider>(context).player1.playerId.toString()),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -54,6 +53,7 @@ class _GamePageState extends State<GamePage> {
                   PlayingCard(),
                 ],
               ),
+              Text(Provider.of<RoomDataProvider>(context).player2.playerId.toString()),
             ],
           ),
         ));
