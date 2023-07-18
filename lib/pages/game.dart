@@ -38,7 +38,7 @@ class _GamePageState extends State<GamePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(Provider.of<RoomDataProvider>(context).player1.playerId.toString()),
+              Text(Provider.of<RoomDataProvider>(context).player1.toString()),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
