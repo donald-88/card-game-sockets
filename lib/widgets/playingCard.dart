@@ -24,7 +24,7 @@ class PlayingCard extends StatelessWidget {
           ),
         ],
       ),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
@@ -32,38 +32,47 @@ class PlayingCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('A',
+                  Text(value,
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black)),
-                  Text('♠', style: TextStyle(height: 1, color: Colors.black)),
+                          color: suit == '♥' || suit == '♦'
+                              ? Colors.red
+                              : Colors.black)),
+                   Text(suit, style: TextStyle(height: 1, color:  suit == '♥' || suit == '♦'
+                              ? Colors.red
+                              : Colors.black)),
                 ],
               ),
             ],
-          ),
-          Text(
-            '♠',
+          ),Text(
+            suit,
             style: TextStyle(
-                fontSize: 40, fontWeight: FontWeight.bold, color: Colors.black),
+                fontSize: 40, fontWeight: FontWeight.bold, color:  suit == '♥' || suit == '♦'
+                              ? Colors.red
+                              : Colors.black),
           ),
-          Row(
+         Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'A',
+                    value,
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         height: 1.2,
-                        color: Colors.black),
+                        color:  suit == '♥' || suit == '♦'
+                              ? Colors.red
+                              : Colors.black),
                   ),
                   Text(
-                    '♠',
-                    style: TextStyle(color: Colors.black),
+                    suit,
+                    style: TextStyle(color:  suit == '♥' || suit == '♦'
+                              ? Colors.red
+                              : Colors.black),
                   ),
                 ],
               ),

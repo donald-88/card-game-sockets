@@ -1,11 +1,10 @@
 import 'package:card_game_sockets/pages/waitingLobby.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../provider/roomDataProvider.dart';
 import '../resources/socketMethod.dart';
+import '../utils/deck.dart';
 import '../widgets/backside.dart';
-import '../widgets/playingCard.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -40,19 +39,19 @@ class _GamePageState extends State<GamePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(Provider.of<RoomDataProvider>(context).player1.playerId.toString()),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  PlayingCard(),
-                  PlayingCard(),
+                  deck[0],
+                  deck[24],
                 ],
               ),
               const Backside(),
-              const Row(
+               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  PlayingCard(),
-                  PlayingCard(),
+                  deck[50],
+                  deck[51]
                 ],
               ),
               Text(Provider.of<RoomDataProvider>(context).player2.playerId.toString()),
