@@ -1,0 +1,43 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Windows",
+        "program": "lib/main.dart",
+        "request": "launch",
+        "type": "dart",
+        "flutterMode": "debug",
+        "args": [
+          "-d",
+          "windows"
+        ]
+      },
+        {"name": "Web",
+        "program": "lib/main.dart",
+        "request": "launch",
+        "type": "dart",
+        "flutterMode": "debug",
+        "args": [
+          "-d",
+          "edge"
+        ]
+      },
+      {
+        "name": "Android",
+        "program": "lib/main.dart",
+        "request": "launch",
+        "type": "dart",
+        "flutterMode": "debug"
+      }
+    ],
+    "compounds": [
+      {
+        "name": "All Devices",
+        "configurations": [
+          "Windows",
+          "Web",
+          "Android"
+        ]
+      }
+    ]
+  }

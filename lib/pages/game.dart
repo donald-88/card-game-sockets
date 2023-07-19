@@ -1,4 +1,5 @@
 import 'package:card_game_sockets/pages/waitingLobby.dart';
+import 'package:card_game_sockets/utils/gameFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/roomDataProvider.dart';
@@ -22,7 +23,7 @@ class _GamePageState extends State<GamePage> {
     // TODO: implement initState
     super.initState();
     _socketMethods.updatePlayersStateListener(context);
-
+    shuffleDeck();
   }
   @override
   Widget build(BuildContext context) {

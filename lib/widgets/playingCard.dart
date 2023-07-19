@@ -39,20 +39,24 @@ class PlayingCard extends StatelessWidget {
                           color: suit == '♥' || suit == '♦'
                               ? Colors.red
                               : Colors.black)),
-                   Text(suit, style: TextStyle(height: 1, color:  suit == '♥' || suit == '♦'
+                  Text(suit,
+                      style: TextStyle(
+                          height: 1,
+                          color: suit == '♥' || suit == '♦'
                               ? Colors.red
                               : Colors.black)),
                 ],
               ),
             ],
-          ),Text(
+          ),
+          Text(
             suit,
             style: TextStyle(
-                fontSize: 40, fontWeight: FontWeight.bold, color:  suit == '♥' || suit == '♦'
-                              ? Colors.red
-                              : Colors.black),
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+                color: suit == '♥' || suit == '♦' ? Colors.red : Colors.black),
           ),
-         Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Column(
@@ -64,15 +68,16 @@ class PlayingCard extends StatelessWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         height: 1.2,
-                        color:  suit == '♥' || suit == '♦'
-                              ? Colors.red
-                              : Colors.black),
+                        color: suit == '♥' || suit == '♦'
+                            ? Colors.red
+                            : Colors.black),
                   ),
                   Text(
                     suit,
-                    style: TextStyle(color:  suit == '♥' || suit == '♦'
-                              ? Colors.red
-                              : Colors.black),
+                    style: TextStyle(
+                        color: suit == '♥' || suit == '♦'
+                            ? Colors.red
+                            : Colors.black),
                   ),
                 ],
               ),

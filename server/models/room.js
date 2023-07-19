@@ -18,10 +18,6 @@ const roomSchema = new mongoose.Schema({
     enum: ["clockwise", "counter-clockwise"],
     default: "clockwise",
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
   canJoin: {
     type: Boolean,
     default: true,

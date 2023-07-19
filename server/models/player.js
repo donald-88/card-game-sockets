@@ -9,6 +9,7 @@ const playerSchema = new mongoose.Schema({
     roomId: {
         type: String,
     },
+    hand: []
 })
 
 module.exports = playerSchema

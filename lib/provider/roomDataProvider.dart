@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/players.dart';
+import '../models/playersModel.dart';
 
 class RoomDataProvider extends ChangeNotifier {
   Map<String, dynamic> _roomData = {};
-  Player _player1 = Player(playerId: '', roomId: '');
-  Player _player2 = Player(playerId: '', roomId: '');
+  Player _player1 = Player(playerId: '', roomId: '', hand: []);
+  Player _player2 = Player(playerId: '', roomId: '', hand: []);
 
   Map<String, dynamic> get roomData => _roomData;
   Player get player1 => _player1;
