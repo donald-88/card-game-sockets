@@ -8,11 +8,9 @@ function shuffleDeck(deck) {
 
   function dealPlayerHands(deck, numPlayers) {
     const playerHands = Array.from({ length: numPlayers }, () => []);
-    while (deck.length > 0) {
-      for (let i = 0; i < numPlayers; i++) {
-        if (deck.length > 0) {
-          playerHands[i].push(deck.pop());
-        }
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < numPlayers; j++) {
+        playerHands[j].push(deck.pop());
       }
     }
     return playerHands;

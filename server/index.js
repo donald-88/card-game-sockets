@@ -85,9 +85,8 @@ io.on("connection", (socket) => {
         room.players.forEach((roomPlayer, index) => {
           roomPlayer.hand = playerHands[index];
         });
-
+        room.discardPile = [deck.pop()]
         room.drawPile = deck;
-        room.discardPile = [];
         room.turn = 0;
 
 
