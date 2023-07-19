@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class PlayingCard extends StatelessWidget {
-  const PlayingCard({super.key});
+  const PlayingCard({super.key, required this.suit, required this.value});
+
+  final String suit;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
