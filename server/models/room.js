@@ -9,7 +9,7 @@ const roomSchema = new mongoose.Schema({
   players: [playerSchema],
   turn: {
     type: Number,
-    default: 0,
+    default: 1,
   },
   drawPile: [],
   discardPile: [],

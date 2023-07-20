@@ -87,7 +87,14 @@ class _GamePageState extends State<GamePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Backside(),
+                        GestureDetector(
+                            onTap: () {
+                              _socketMethods.pickCard(
+                                  roomDataProvider.roomData['players'][1]
+                                      ['playerId'],
+                                  roomDataProvider.roomData['_id']);
+                            },
+                            child: const Backside()),
                         const SizedBox(
                           width: 100,
                         ),

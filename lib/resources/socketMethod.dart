@@ -1,4 +1,4 @@
-import 'package:card_game_sockets/utils/cardValidator.dart';
+import 'package:card_game_sockets/utils/validator.dart';
 import 'package:card_game_sockets/widgets/mySnackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
