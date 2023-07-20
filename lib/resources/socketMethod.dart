@@ -65,10 +65,5 @@ class SocketMethods {
   ////////////////////In-Game Functions///////////////////////////
   ///////////////////////////////////////////////////////////////
 
-  void initializeGame(BuildContext context) {
-    _socketClient.on('initializeGame', (data){
-      
-    });
-  }
-  
+
 }

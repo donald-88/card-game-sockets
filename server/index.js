@@ -79,23 +79,22 @@ io.on("connection", (socket) => {
           }
         }
 
-        gameLogic.shuffleDeck(deck)
+        gameLogic.shuffleDeck(deck);
 
-        const playerHands = gameLogic.dealPlayerHands(deck, room.players.length);
+        const playerHands = gameLogic.dealPlayerHands(
+          deck,
+          room.players.length
+        );
         room.players.forEach((roomPlayer, index) => {
           roomPlayer.hand = playerHands[index];
         });
-        room.discardPile = [deck.pop()]
+        room.discardPile = [deck.pop()];
         room.drawPile = deck;
-        room.turn = 0;
-
-
 
         room = await room.save();
         io.to(roomId).emit("roomJoined", room);
         io.to(roomId).emit("updatePlayers", room.players);
         io.to(roomId).emit("updateRoom", room.players);
-        io.to(roomId).emit("initializeGame", room);
       } else {
         socket.emit(
           "errorOccured",

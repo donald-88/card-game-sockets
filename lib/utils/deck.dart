@@ -53,5 +53,4 @@ List<PlayingCard> deck = [
   const PlayingCard(suit: '♦', value: 'J',),
   const PlayingCard(suit: '♦', value: 'Q',),
   const PlayingCard(suit: '♦', value: 'K',),
-  
 ];
