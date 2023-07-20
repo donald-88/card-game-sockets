@@ -21,6 +21,7 @@ class _GamePageState extends State<GamePage> {
     // TODO: implement initState
     super.initState();
     _socketMethods.updatePlayersStateListener(context);
+    _socketMethods.updateRoomListener(context);
   }
 
   @override
@@ -58,7 +59,7 @@ class _GamePageState extends State<GamePage> {
                                 onTap: () {
                                   _socketMethods.playCard(
                                       index,
-                                      "McDonald",
+                                      "Mcdonald",
                                       roomDataProvider.roomData['_id'],
                                       roomDataProvider.roomData['players'][0]
                                           ['hand'][index],
@@ -113,6 +114,20 @@ class _GamePageState extends State<GamePage> {
                                 0,
                             itemBuilder: (context, index) {
                               return GestureDetector(
+                                onTap: () {
+                                  _socketMethods.playCard(
+                                      index,
+                                      "AJ",
+                                      roomDataProvider.roomData['_id'],
+                                      roomDataProvider.roomData['players'][1]
+                                          ['hand'][index],
+                                      roomDataProvider.roomData['discardPile'][
+                                          roomDataProvider
+                                                  .roomData['discardPile']
+                                                  .length -
+                                              1],
+                                      context);
+                                },
                                 child: SizedBox(
                                   width: 100,
                                   height: 150,

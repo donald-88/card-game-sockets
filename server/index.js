@@ -105,6 +105,24 @@ io.on("connection", (socket) => {
       console.log(e);
     }
   });
+
+
+  socket.on('playCard', async ({index, playerId, roomId}) => {
+    try {
+      let room = await roomModel.findById(roomId);
+      console.log(room);
+      let player = room.players.find(player => player.playerId === playerId);
+      console.log(player);
+      let card = player.hand[index];
+      room.discardPile.push(card);
+        player.hand.splice(index, 1);
+        room = await room.save();
+        io.to(roomId).emit('updateRoom', room);
+        io.to(roomId).emit("updatePlayers", room.players);
+    } catch (error) {
+      console.log(error);
+    }
+  })
 });
 
 mongoose

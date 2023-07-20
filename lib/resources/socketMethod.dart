@@ -77,4 +77,11 @@ class SocketMethods {
       showSnackBar(context, 'Invalid Move');
     }
   }
+
+  void pickCard(String playerId, String roomId) {
+    _socketClient.emit('pickCard', {
+      'playerId': playerId,
+      'roomId': roomId,
+    });
+  }
 }
