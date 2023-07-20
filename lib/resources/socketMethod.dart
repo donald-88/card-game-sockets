@@ -65,5 +65,11 @@ class SocketMethods {
   ////////////////////In-Game Functions///////////////////////////
   ///////////////////////////////////////////////////////////////
 
-
+  void playCard(int index, String playerId, String roomId) {
+    _socketClient.emit('playCard', {
+      'index': index,
+      'playerId': playerId,
+      'roomId': roomId,
+    });
+  }
 }

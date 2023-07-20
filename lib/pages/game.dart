@@ -23,8 +23,6 @@ class _GamePageState extends State<GamePage> {
     _socketMethods.updatePlayersStateListener(context);
   }
 
-  List player1Hand = [];
-
   @override
   Widget build(BuildContext context) {
     RoomDataProvider roomDataProvider = Provider.of<RoomDataProvider>(context);
@@ -51,21 +49,33 @@ class _GamePageState extends State<GamePage> {
                       width: double.infinity,
                       child: Center(
                         child: ListView.builder(
-                          shrinkWrap: true,
+                            shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
-                            itemCount: roomDataProvider.roomData['players'][0]['hand'].length,
+                            itemCount: roomDataProvider
+                                .roomData['players'][0]['hand'].length,
                             itemBuilder: (context, index) {
-                              return SizedBox(
-                                height: 150,
-                                width: 100,
-                                child: PlayingCard(
-                                    suit: roomDataProvider.roomData['players'][0]['hand'][index]['suit'],
-                                    value: roomDataProvider.roomData['players'][0]['hand'][index]['rank']),
+                              return GestureDetector(
+                                child: SizedBox(
+                                  height: 150,
+                                  width: 100,
+                                  child: PlayingCard(
+                                      suit: roomDataProvider.roomData['players']
+                                          [0]['hand'][index]['suit'],
+                                      value: roomDataProvider.roomData['players']
+                                          [0]['hand'][index]['rank']),
+                                ),
                               );
                             }),
                       ),
                     ),
-                    const Backside(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Backside(),
+                        const SizedBox(width: 100,),
+                        PlayingCard(suit: roomDataProvider.roomData['discardPile'][roomDataProvider.roomData['discardPile'].length -1]['suit'], value: roomDataProvider.roomData['discardPile'][roomDataProvider.roomData['discardPile'].length -1]['rank'])
+                      ],
+                    ),
                     SizedBox(
                       height: 160,
                       width: double.infinity,
@@ -73,14 +83,22 @@ class _GamePageState extends State<GamePage> {
                         child: ListView.builder(
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
-                            itemCount: roomDataProvider.roomData['players'][1]['hand'].length ?? 0,
+                            itemCount: roomDataProvider
+                                    .roomData['players'][1]['hand'].length ??
+                                0,
                             itemBuilder: (context, index) {
-                              return SizedBox(
-                                width: 100,
-                                height: 150,
-                                child: PlayingCard(
-                                    suit: roomDataProvider.roomData['players'][1]['hand'][index]['suit'] ?? '',
-                                    value: roomDataProvider.roomData['players'][1]['hand'][index]['rank'] ?? ''),
+                              return GestureDetector(
+                                child: SizedBox(
+                                  width: 100,
+                                  height: 150,
+                                  child: PlayingCard(
+                                      suit: roomDataProvider.roomData['players']
+                                              [1]['hand'][index]['suit'] ??
+                                          '',
+                                      value: roomDataProvider.roomData['players']
+                                              [1]['hand'][index]['rank'] ??
+                                          ''),
+                                ),
                               );
                             }),
                       ),
