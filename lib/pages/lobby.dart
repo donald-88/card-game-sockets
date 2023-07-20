@@ -29,7 +29,7 @@ class _LobbyState extends State<Lobby> {
   }
 
   void joinRoom(){
-    _socketMethods.joinRoom(_roomIdController.text, 'KoKo');
+    _socketMethods.joinRoom(_roomIdController.text, 'AJ');
   }
 
   showJoinRoom(){

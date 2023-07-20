@@ -1,3 +1,4 @@
+import 'package:card_game_sockets/utils/cardValidator.dart';
 import 'package:card_game_sockets/widgets/mySnackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -62,14 +63,18 @@ class SocketMethods {
   }
 
   /////////////////////////////////////////////////////////////////
-  ////////////////////In-Game Functions///////////////////////////
-  ///////////////////////////////////////////////////////////////
+  ////////////////////In-Game Functions////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-  void playCard(int index, String playerId, String roomId) {
-    _socketClient.emit('playCard', {
+  void playCard(int index, String playerId, String roomId, Map<String, dynamic> card, Map<String, dynamic> topCard, context) {
+    if(cardValidator(card, topCard)){
+      _socketClient.emit('playCard', {
       'index': index,
       'playerId': playerId,
       'roomId': roomId,
     });
+    } else{
+      showSnackBar(context, 'Invalid Move');
+    }
   }
 }

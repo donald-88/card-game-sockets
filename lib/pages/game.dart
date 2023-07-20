@@ -55,14 +55,29 @@ class _GamePageState extends State<GamePage> {
                                 .roomData['players'][0]['hand'].length,
                             itemBuilder: (context, index) {
                               return GestureDetector(
+                                onTap: () {
+                                  _socketMethods.playCard(
+                                      index,
+                                      "McDonald",
+                                      roomDataProvider.roomData['_id'],
+                                      roomDataProvider.roomData['players'][0]
+                                          ['hand'][index],
+                                      roomDataProvider.roomData['discardPile'][
+                                          roomDataProvider
+                                                  .roomData['discardPile']
+                                                  .length -
+                                              1],
+                                      context);
+                                },
                                 child: SizedBox(
                                   height: 150,
                                   width: 100,
                                   child: PlayingCard(
                                       suit: roomDataProvider.roomData['players']
                                           [0]['hand'][index]['suit'],
-                                      value: roomDataProvider.roomData['players']
-                                          [0]['hand'][index]['rank']),
+                                      value:
+                                          roomDataProvider.roomData['players']
+                                              [0]['hand'][index]['rank']),
                                 ),
                               );
                             }),
@@ -72,8 +87,18 @@ class _GamePageState extends State<GamePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Backside(),
-                        const SizedBox(width: 100,),
-                        PlayingCard(suit: roomDataProvider.roomData['discardPile'][roomDataProvider.roomData['discardPile'].length -1]['suit'], value: roomDataProvider.roomData['discardPile'][roomDataProvider.roomData['discardPile'].length -1]['rank'])
+                        const SizedBox(
+                          width: 100,
+                        ),
+                        PlayingCard(
+                            suit: roomDataProvider.roomData['discardPile'][
+                                roomDataProvider
+                                        .roomData['discardPile'].length -
+                                    1]['suit'],
+                            value: roomDataProvider.roomData['discardPile'][
+                                roomDataProvider
+                                        .roomData['discardPile'].length -
+                                    1]['rank'])
                       ],
                     ),
                     SizedBox(
@@ -95,9 +120,10 @@ class _GamePageState extends State<GamePage> {
                                       suit: roomDataProvider.roomData['players']
                                               [1]['hand'][index]['suit'] ??
                                           '',
-                                      value: roomDataProvider.roomData['players']
-                                              [1]['hand'][index]['rank'] ??
-                                          ''),
+                                      value:
+                                          roomDataProvider.roomData['players']
+                                                  [1]['hand'][index]['rank'] ??
+                                              ''),
                                 ),
                               );
                             }),
