@@ -6,8 +6,9 @@ bool cardValidator(Map<String, dynamic> card, Map<String, dynamic> topCard) {
   }
 }
 
-bool checkTurn(String playerId, int turn) {
-  if (playerId == turn) {
+bool checkTurn(int playerIndex, int turn) {
+  turn = turn % 2;
+  if (playerIndex == turn) {
     return true;
   } else {
     return false;

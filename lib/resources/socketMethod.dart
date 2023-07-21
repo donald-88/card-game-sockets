@@ -66,15 +66,20 @@ class SocketMethods {
   ////////////////////In-Game Functions////////////////////////////
   ////////////////////////////////////////////////////////////////
 
-  void playCard(int index, String playerId, String roomId, Map<String, dynamic> card, Map<String, dynamic> topCard, context) {
-    if(cardValidator(card, topCard)){
-      _socketClient.emit('playCard', {
-      'index': index,
-      'playerId': playerId,
-      'roomId': roomId,
-    });
-    } else{
-      showSnackBar(context, 'Invalid Move');
+  void playCard(int index, int playerIndex, String playerId, int turn, String roomId,
+      Map<String, dynamic> card, Map<String, dynamic> topCard, context) {
+    if (checkTurn(playerIndex, turn)) {
+      if (cardValidator(card, topCard)) {
+        _socketClient.emit('playCard', {
+          'index': index,
+          'roomId': roomId,
+          'playerId': playerId,
+        });
+      } else {
+        showSnackBar(context, 'Invalid Card');
+      }
+    } else {
+      showSnackBar(context, 'Not your turn');
     }
   }
 

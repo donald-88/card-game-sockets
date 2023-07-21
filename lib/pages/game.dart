@@ -59,7 +59,9 @@ class _GamePageState extends State<GamePage> {
                                 onTap: () {
                                   _socketMethods.playCard(
                                       index,
+                                      0,
                                       "Mcdonald",
+                                      roomDataProvider.roomData['turn'],
                                       roomDataProvider.roomData['_id'],
                                       roomDataProvider.roomData['players'][0]
                                           ['hand'][index],
@@ -124,7 +126,9 @@ class _GamePageState extends State<GamePage> {
                                 onTap: () {
                                   _socketMethods.playCard(
                                       index,
+                                      1,
                                       "AJ",
+                                      roomDataProvider.roomData['turn'],
                                       roomDataProvider.roomData['_id'],
                                       roomDataProvider.roomData['players'][1]
                                           ['hand'][index],
