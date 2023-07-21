@@ -110,11 +110,16 @@ io.on("connection", (socket) => {
     try {
       let room = await roomModel.findById(roomId);
       let player = room.players.find((player) => player.playerId === playerId);
+      let opponent = room.players[1 - (room.turn % 2)];
       let card = player.hand[index];
       room.discardPile.push(card);
       player.hand.splice(index, 1);
-      if(card.rank !== "8" && card.rank !== "J") room.turn ++
-      
+
+      if (card.rank !== "8" && card.rank !== "J") room.turn++;
+      if (card.rank === "2") {
+        opponent.hand.push(room.drawPile.pop());
+        opponent.hand.push(room.drawPile.pop());
+      }
 
       room = await room.save();
       io.to(roomId).emit("updateRoom", room);
@@ -124,14 +129,14 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("pickCard", async ({roomId }) => {
+  socket.on("pickCard", async ({ roomId }) => {
     try {
       let room = await roomModel.findById(roomId);
       let turn = room.turn % 2;
       let player = room.players[turn];
       let card = room.drawPile.pop();
       player.hand.push(card);
-      room.turn ++
+      room.turn++;
 
       room = await room.save();
       io.to(roomId).emit("updateRoom", room);
