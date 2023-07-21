@@ -113,7 +113,8 @@ io.on("connection", (socket) => {
       let card = player.hand[index];
       room.discardPile.push(card);
       player.hand.splice(index, 1);
-      room.turn ++
+      if(card.rank !== "8" && card.rank !== "J") room.turn ++
+      
 
       room = await room.save();
       io.to(roomId).emit("updateRoom", room);
@@ -123,9 +124,8 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("pickCard", async ({ playerId, roomId }) => {
+  socket.on("pickCard", async ({roomId }) => {
     try {
-      console.log(playerId);
       let room = await roomModel.findById(roomId);
       let turn = room.turn % 2;
       let player = room.players[turn];
