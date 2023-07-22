@@ -66,8 +66,15 @@ class SocketMethods {
   ////////////////////In-Game Functions////////////////////////////
   ////////////////////////////////////////////////////////////////
 
-  void playCard(int index, int playerIndex, String playerId, int turn, String roomId,
-      Map<String, dynamic> card, Map<String, dynamic> topCard, context) {
+  void playCard(
+      int index,
+      int playerIndex,
+      String playerId,
+      int turn,
+      String roomId,
+      Map<String, dynamic> card,
+      Map<String, dynamic> topCard,
+      context) {
     if (checkTurn(playerIndex, turn)) {
       if (cardValidator(card, topCard)) {
         _socketClient.emit('playCard', {
@@ -87,6 +94,14 @@ class SocketMethods {
     _socketClient.emit('pickCard', {
       'playerId': playerId,
       'roomId': roomId,
+    });
+  }
+
+  void pickSuiteListener(BuildContext context) {
+    _socketClient.on("pickSuite", (player) {
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updatePlayer1(player);
+      showAboutDialog(context: context);
     });
   }
 }

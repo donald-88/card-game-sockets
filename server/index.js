@@ -120,6 +120,7 @@ io.on("connection", (socket) => {
         opponent.hand.push(room.drawPile.pop());
         opponent.hand.push(room.drawPile.pop());
       }
+      if(card.rank !== "A") io.to(roomId).emit("pickSuit", player)
 
       room = await room.save();
       io.to(roomId).emit("updateRoom", room);
