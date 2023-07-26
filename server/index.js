@@ -129,6 +129,23 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("playAce", async ({ index, playerId, roomId, suit }) => {
+    try{
+      let room = await roomModel.findById(roomId);
+      let player = room.players.find((player) => player.playerId === playerId);
+      let card = player.hand[index];
+      room.discardPile.push(card);
+      player.hand.splice(index, 1);
+
+      room = await room.save();
+      io.to(roomId).emit("updateRoom", room);
+      io.to(roomId).emit("updatePlayers", room.players);
+      io.to(roomId).emit("pickSuit", suit);
+    } catch (error) {
+      console.log(error);
+    }
+  })
+
   socket.on("pickCard", async ({ roomId }) => {
     try {
       let room = await roomModel.findById(roomId);

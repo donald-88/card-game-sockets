@@ -14,3 +14,11 @@ bool checkTurn(int playerIndex, int turn) {
     return false;
   }
 }
+
+bool checkAce(Map<String, dynamic> card) {
+  if (card['rank'] == 'A') {
+    return true;
+  } else {
+    return false;
+  }
+}

@@ -1,5 +1,6 @@
 import 'package:card_game_sockets/utils/validator.dart';
 import 'package:card_game_sockets/widgets/mySnackbar.dart';
+import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/roomDataProvider.dart';
@@ -66,15 +67,82 @@ class SocketMethods {
   ////////////////////In-Game Functions////////////////////////////
   ////////////////////////////////////////////////////////////////
 
-  void playCard(int index, int playerIndex, String playerId, int turn, String roomId,
-      Map<String, dynamic> card, Map<String, dynamic> topCard, context) {
+  void playCard(
+      int index,
+      int playerIndex,
+      String playerId,
+      int turn,
+      String roomId,
+      Map<String, dynamic> card,
+      Map<String, dynamic> topCard,
+      context) {
     if (checkTurn(playerIndex, turn)) {
       if (cardValidator(card, topCard)) {
-        _socketClient.emit('playCard', {
-          'index': index,
-          'roomId': roomId,
-          'playerId': playerId,
-        });
+        if (checkAce(card)) {
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) => AlertDialog(
+                  title: const Text('Choose Suit'),
+                  content: Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            _socketClient.emit('playAce', {
+                              'index': index,
+                              'roomId': roomId,
+                              'playerId': playerId,
+                              'suit': '♣'
+                            });
+
+                            Navigator.pop(context);
+                          },
+                          child: const PlayingCard(suit: '♣', value: '')),
+                      GestureDetector(
+                          onTap: () {
+                            _socketClient.emit('playAce', {
+                              'index': index,
+                              'roomId': roomId,
+                              'playerId': playerId,
+                              'suit': '♦'
+                            });
+
+                            Navigator.pop(context);
+                          },
+                          child: const PlayingCard(suit: '♦', value: '')),
+                      GestureDetector(
+                          onTap: () {
+                            _socketClient.emit('playAce', {
+                              'index': index,
+                              'roomId': roomId,
+                              'playerId': playerId,
+                              'suit': '♥'
+                            });
+
+                            Navigator.pop(context);
+                          },
+                          child: const PlayingCard(suit: '♥', value: '')),
+                      GestureDetector(
+                          onTap: () {
+                            _socketClient.emit('playAce', {
+                              'index': index,
+                              'roomId': roomId,
+                              'playerId': playerId,
+                              'suit': '♠'
+                            });
+
+                            Navigator.pop(context);
+                          },
+                          child: const PlayingCard(suit: '♠', value: '')),
+                    ],
+                  )));
+        } else {
+          _socketClient.emit('playCard', {
+            'index': index,
+            'roomId': roomId,
+            'playerId': playerId,
+          });
+        }
       } else {
         showSnackBar(context, 'Invalid Card');
       }
@@ -87,6 +155,19 @@ class SocketMethods {
     _socketClient.emit('pickCard', {
       'playerId': playerId,
       'roomId': roomId,
+    });
+  }
+
+  void pickSuitListener(BuildContext context) {
+    _socketClient.on('pickSuit', (suit) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return SimpleDialog(
+              title: const Text("Suit"),
+              children: [PlayingCard(suit: suit, value: '')],
+            );
+          });
     });
   }
 }
