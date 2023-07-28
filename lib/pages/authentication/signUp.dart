@@ -43,7 +43,7 @@ class _SignUpState extends State<SignUp> {
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall!
-                    .copyWith(fontWeight: FontWeight.bold),
+                    .copyWith(fontWeight: FontWeight.bold, color: Colors.white),
               ),
               const SizedBox(height: 16),
               Text(

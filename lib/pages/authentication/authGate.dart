@@ -17,7 +17,7 @@ class AuthGate extends StatelessWidget {
         } else {
           return const AuthWrapper();
         }
-      },
+      }, 
     ));
   }
 }

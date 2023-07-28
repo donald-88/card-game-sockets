@@ -43,7 +43,7 @@ class _GamePageState extends State<GamePage> {
                   children: [
                     Text(Provider.of<RoomDataProvider>(context)
                         .player1
-                        .playerId
+                        .playerId.split('@')[0]
                         .toString()),
                     SizedBox(
                       height: 160,
@@ -157,7 +157,7 @@ class _GamePageState extends State<GamePage> {
                     ),
                     Text(Provider.of<RoomDataProvider>(context)
                         .player2
-                        .playerId
+                        .playerId.split('@')[0]
                         .toString()),
                   ],
                 ),
