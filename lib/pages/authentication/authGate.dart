@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../lobby.dart';
 import 'authWrapper.dart';
@@ -9,12 +10,12 @@ class AuthGate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: StreamBuilder(
-      stream: null,
+      stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return const AuthWrapper();
-        } else {
           return const Lobby();
+        } else {
+          return const AuthWrapper();
         }
       },
     ));

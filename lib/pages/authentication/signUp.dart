@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../utils/auth.dart';
 import '../../widgets/loading.dart';
 
 class SignUp extends StatefulWidget {
@@ -15,8 +15,17 @@ class _SignUpState extends State<SignUp> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void signUp() async {
+  final AuthService _auth = AuthService();
+
+ void signUp() async {
     Loading(context);
+    dynamic result = await _auth.registerWithEmailAndPassword(
+        emailController.text, passwordController.text);
+    if (result == null) {
+      Navigator.of(context).pop();
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 
   @override

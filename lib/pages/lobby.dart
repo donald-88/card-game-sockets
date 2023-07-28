@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../resources/socketMethod.dart';
@@ -12,6 +13,7 @@ class Lobby extends StatefulWidget {
 class _LobbyState extends State<Lobby> {
   final SocketMethods _socketMethods = SocketMethods();
   final TextEditingController _roomIdController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -25,11 +27,13 @@ class _LobbyState extends State<Lobby> {
   }
 
   void createRoom(){
-     _socketMethods.createRoom('Mcdonald');
+    User? currentUser = _auth.currentUser;
+     _socketMethods.createRoom(currentUser!.uid);
   }
 
   void joinRoom(){
-    _socketMethods.joinRoom(_roomIdController.text, 'AJ');
+    User? currentUser = _auth.currentUser;
+    _socketMethods.joinRoom(_roomIdController.text, currentUser!.uid );
   }
 
   showJoinRoom(){
