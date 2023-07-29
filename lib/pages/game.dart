@@ -2,7 +2,6 @@ import 'package:card_game_sockets/pages/waitingLobby.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../provider/roomDataProvider.dart';
 import '../resources/socketMethod.dart';
@@ -44,13 +43,10 @@ class _GamePageState extends State<GamePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                        Provider.of<RoomDataProvider>(context)
-                            .player1
-                            .playerId
-                            .split('@')[0]
-                            .toString(),
-                        style: GoogleFonts.tourney(fontSize: 20)),
+                    Text(Provider.of<RoomDataProvider>(context)
+                        .player1
+                        .playerId
+                        .toString()),
                     SizedBox(
                       height: 160,
                       width: double.infinity,
@@ -179,14 +175,10 @@ class _GamePageState extends State<GamePage> {
                             }),
                       ),
                     ),
-                    Text(
-                      Provider.of<RoomDataProvider>(context)
-                          .player2
-                          .playerId
-                          .split('@')[0]
-                          .toString(),
-                      style: GoogleFonts.tourney(fontSize: 20),
-                    ),
+                    Text(Provider.of<RoomDataProvider>(context)
+                        .player2
+                        .playerId
+                        .toString()),
                   ],
                 ),
               ));

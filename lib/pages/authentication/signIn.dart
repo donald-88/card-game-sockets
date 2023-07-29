@@ -50,12 +50,12 @@ class _SignInState extends State<SignIn> {
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall!
-                    .copyWith(fontWeight: FontWeight.bold, color: Colors.white),
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
               Text(
                 'Enter your email and password to sign in and start playing!',
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 16),
               TextField(
