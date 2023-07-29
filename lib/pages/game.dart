@@ -1,6 +1,5 @@
 import 'package:card_game_sockets/pages/waitingLobby.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/roomDataProvider.dart';
@@ -28,7 +27,6 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     RoomDataProvider roomDataProvider = Provider.of<RoomDataProvider>(context);
-    FirebaseAuth auth = FirebaseAuth.instance;
 
     return Scaffold(
         backgroundColor: Colors.green.shade800,
@@ -45,7 +43,11 @@ class _GamePageState extends State<GamePage> {
                   children: [
                     Text(Provider.of<RoomDataProvider>(context)
                         .player1
+<<<<<<< HEAD
                         .playerId
+=======
+                        .playerId.split('@')[0]
+>>>>>>> parent of aa55460 (after event to laptop)
                         .toString()),
                     SizedBox(
                       height: 160,
@@ -57,44 +59,34 @@ class _GamePageState extends State<GamePage> {
                             itemCount: roomDataProvider
                                 .roomData['players'][0]['hand'].length,
                             itemBuilder: (context, index) {
-                              if (auth.currentUser!.email ==
-                                  roomDataProvider.roomData['players'][0]
-                                      ['playerId']) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    _socketMethods.playCard(
-                                        index,
-                                        0,
-                                        Provider.of<RoomDataProvider>(context)
-                                            .player1
-                                            .playerId
-                                            .toString(),
-                                        roomDataProvider.roomData['turn'],
-                                        roomDataProvider.roomData['_id'],
-                                        roomDataProvider.roomData['players'][0]
-                                            ['hand'][index],
-                                        roomDataProvider.roomData['discardPile']
-                                            [roomDataProvider
-                                                    .roomData['discardPile']
-                                                    .length -
-                                                1],
-                                        context);
-                                  },
-                                  child: SizedBox(
-                                    height: 150,
-                                    width: 100,
-                                    child: PlayingCard(
-                                        suit:
-                                            roomDataProvider.roomData['players']
-                                                [0]['hand'][index]['suit'],
-                                        value:
-                                            roomDataProvider.roomData['players']
-                                                [0]['hand'][index]['rank']),
-                                  ),
-                                );
-                              } else{
-                                return const Backside();
-                              }
+                              return GestureDetector(
+                                onTap: () {
+                                  _socketMethods.playCard(
+                                      index,
+                                      0,
+                                      "Mcdonald",
+                                      roomDataProvider.roomData['turn'],
+                                      roomDataProvider.roomData['_id'],
+                                      roomDataProvider.roomData['players'][0]
+                                          ['hand'][index],
+                                      roomDataProvider.roomData['discardPile'][
+                                          roomDataProvider
+                                                  .roomData['discardPile']
+                                                  .length -
+                                              1],
+                                      context);
+                                },
+                                child: SizedBox(
+                                  height: 150,
+                                  width: 100,
+                                  child: PlayingCard(
+                                      suit: roomDataProvider.roomData['players']
+                                          [0]['hand'][index]['suit'],
+                                      value:
+                                          roomDataProvider.roomData['players']
+                                              [0]['hand'][index]['rank']),
+                                ),
+                              );
                             }),
                       ),
                     ),
@@ -134,50 +126,46 @@ class _GamePageState extends State<GamePage> {
                                     .roomData['players'][1]['hand'].length ??
                                 0,
                             itemBuilder: (context, index) {
-                             if (auth.currentUser!.email ==
-                                  roomDataProvider.roomData['players'][1]
-                                      ['playerId']) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    _socketMethods.playCard(
-                                        index,
-                                        1,
-                                        Provider.of<RoomDataProvider>(context)
-                                            .player1
-                                            .playerId
-                                            .toString(),
-                                        roomDataProvider.roomData['turn'],
-                                        roomDataProvider.roomData['_id'],
-                                        roomDataProvider.roomData['players'][1]
-                                            ['hand'][index],
-                                        roomDataProvider.roomData['discardPile']
-                                            [roomDataProvider
-                                                    .roomData['discardPile']
-                                                    .length -
-                                                1],
-                                        context);
-                                  },
-                                  child: SizedBox(
-                                    height: 150,
-                                    width: 100,
-                                    child: PlayingCard(
-                                        suit:
-                                            roomDataProvider.roomData['players']
-                                                [1]['hand'][index]['suit'],
-                                        value:
-                                            roomDataProvider.roomData['players']
-                                                [1]['hand'][index]['rank']),
-                                  ),
-                                );
-                              } else{
-                                return const Backside();
-                              }
+                              return GestureDetector(
+                                onTap: () {
+                                  _socketMethods.playCard(
+                                      index,
+                                      1,
+                                      "AJ",
+                                      roomDataProvider.roomData['turn'],
+                                      roomDataProvider.roomData['_id'],
+                                      roomDataProvider.roomData['players'][1]
+                                          ['hand'][index],
+                                      roomDataProvider.roomData['discardPile'][
+                                          roomDataProvider
+                                                  .roomData['discardPile']
+                                                  .length -
+                                              1],
+                                      context);
+                                },
+                                child: SizedBox(
+                                  width: 100,
+                                  height: 150,
+                                  child: PlayingCard(
+                                      suit: roomDataProvider.roomData['players']
+                                              [1]['hand'][index]['suit'] ??
+                                          '',
+                                      value:
+                                          roomDataProvider.roomData['players']
+                                                  [1]['hand'][index]['rank'] ??
+                                              ''),
+                                ),
+                              );
                             }),
                       ),
                     ),
                     Text(Provider.of<RoomDataProvider>(context)
                         .player2
+<<<<<<< HEAD
                         .playerId
+=======
+                        .playerId.split('@')[0]
+>>>>>>> parent of aa55460 (after event to laptop)
                         .toString()),
                   ],
                 ),
