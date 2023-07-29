@@ -43,11 +43,7 @@ class _GamePageState extends State<GamePage> {
                   children: [
                     Text(Provider.of<RoomDataProvider>(context)
                         .player1
-<<<<<<< HEAD
-                        .playerId
-=======
                         .playerId.split('@')[0]
->>>>>>> parent of aa55460 (after event to laptop)
                         .toString()),
                     SizedBox(
                       height: 160,
@@ -161,11 +157,7 @@ class _GamePageState extends State<GamePage> {
                     ),
                     Text(Provider.of<RoomDataProvider>(context)
                         .player2
-<<<<<<< HEAD
-                        .playerId
-=======
                         .playerId.split('@')[0]
->>>>>>> parent of aa55460 (after event to laptop)
                         .toString()),
                   ],
                 ),
