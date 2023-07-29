@@ -37,10 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   socket_io_client: ^2.0.2
   provider: ^6.0.5
-<<<<<<< HEAD
+  firebase_core: ^2.15.0
   firebase_auth: ^4.7.2
-=======
->>>>>>> parent of 81d32e3 (signIn with flutter)
 
 dev_dependencies:
   flutter_test:

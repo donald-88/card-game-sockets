@@ -42,9 +42,7 @@ class SocketMethods {
   }
 
   void errorOcurred(BuildContext context) {
-    _socketClient.on('errorOccured', (error) {
-      showSnackBar(context, error);
-    });
+    _socketClient.on('errorOccured', (error) {});
   }
 
   void updatePlayersStateListener(BuildContext context) {

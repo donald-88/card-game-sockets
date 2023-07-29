@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "168442241897",
+    "project_id": "card-game-4fe5e",
+    "storage_bucket": "card-game-4fe5e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168442241897:android:a29b80f570bd751eda13f8",
+        "android_client_info": {
+          "package_name": "com.example.card_game_sockets"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168442241897-u04mggg75l992ifbmip4bim5tool3eq6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDHMT4G7akJYdk7pGotvEelrHm0FzCprA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168442241897-u04mggg75l992ifbmip4bim5tool3eq6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "168442241897-8e33ombsal99pi9brt9b5bgkm57f0ff8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cardGameSockets.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

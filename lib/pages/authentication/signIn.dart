@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../utils/auth.dart';
+import '../../widgets/loading.dart';
 
 
 class SignIn extends StatefulWidget {
@@ -14,8 +16,18 @@ class _SignInState extends State<SignIn> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+   final AuthService _auth = AuthService();
+
   void signIn() {
-   
+   Loading(context);
+    dynamic result = _auth.signInWithEmailAndPassword(
+        emailController.text, passwordController.text);
+
+    if (result == null) {
+      Navigator.of(context).pop();
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 
 
