@@ -102,8 +102,7 @@ class _GamePageState extends State<GamePage> {
                         GestureDetector(
                             onTap: () {
                               _socketMethods.pickCard(
-                                  roomDataProvider.roomData['players'][1]
-                                      ['playerId'],
+                                currentUser!.email!,
                                   roomDataProvider.roomData['_id']);
                             },
                             child: const Backside()),
