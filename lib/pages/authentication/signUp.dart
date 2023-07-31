@@ -15,12 +15,11 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
   final AuthService _auth = AuthService();
 
   void signUp() async {
     Loading(context);
-    dynamic result = _auth.registerWithEmailAndPassword(
+    dynamic result = await _auth.registerWithEmailAndPassword(
         emailController.text, passwordController.text);
 
     if (result == null) {
