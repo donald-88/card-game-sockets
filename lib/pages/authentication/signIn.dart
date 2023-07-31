@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../utils/auth.dart';
 import '../../widgets/loading.dart';
 
-
 class SignIn extends StatefulWidget {
   const SignIn({super.key, this.toggleView});
 
@@ -16,11 +15,11 @@ class _SignInState extends State<SignIn> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-   final AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
 
-  void signIn() {
-   Loading(context);
-    dynamic result = _auth.signInWithEmailAndPassword(
+  void signIn() async {
+    Loading(context);
+    dynamic result = await _auth.signInWithEmailAndPassword(
         emailController.text, passwordController.text);
 
     if (result == null) {
@@ -29,8 +28,6 @@ class _SignInState extends State<SignIn> {
       Navigator.of(context).pop();
     }
   }
-
-
 
   @override
   void dispose() {
