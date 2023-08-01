@@ -5,7 +5,7 @@ class SocketClient {
   static SocketClient? _instance;
 
   SocketClient._internal() {
-    socket = IO.io('https://server-cvlet.ondigitalocean.app/', <String, dynamic>{
+    socket = IO.io('https://card-server-ihevl.ondigitalocean.app/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
     });
