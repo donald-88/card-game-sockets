@@ -25,7 +25,7 @@ class SocketMethods {
 ////////////////////Listeners////////////////////////////////
 /////////////////////////////////////////////////////////////
 
-  void roomCreatedListener(BuildContext context) {
+  void roomCreatedListener(BuildContext context) async {
     _socketClient.on('roomCreated', (room) {
       Provider.of<RoomDataProvider>(context, listen: false)
           .updateRoomData(room);
@@ -73,7 +73,7 @@ class SocketMethods {
       String roomId,
       Map<String, dynamic> card,
       Map<String, dynamic> topCard,
-      context) {
+      context) async {
     if (checkTurn(playerIndex, turn)) {
       if (cardValidator(card, topCard)) {
         if (checkAce(card)) {
