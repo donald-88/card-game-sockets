@@ -24,11 +24,11 @@ class _LobbyState extends State<Lobby> {
   void createRoom(){
     User? currentUser = _auth.currentUser;
     _roomService.createRoom(currentUser!.uid, context);
-    print("to db");
   }
 
   void joinRoom(){
-    showJoinRoom();
+    User? currentUser = _auth.currentUser;
+    _roomService.joinRoom(currentUser!.uid, _roomIdController.text);
   }
 
   showJoinRoom(){

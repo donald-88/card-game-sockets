@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class WaitingLobby extends StatelessWidget {
-  const WaitingLobby({super.key});
+
+  final String roomId;
+  const WaitingLobby({super.key, required this.roomId});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +18,10 @@ class WaitingLobby extends StatelessWidget {
           const SizedBox(height: 20,),
           Text('Waiting for other players to join...', style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height:16),
-          Text('RoomId: }', style: Theme.of(context).textTheme.headlineSmall),
+          Text('RoomId: $roomId', style: Theme.of(context).textTheme.headlineSmall),
           const SizedBox(height: 16),
           ElevatedButton(onPressed: (){
-            const data = ClipboardData(text: '');
+            ClipboardData data = ClipboardData(text: roomId);
             Clipboard.setData(data);}, child: const Text('Copy Room ID'))
         ],
       )

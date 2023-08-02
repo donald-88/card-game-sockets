@@ -1,3 +1,4 @@
+import 'package:card_game_sockets/models/roomModel.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
 import 'package:uuid/uuid.dart';
@@ -7,27 +8,34 @@ class RoomService {
       FirebaseDatabase.instance.ref().child('rooms');
 
   Future<void> createRoom(String playerId, BuildContext context) async {
+    const uuid = Uuid();
+    String roomId = uuid.v1();
     try {
-      const uuid = Uuid();
-      String roomId = uuid.v1();
-      await _roomRef.child(roomId).set({
-        "players": [playerId],
-        "turnIndex": 0,
-        "drawPile": [],
-        "discardPile": [],
-        "canJoin": true
-      });
-      Navigator.pushNamed(context, '/game', arguments: {roomId});
+      RoomModel roomModel = RoomModel(
+          roomId: roomId,
+          players: [playerId],
+          drawPile: [],
+          discardPile: [],
+          turnIndex: 0,
+          canJoin: false);
+      await _roomRef.child(roomId).set(roomModel.toJson());
+      Navigator.pushNamed(context, '/game', arguments: roomId);
     } catch (e) {
       print(e);
     }
   }
 
-  Future<void> joinCreate(String player2Id) async {
+  Future<void> joinRoom(String playerId, String roomId) async {
     try {
-      await _roomRef.set({
-        "players": [player2Id]
-      });
+      DatabaseReference roomRef = _roomRef.child(roomId);
+      final snapshot = await roomRef.get();
+      if (snapshot.exists) {
+        RoomModel roomModel = RoomModel.fromJson(snapshot.value);
+        roomModel.players.add(playerId);
+        await roomRef.set(roomModel.toJson());
+      } else {
+        print('No data available.');
+      }
     } catch (e) {
       print(e);
     }
