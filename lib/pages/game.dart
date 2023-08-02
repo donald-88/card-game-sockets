@@ -1,11 +1,4 @@
-import 'package:card_game_sockets/pages/waitingLobby.dart';
-import 'package:card_game_sockets/widgets/playingCard.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../provider/roomDataProvider.dart';
-import '../resources/socketMethod.dart';
-import '../widgets/backside.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -15,167 +8,26 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  final SocketMethods _socketMethods = SocketMethods();
-   final FirebaseAuth _auth = FirebaseAuth.instance;
-   
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _socketMethods.updatePlayersStateListener(context);
-    _socketMethods.updateRoomListener(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    RoomDataProvider roomDataProvider = Provider.of<RoomDataProvider>(context);
-    User? currentUser = _auth.currentUser;
-
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           child: const Icon(Icons.chat),
         ),
-        body: roomDataProvider.roomData['canJoin']
-            ? const WaitingLobby()
-            : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(Provider.of<RoomDataProvider>(context)
-                        .player1
-                        .playerId
-                        .split('@')[0]
-                        .toString()),
-                    SizedBox(
-                      height: 160,
-                      width: double.infinity,
-                      child: Center(
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: roomDataProvider
-                                .roomData['players'][0]['hand'].length,
-                            itemBuilder: (context, index) {
-                             if(currentUser!.email! == roomDataProvider.roomData['players'][0]['playerId']){
-                               return GestureDetector(
-                                onTap: () {
-                                  _socketMethods.playCard(
-                                      index,
-                                      0,
-                                      roomDataProvider.roomData['players'][0]
-                                          ['playerId'],
-                                      roomDataProvider.roomData['turn'],
-                                      roomDataProvider.roomData['_id'],
-                                      roomDataProvider.roomData['players'][0]
-                                          ['hand'][index],
-                                      roomDataProvider.roomData['discardPile'][
-                                          roomDataProvider
-                                                  .roomData['discardPile']
-                                                  .length -
-                                              1],
-                                      context);
-                                },
-                                child: SizedBox(
-                                  height: 150,
-                                  width: 100,
-                                  child: PlayingCard(
-                                      suit: roomDataProvider.roomData['players']
-                                          [0]['hand'][index]['suit'],
-                                      value:
-                                          roomDataProvider.roomData['players']
-                                              [0]['hand'][index]['rank']),
-                                ),
-                              );
-                             }else{
-                              return const Backside();
-                             }
-                            }),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                            onTap: () {
-                              _socketMethods.pickCard(
-                                currentUser!.email!,
-                                  roomDataProvider.roomData['_id']);
-                            },
-                            child: const Backside()),
-                        const SizedBox(
-                          width: 100,
-                        ),
-                        PlayingCard(
-                            suit: roomDataProvider.roomData['discardPile'][
-                                roomDataProvider
-                                        .roomData['discardPile'].length -
-                                    1]['suit'],
-                            value: roomDataProvider.roomData['discardPile'][
-                                roomDataProvider
-                                        .roomData['discardPile'].length -
-                                    1]['rank'])
-                      ],
-                    ),
-                    SizedBox(
-                      height: 160,
-                      width: double.infinity,
-                      child: Center(
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: roomDataProvider
-                                    .roomData['players'][1]['hand'].length ??
-                                0,
-                            itemBuilder: (context, index) {
-                              if(currentUser!.email! == roomDataProvider.roomData['players'][1]['playerId']){
-                                return GestureDetector(
-                                onTap: () {
-                                  _socketMethods.playCard(
-                                      index,
-                                      1,
-                                      roomDataProvider.roomData['players'][1]
-                                          ['playerId'],
-                                      roomDataProvider.roomData['turn'],
-                                      roomDataProvider.roomData['_id'],
-                                      roomDataProvider.roomData['players'][1]
-                                          ['hand'][index],
-                                      roomDataProvider.roomData['discardPile'][
-                                          roomDataProvider
-                                                  .roomData['discardPile']
-                                                  .length -
-                                              1],
-                                      context);
-                                },
-                                child: SizedBox(
-                                  width: 100,
-                                  height: 150,
-                                  child: PlayingCard(
-                                      suit: roomDataProvider.roomData['players']
-                                              [1]['hand'][index]['suit'] ??
-                                          '',
-                                      value:
-                                          roomDataProvider.roomData['players']
-                                                  [1]['hand'][index]['rank'] ??
-                                              ''),
-                                ),
-                              );
-                              }else{
-                                return const Backside();
-                              }
-                            }),
-                      ),
-                    ),
-                    Text(Provider.of<RoomDataProvider>(context)
-                        .player2
-                        .playerId
-                        .split('@')[0]
-                        .toString()),
-                  ],
-                ),
-              ));
+        body: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [],
+          ),
+        ));
   }
 }

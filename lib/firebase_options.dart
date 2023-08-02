@@ -52,6 +52,7 @@ class DefaultFirebaseOptions {
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBOIefMtGjPzi6b39YE4nGwbEG-aGxHZdo',
     appId: '1:168442241897:web:c131ab89655b92abda13f8',
+    databaseURL: 'https://card-game-4fe5e-default-rtdb.firebaseio.com/',
     messagingSenderId: '168442241897',
     projectId: 'card-game-4fe5e',
     authDomain: 'card-game-4fe5e.firebaseapp.com',

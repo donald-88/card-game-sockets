@@ -1,7 +1,6 @@
+import 'package:card_game_sockets/services/roomService.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../resources/socketMethod.dart';
 
 class Lobby extends StatefulWidget {
   const Lobby({super.key});
@@ -11,30 +10,25 @@ class Lobby extends StatefulWidget {
 }
 
 class _LobbyState extends State<Lobby> {
-  final SocketMethods _socketMethods = SocketMethods();
   final TextEditingController _roomIdController = TextEditingController();
 
    final FirebaseAuth _auth = FirebaseAuth.instance;
+   final RoomService _roomService = RoomService();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _socketMethods.roomCreatedListener(context);
-    _socketMethods.joinRoomListener(context);
-    _socketMethods.roomCreatedListener(context);
-    _socketMethods.errorOcurred(context);
-    _socketMethods.updatePlayersStateListener(context);
   }
 
   void createRoom(){
     User? currentUser = _auth.currentUser;
-     _socketMethods.createRoom(currentUser!.email!);
+    _roomService.createRoom(currentUser!.uid, context);
+    print("to db");
   }
 
   void joinRoom(){
-    User? currentUser = _auth.currentUser;
-    _socketMethods.joinRoom(_roomIdController.text, currentUser!.email!);
+    showJoinRoom();
   }
 
   showJoinRoom(){
