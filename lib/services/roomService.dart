@@ -30,7 +30,8 @@ class RoomService {
       DatabaseReference roomRef = _roomRef.child(roomId);
       final snapshot = await roomRef.get();
       if (snapshot.exists) {
-        RoomModel roomModel = RoomModel.fromJson(snapshot.value);
+        Map<String, dynamic> roomData = snapshot.value as Map<String, dynamic>;
+        RoomModel roomModel = RoomModel.fromJson(roomData);
         roomModel.players.add(playerId);
         await roomRef.set(roomModel.toJson());
       } else {

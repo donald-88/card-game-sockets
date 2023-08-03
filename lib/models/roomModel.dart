@@ -1,9 +1,9 @@
 class RoomModel {
   String roomId;
-  List players;
+  List<String> players;
   int turnIndex;
-  List drawPile;
-  List discardPile;
+  List<String> drawPile;
+  List<String> discardPile;
   bool canJoin;
 
   RoomModel(
@@ -23,11 +23,15 @@ class RoomModel {
         'canJoin': canJoin
       };
 
-  RoomModel.fromJson(Map<String, dynamic> json)
-      : roomId = json['roomId'],
-        players = json['players'],
-        turnIndex = json['turnIndex'],
-        drawPile = json['drawPile'],
-        discardPile = json['discardPile'],
-        canJoin = json['canJoin'];
+  factory RoomModel.fromJson(Map<String, dynamic> json){
+      var playerObj = json['players'];
+      var drawPileObj = json['drawPile'] ?? [];
+      var discardPileObj = json['discardPile'] ?? [];
+      return RoomModel(roomId : json['roomId'],
+        players : List<String>.from(playerObj),
+        turnIndex : json['turnIndex'],
+        drawPile : List<String>.from(drawPileObj),
+        discardPile : List<String>.from(discardPileObj),
+        canJoin : json['canJoin']);
+  }
 }
