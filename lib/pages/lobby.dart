@@ -28,7 +28,7 @@ class _LobbyState extends State<Lobby> {
 
   void joinRoom(){
     User? currentUser = _auth.currentUser;
-    _roomService.joinRoom(currentUser!.uid, _roomIdController.text);
+    _roomService.joinRoom(currentUser!.uid, _roomIdController.text, context);
   }
 
   showJoinRoom(){

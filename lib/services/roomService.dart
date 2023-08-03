@@ -25,7 +25,7 @@ class RoomService {
     }
   }
 
-  Future<void> joinRoom(String playerId, String roomId) async {
+  Future<void> joinRoom(String playerId, String roomId, BuildContext context) async {
     try {
       DatabaseReference roomRef = _roomRef.child(roomId);
       final snapshot = await roomRef.get();
@@ -35,6 +35,7 @@ class RoomService {
         roomModel.players.add(playerId);
         roomModel.canJoin = false;
         await roomRef.set(roomModel.toJson());
+        Navigator.pushNamed(context, '/game', arguments: roomId);
       } else {
         print('No data available.');
       }
