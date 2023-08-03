@@ -1,4 +1,5 @@
 import 'package:card_game_sockets/pages/waitingLobby.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class GamePage extends StatefulWidget {
@@ -14,12 +15,22 @@ class _GamePageState extends State<GamePage> {
     // TODO: implement initState
     super.initState();
   }
-  bool join = true;
+  
+  bool join = false;
              
   @override
   Widget build(BuildContext context) {
     final String roomId =
         ModalRoute.of(context)!.settings.arguments as String;
+        final DatabaseReference _roomRef =
+      FirebaseDatabase.instance.ref().child('rooms/$roomId');
+
+      _roomRef.onValue.listen((event) {
+       
+          setState(() {
+            join = event.snapshot.value['canJoin'];
+          });
+      });
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         floatingActionButton: FloatingActionButton(

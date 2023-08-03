@@ -17,7 +17,7 @@ class RoomService {
           drawPile: [],
           discardPile: [],
           turnIndex: 0,
-          canJoin: false);
+          canJoin: true);
       await _roomRef.child(roomId).set(roomModel.toJson());
       Navigator.pushNamed(context, '/game', arguments: roomId);
     } catch (e) {
@@ -33,6 +33,7 @@ class RoomService {
         Map<String, dynamic> roomData = snapshot.value as Map<String, dynamic>;
         RoomModel roomModel = RoomModel.fromJson(roomData);
         roomModel.players.add(playerId);
+        roomModel.canJoin = false;
         await roomRef.set(roomModel.toJson());
       } else {
         print('No data available.');
