@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../utils/auth.dart';
+import '../../services/authService.dart';
 import '../../widgets/loading.dart';
 
 class SignIn extends StatefulWidget {
