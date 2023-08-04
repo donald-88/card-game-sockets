@@ -1,6 +1,7 @@
+
 class RoomModel {
   String roomId;
-  List<String> players;
+  List<Map<String, dynamic>> players;
   int turnIndex;
   List<String> drawPile;
   List<String> discardPile;
@@ -28,7 +29,7 @@ class RoomModel {
       var drawPileObj = json['drawPile'] ?? [];
       var discardPileObj = json['discardPile'] ?? [];
       return RoomModel(roomId : json['roomId'],
-        players : List<String>.from(playerObj),
+        players : List<Map<String, dynamic>>.from(playerObj),
         turnIndex : json['turnIndex'],
         drawPile : List<String>.from(drawPileObj),
         discardPile : List<String>.from(discardPileObj),
