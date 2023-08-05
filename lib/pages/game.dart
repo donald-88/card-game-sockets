@@ -1,7 +1,6 @@
-import 'package:card_game_sockets/pages/waitingLobby.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:card_game_sockets/utils/deck.dart';
+import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:flutter/material.dart';
-
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -14,35 +13,25 @@ class _GamePageState extends State<GamePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    initializeGame();
+  }
+  List<PlayingCard> deck = [];
+
+  void initializeGame(){
+    deck = buildDeck();
+    deck.shuffle();
+    
   }
 
-  bool join = false;
-
-
-
   @override
-  Widget build(BuildContext context) {
-    final String roomId = ModalRoute.of(context)!.settings.arguments as String;
-    final DatabaseReference roomRef =
-        FirebaseDatabase.instance.ref().child('rooms/$roomId');
-    
-
-    roomRef.onValue.listen((event) {
-      Map<String, dynamic> data = event.snapshot.value as Map<String, dynamic>;
-      setState(() {
-        join = data['canJoin'] ?? false;
-      });
-    });
-    
+  Widget build(BuildContext context) {  
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           child: const Icon(Icons.chat),
         ),
-        body: join
-            ? WaitingLobby(roomId: roomId)
-            : const Center(
+        body: const Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
