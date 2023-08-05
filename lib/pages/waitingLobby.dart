@@ -11,7 +11,7 @@ class WaitingLobby extends StatefulWidget {
 }
 
 class _WaitingLobbyState extends State<WaitingLobby> {
-  bool join = false;
+  bool join = true;
   @override
   Widget build(BuildContext context) {
     final String roomId = ModalRoute.of(context)!.settings.arguments as String;
