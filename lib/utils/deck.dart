@@ -1,4 +1,4 @@
-import 'package:card_game_sockets/widgets/playingCard.dart';
+import 'package:card_game_sockets/models/cardModel.dart';
 
 List<String> suits = ["♣", "♦", "♥", "♠"];
 List<String> ranks = [
@@ -16,12 +16,12 @@ List<String> ranks = [
   "K",
   "A",
 ];
-List<PlayingCard> deck = [];
+List<CardModel> deck = [];
 
-List<PlayingCard> buildDeck() {
+List<CardModel> buildDeck() {
   for (String suit in suits) {
     for (String rank in ranks) {
-      deck.add(PlayingCard(suit: suit, value: rank));
+      deck.add(CardModel(suit: suit, rank: rank));
     }
   }
   return deck;

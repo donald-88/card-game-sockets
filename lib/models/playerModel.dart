@@ -1,20 +1,24 @@
+import 'package:card_game_sockets/models/cardModel.dart';
+
 class PlayerModel {
   String playerId;
   String roomId;
-  List hand;
+  List<CardModel> hand;
 
-  PlayerModel({required this.playerId, required this.roomId, required this.hand});
+  PlayerModel(
+      {required this.playerId, required this.roomId, required this.hand});
 
   Map<String, dynamic> toJson() => {
         'playerId': playerId,
         'roomId': roomId,
-        'hand': hand,
+        'hand': hand.map((e) => e.toJson()).toList(),
       };
-  
-  factory PlayerModel.fromJson(Map<String, dynamic> json){
-      var handObj = json['hand'] ?? [];
-      return PlayerModel(playerId : json['playerId'],
-        roomId : json['roomId'],
-        hand : List<String>.from(handObj));
+
+  factory PlayerModel.fromJson(Map<String, dynamic> json) {
+    var handObj = json['hand'] ?? [];
+    return PlayerModel(
+        playerId: json['playerId'],
+        roomId: json['roomId'],
+        hand: List<CardModel>.from(handObj));
   }
 }

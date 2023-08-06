@@ -1,10 +1,12 @@
 
+import 'package:card_game_sockets/models/cardModel.dart';
+
 class RoomModel {
   String roomId;
   List<Map<String, dynamic>> players;
   int turnIndex;
-  List<String> drawPile;
-  List<String> discardPile;
+  List<CardModel> drawPile;
+  List<CardModel> discardPile;
   bool canJoin;
 
   RoomModel(
@@ -19,8 +21,8 @@ class RoomModel {
         'roomId': roomId,
         'players': players,
         'turnIndex': turnIndex,
-        'drawPile': drawPile,
-        'discardPile': discardPile,
+        'drawPile': drawPile.map((e) => e.toJson()).toList(),
+        'discardPile': discardPile.map((e) => e.toJson()).toList(),
         'canJoin': canJoin
       };
 
@@ -31,8 +33,8 @@ class RoomModel {
       return RoomModel(roomId : json['roomId'],
         players : List<Map<String, dynamic>>.from(playerObj),
         turnIndex : json['turnIndex'],
-        drawPile : List<String>.from(drawPileObj),
-        discardPile : List<String>.from(discardPileObj),
+        drawPile : List<CardModel>.from(drawPileObj),
+        discardPile : List<CardModel>.from(discardPileObj),
         canJoin : json['canJoin']);
   }
 }
