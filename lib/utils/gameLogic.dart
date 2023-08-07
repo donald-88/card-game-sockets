@@ -45,12 +45,6 @@ void playCard(String roomId, int index, int playerIndex) async {
   DatabaseReference roomRef = FirebaseDatabase.instance.ref().child('rooms').child(roomId);
   final snapshot = await roomRef.get();
   if (snapshot.exists) {
-    Map<String, dynamic> roomData = snapshot.value as Map<String, dynamic>;
-    RoomModel roomModel = RoomModel.fromJson(roomData);
-    Map<String, dynamic> player = roomModel.players[playerIndex];
-    PlayerModel playerModel = PlayerModel.fromJson(player);
-    roomModel.discardPile.add(playerModel.hand.removeAt(index));
-    print(playerModel);
-    roomRef.set(roomModel.toJson());
+    print(snapshot.value);
   }
 }

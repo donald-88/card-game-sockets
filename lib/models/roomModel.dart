@@ -33,8 +33,8 @@ class RoomModel {
       return RoomModel(roomId : json['roomId'],
         players : List<Map<String, dynamic>>.from(playerObj),
         turnIndex : json['turnIndex'],
-        drawPile : List<CardModel>.from(drawPileObj),
-        discardPile : List<CardModel>.from(discardPileObj),
+        drawPile : List<CardModel>.from(drawPileObj.map((x) => CardModel.fromJson(x))),
+        discardPile : List<CardModel>.from(discardPileObj.map((x) => CardModel.fromJson(x))),
         canJoin : json['canJoin']);
   }
 }

@@ -19,6 +19,6 @@ class PlayerModel {
     return PlayerModel(
         playerId: json['playerId'],
         roomId: json['roomId'],
-        hand: List<CardModel>.from(handObj));
+        hand: List<CardModel>.from(handObj.map((x) => CardModel.fromJson(x))));
   }
 }
