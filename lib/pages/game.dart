@@ -23,6 +23,7 @@ class _GamePageState extends State<GamePage> {
   Map<String, dynamic> player1 = {};
   Map<String, dynamic> player2 = {};
   List discardPile = [];
+  int turn = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class _GamePageState extends State<GamePage> {
         player1 = data['players'][0];
         player2 = data['players'][1];
         discardPile = data['discardPile'];
+        turn = data['turnIndex'];
       });
     });
     return Scaffold(
@@ -72,7 +74,9 @@ class _GamePageState extends State<GamePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Backside(),
+                    GestureDetector(
+                      onTap: () => pickCard(roomId),
+                      child: const Backside()),
                     const SizedBox(width: 100),
                     PlayingCard(
                         suit: discardPile[discardPile.length - 1]['suit'],

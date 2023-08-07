@@ -42,9 +42,34 @@ List dealCards(int numberOfPlayers, List deck) {
 }
 
 void playCard(String roomId, int index, int playerIndex) async {
-  DatabaseReference roomRef = FirebaseDatabase.instance.ref().child('rooms').child(roomId);
+  DatabaseReference roomRef =
+      FirebaseDatabase.instance.ref().child('rooms').child(roomId);
   final snapshot = await roomRef.get();
   if (snapshot.exists) {
-    print(snapshot.value);
+    Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
+    RoomModel roomModel = RoomModel.fromJson(data);
+    Map<String, dynamic> player = roomModel.players[playerIndex];
+    PlayerModel playerModel = PlayerModel.fromJson(player);
+    CardModel playedCard = playerModel.hand.removeAt(index);
+    roomModel.discardPile.add(playedCard);
+    roomModel.players[playerIndex]['hand'][index] = null;
+    roomModel.turnIndex ++;
+    roomRef.update(roomModel.toJson());
   }
+}
+
+void pickCard(String roomId) async{
+DatabaseReference roomRef =
+      FirebaseDatabase.instance.ref().child('rooms').child(roomId);
+      final snapshot = await roomRef.get();
+      if(snapshot.exists){
+        Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
+        RoomModel roomModel = RoomModel.fromJson(data);
+        int turn = roomModel.turnIndex % 2;
+        Map<String, dynamic> player = roomModel.players[turn];
+        PlayerModel playerModel = PlayerModel.fromJson(player);
+        playerModel.hand.add(roomModel.drawPile.removeLast());
+        roomModel.drawPile.removeLast();
+        roomRef.update(roomModel.toJson());
+      }
 }
