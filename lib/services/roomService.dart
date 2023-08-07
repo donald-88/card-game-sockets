@@ -1,8 +1,13 @@
 import 'package:card_game_sockets/models/playerModel.dart';
 import 'package:card_game_sockets/models/roomModel.dart';
+import 'package:card_game_sockets/providers/roomProvider.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
+
+import '../utils/gameLogic.dart';
+
 class RoomService {
   final DatabaseReference _roomRef =
       FirebaseDatabase.instance.ref().child('rooms');
@@ -33,6 +38,10 @@ class RoomService {
   Future<void> joinRoom(
       String playerId, String roomId, BuildContext context) async {
     try {
+      Provider.of<RoomProvider>(
+        context,
+        listen: false,
+      ).updateRoomData(roomId);
       DatabaseReference roomRef = _roomRef.child(roomId);
       final snapshot = await roomRef.get();
       if (snapshot.exists) {
@@ -42,6 +51,8 @@ class RoomService {
         roomModel.players.add(
             PlayerModel(playerId: playerId, roomId: roomId, hand: []).toJson());
         await roomRef.set(roomModel.toJson());
+
+        initializeGame(roomId);
         Navigator.pushNamed(context, '/waitingLobby', arguments: roomId);
       } else {
         print('No data available.');
