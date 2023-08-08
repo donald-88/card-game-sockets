@@ -52,12 +52,10 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard, int player
   if (snapshot.exists) {
     Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
     RoomModel roomModel = RoomModel.fromJson(data);
-    Map<String, dynamic> player = roomModel.players[playerIndex];
-    PlayerModel playerModel = PlayerModel.fromJson(player);
-    playerModel.hand.remove(playedCard);
     roomModel.discardPile.add(playedCard);
+    roomModel.players[playerIndex]['hand'].removeWhere((card) => card['suit'] == playedCard.suit && card['rank'] == playedCard.rank);
     roomModel.turnIndex ++;
-    roomRef.update(roomModel.toJson());
+    roomRef.set(roomModel.toJson());
   }
  }else{
   showErrorDialog('Wrong Card!', 'Make sure the suit or rank match', context);
@@ -75,10 +73,8 @@ DatabaseReference roomRef =
         Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
         RoomModel roomModel = RoomModel.fromJson(data);
         int turn = roomModel.turnIndex % 2;
-        Map<String, dynamic> player = roomModel.players[turn];
-        PlayerModel playerModel = PlayerModel.fromJson(player);
-        playerModel.hand.add(roomModel.drawPile.removeLast());
         roomModel.drawPile.removeLast();
-        roomRef.update(roomModel.toJson());
+        roomModel.turnIndex ++;
+        roomRef.set(roomModel.toJson());
       }
 }
