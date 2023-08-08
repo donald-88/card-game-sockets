@@ -1,8 +1,11 @@
+import 'package:card_game_sockets/models/playerModel.dart';
+import 'package:card_game_sockets/models/roomModel.dart';
 import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:card_game_sockets/widgets/backside.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
 class GamePage extends StatefulWidget {
@@ -52,31 +55,31 @@ class _GamePageState extends State<GamePage> {
                   height: 160,
                   width: double.infinity,
                   child: Center(
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: player1['hand'].length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          if (currentUser!.uid == player1['playerId']) {
-                            return GestureDetector(
-                              onTap: () => playCard(roomId, index, 0),
-                              child: PlayingCard(
-                                  suit: player1['hand'][index]['suit'].toString(),
-                                  value:
-                                      player1['hand'][index]['rank'].toString()),
-                            );
-                          } else {
-                            return const Backside();
-                          }
-                        }),
-                  ),
+                      child: FirebaseAnimatedList(
+                          query: roomRef,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, snapshot,
+                              animation, index) {
+                            if (snapshot.exists) {
+                              Map<String, dynamic> room =
+                                  snapshot.value as Map<String, dynamic>;
+                              RoomModel roomModel = RoomModel.fromJson(room);
+                              Map<String, dynamic> player =
+                                  roomModel.players as Map<String, dynamic>;
+                              PlayerModel playerModel =
+                                  PlayerModel.fromJson(player[0]);
+                              return const PlayingCard(suit: '', value: '');
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          })),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: () => pickCard(roomId),
-                      child: const Backside()),
+                        onTap: () => pickCard(roomId), child: const Backside()),
                     const SizedBox(width: 100),
                     PlayingCard(
                         suit: discardPile[discardPile.length - 1]['suit'],
@@ -96,9 +99,10 @@ class _GamePageState extends State<GamePage> {
                             return GestureDetector(
                               onTap: () => playCard(roomId, index, 1),
                               child: PlayingCard(
-                                  suit: player2['hand'][index]['suit'].toString(),
-                                  value:
-                                      player2['hand'][index]['rank'].toString()),
+                                  suit:
+                                      player2['hand'][index]['suit'].toString(),
+                                  value: player2['hand'][index]['rank']
+                                      .toString()),
                             );
                           } else {
                             return const Backside();
