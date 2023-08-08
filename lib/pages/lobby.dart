@@ -55,7 +55,7 @@ class _LobbyState extends State<Lobby> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Create or Join a Game Server',
+              'Test Create or Join a Game Server',
               style: Theme.of(context)
                   .textTheme
                   .displaySmall!
