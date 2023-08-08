@@ -43,38 +43,45 @@ List dealCards(int numberOfPlayers, List deck) {
   return playerHands;
 }
 
-void playCard(String roomId, CardModel playedCard, CardModel topCard, int playerIndex, int turnIndex, context) async {
- if(checkTurn(playerIndex, turnIndex)){
-  if(cardValidator(playedCard, topCard)){
-   DatabaseReference roomRef =
+void playCard(String roomId, CardModel playedCard, CardModel topCard,
+    int playerIndex, int turnIndex, context) async {
+  if (checkTurn(playerIndex, turnIndex)) {
+    if (cardValidator(playedCard, topCard)) {
+      DatabaseReference roomRef =
+          FirebaseDatabase.instance.ref().child('rooms').child(roomId);
+      final snapshot = await roomRef.get();
+      if (snapshot.exists) {
+        Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
+        RoomModel roomModel = RoomModel.fromJson(data);
+        roomModel.discardPile.add(playedCard);
+        roomModel.players[playerIndex]['hand'].removeWhere((card) =>
+            card['suit'] == playedCard.suit && card['rank'] == playedCard.rank);
+        if(playedCard.rank != "8" && playedCard.rank != 'J'){
+          roomModel.turnIndex++;
+        }
+        roomRef.set(roomModel.toJson());
+      }
+    } else {
+      showErrorDialog(
+          'Wrong Card!', 'Make sure the suit or rank match', context);
+    }
+  } else {
+    showErrorDialog('Not Your Turn!', 'Wait for opponent move', context);
+  }
+}
+
+void pickCard(String roomId) async {
+  DatabaseReference roomRef = 
       FirebaseDatabase.instance.ref().child('rooms').child(roomId);
   final snapshot = await roomRef.get();
   if (snapshot.exists) {
     Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
     RoomModel roomModel = RoomModel.fromJson(data);
-    roomModel.discardPile.add(playedCard);
-    roomModel.players[playerIndex]['hand'].removeWhere((card) => card['suit'] == playedCard.suit && card['rank'] == playedCard.rank);
-    roomModel.turnIndex ++;
+    int turn = roomModel.turnIndex % 2;
+    CardModel pickedCard = roomModel.drawPile.removeLast();
+    roomModel.players[turn]['hand']
+        .add({"suit": pickedCard.suit, "rank": pickedCard.rank});
+    roomModel.turnIndex++;
     roomRef.set(roomModel.toJson());
   }
- }else{
-  showErrorDialog('Wrong Card!', 'Make sure the suit or rank match', context);
- }
- }else{
-  showErrorDialog('Not Your Turn!', 'Wait for opponent move', context);
- }
-}
-
-void pickCard(String roomId) async{
-DatabaseReference roomRef =
-      FirebaseDatabase.instance.ref().child('rooms').child(roomId);
-      final snapshot = await roomRef.get();
-      if(snapshot.exists){
-        Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
-        RoomModel roomModel = RoomModel.fromJson(data);
-        int turn = roomModel.turnIndex % 2;
-        roomModel.drawPile.removeLast();
-        roomModel.turnIndex ++;
-        roomRef.set(roomModel.toJson());
-      }
 }
