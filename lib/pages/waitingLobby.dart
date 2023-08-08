@@ -46,6 +46,6 @@ class _WaitingLobbyState extends State<WaitingLobby> {
                       child: const Text('Copy Room ID'))
                 ],
               )
-            ): const GamePage();
+            ): GamePage(roomId: roomId,);
   }
 }

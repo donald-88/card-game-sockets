@@ -1,4 +1,6 @@
 import 'package:card_game_sockets/utils/deck.dart';
+import 'package:card_game_sockets/utils/validator.dart';
+import 'package:card_game_sockets/widgets/errorDialog.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../models/cardModel.dart';
 import '../models/playerModel.dart';
@@ -41,8 +43,9 @@ List dealCards(int numberOfPlayers, List deck) {
   return playerHands;
 }
 
-void playCard(String roomId, int index, int playerIndex) async {
-  DatabaseReference roomRef =
+void playCard(String roomId, CardModel playedCard, CardModel topCard, int playerIndex, context) async {
+ if(cardValidator(playedCard, topCard)){
+   DatabaseReference roomRef =
       FirebaseDatabase.instance.ref().child('rooms').child(roomId);
   final snapshot = await roomRef.get();
   if (snapshot.exists) {
@@ -50,12 +53,14 @@ void playCard(String roomId, int index, int playerIndex) async {
     RoomModel roomModel = RoomModel.fromJson(data);
     Map<String, dynamic> player = roomModel.players[playerIndex];
     PlayerModel playerModel = PlayerModel.fromJson(player);
-    CardModel playedCard = playerModel.hand.removeAt(index);
+    playerModel.hand.remove(playedCard);
     roomModel.discardPile.add(playedCard);
-    roomModel.players[playerIndex]['hand'][index] = null;
     roomModel.turnIndex ++;
     roomRef.update(roomModel.toJson());
   }
+ }else{
+  showErrorDialog('Wrong Card', 'Make sure the suit or rank match', context);
+ }
 }
 
 void pickCard(String roomId) async{

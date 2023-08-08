@@ -1,5 +1,7 @@
-bool cardValidator(Map<String, dynamic> card, Map<String, dynamic> topCard) {
-  if (card['suit'] == topCard['suit'] || card['rank'] == topCard['rank']) {
+import 'package:card_game_sockets/models/cardModel.dart';
+
+bool cardValidator(CardModel card, CardModel topCard) {
+  if (card.suit == topCard.suit || card.rank == topCard.rank) {
     return true;
   }else{
     return false;
@@ -15,8 +17,8 @@ bool checkTurn(int playerIndex, int turn) {
   }
 }
 
-bool checkAce(Map<String, dynamic> card) {
-  if (card['rank'] == 'A') {
+bool checkAce(CardModel card) {
+  if (card.rank == 'A') {
     return true;
   } else {
     return false;

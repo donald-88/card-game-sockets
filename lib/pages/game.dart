@@ -5,11 +5,13 @@ import 'package:card_game_sockets/widgets/backside.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
+import '../models/cardModel.dart';
+
 class GamePage extends StatefulWidget {
-  const GamePage({super.key});
+  final String roomId;
+  const GamePage({super.key, required this.roomId});
   @override
   State<GamePage> createState() => _GamePageState();
 }
@@ -19,31 +21,33 @@ class _GamePageState extends State<GamePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    FirebaseDatabase.instance
+        .ref()
+        .child('rooms')
+        .child(widget.roomId)
+        .onValue
+        .listen((event) {
+      Map<String, dynamic> room = event.snapshot.value as Map<String, dynamic>;
+      RoomModel roomModel = RoomModel.fromJson(room);
+      PlayerModel player1Model = PlayerModel.fromJson(roomModel.players[0]);
+      PlayerModel player2Model = PlayerModel.fromJson(roomModel.players[1]);
+      setState(() {
+        discardPile = roomModel.discardPile;
+        player1 = player1Model;
+        player2 = player2Model;
+      });
+    });
   }
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Map<String, dynamic> player1 = {};
-  Map<String, dynamic> player2 = {};
-  List discardPile = [];
-  int turn = 0;
+  List<CardModel> discardPile = [];
+  PlayerModel player1 = PlayerModel(playerId: '', roomId: '', hand: []);
+  PlayerModel player2 = PlayerModel(playerId: '', roomId: '', hand: []);
 
   @override
   Widget build(BuildContext context) {
     User? currentUser = _auth.currentUser;
-    final String roomId = ModalRoute.of(context)!.settings.arguments as String;
-    DatabaseReference roomRef =
-        FirebaseDatabase.instance.ref().child('rooms').child(roomId);
-
-    roomRef.onValue.listen((event) {
-      Map<String, dynamic> data = event.snapshot.value as Map<String, dynamic>;
-      setState(() {
-        player1 = data['players'][0];
-        player2 = data['players'][1];
-        discardPile = data['discardPile'];
-        turn = data['turnIndex'];
-      });
-    });
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         body: Center(
@@ -52,38 +56,48 @@ class _GamePageState extends State<GamePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 160,
-                  width: double.infinity,
-                  child: Center(
-                      child: FirebaseAnimatedList(
-                          query: roomRef,
-                          scrollDirection: Axis.horizontal,
+                    height: 160,
+                    width: double.infinity,
+                    child: Center(
+                      child: ListView.builder(
                           shrinkWrap: true,
-                          itemBuilder: (BuildContext context, snapshot,
-                              animation, index) {
-                            if (snapshot.exists) {
-                              Map<String, dynamic> room =
-                                  snapshot.value as Map<String, dynamic>;
-                              RoomModel roomModel = RoomModel.fromJson(room);
-                              Map<String, dynamic> player =
-                                  roomModel.players as Map<String, dynamic>;
-                              PlayerModel playerModel =
-                                  PlayerModel.fromJson(player[0]);
-                              return const PlayingCard(suit: '', value: '');
+                          itemCount: player1.hand.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            if (currentUser!.uid == player1.playerId) {
+                              CardModel playedCard = player1.hand[index];
+                              return GestureDetector(
+                                onTap: () => playCard(
+                                    widget.roomId,
+                                    playedCard,
+                                    discardPile.isEmpty
+                                        ? CardModel(suit: '', rank: '')
+                                        : discardPile[discardPile.length - 1],
+                                    0,
+                                    context),
+                                child: PlayingCard(
+                                    suit: player1.hand[index].suit,
+                                    value: player1.hand[index].rank),
+                              );
                             } else {
-                              return const CircularProgressIndicator();
+                              return const Backside();
                             }
-                          })),
-                ),
+                          }),
+                    )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                        onTap: () => pickCard(roomId), child: const Backside()),
+                        onTap: () => pickCard(widget.roomId),
+                        child: const Backside()),
                     const SizedBox(width: 100),
                     PlayingCard(
-                        suit: discardPile[discardPile.length - 1]['suit'],
-                        value: discardPile[discardPile.length - 1]['rank'])
+                        suit: discardPile.isEmpty
+                            ? ""
+                            : discardPile[discardPile.length - 1].suit,
+                        value: discardPile.isEmpty
+                            ? ""
+                            : discardPile[discardPile.length - 1].rank)
                   ],
                 ),
                 SizedBox(
@@ -92,17 +106,23 @@ class _GamePageState extends State<GamePage> {
                   child: Center(
                     child: ListView.builder(
                         shrinkWrap: true,
-                        itemCount: player2['hand'].length,
+                        itemCount: player2.hand.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          if (currentUser!.uid == player2['playerId']) {
+                          if (currentUser!.uid == player2.playerId) {
+                            CardModel playedCard = player2.hand[index];
                             return GestureDetector(
-                              onTap: () => playCard(roomId, index, 1),
+                              onTap: () => playCard(
+                                  widget.roomId,
+                                  playedCard,
+                                  discardPile.isEmpty
+                                      ? CardModel(suit: '', rank: '')
+                                      : discardPile[discardPile.length - 1],
+                                  1,
+                                  context),
                               child: PlayingCard(
-                                  suit:
-                                      player2['hand'][index]['suit'].toString(),
-                                  value: player2['hand'][index]['rank']
-                                      .toString()),
+                                  suit: player2.hand[index].suit,
+                                  value: player2.hand[index].rank),
                             );
                           } else {
                             return const Backside();
