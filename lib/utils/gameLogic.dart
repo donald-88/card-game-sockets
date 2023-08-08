@@ -43,8 +43,9 @@ List dealCards(int numberOfPlayers, List deck) {
   return playerHands;
 }
 
-void playCard(String roomId, CardModel playedCard, CardModel topCard, int playerIndex, context) async {
- if(cardValidator(playedCard, topCard)){
+void playCard(String roomId, CardModel playedCard, CardModel topCard, int playerIndex, int turnIndex, context) async {
+ if(checkTurn(playerIndex, turnIndex)){
+  if(cardValidator(playedCard, topCard)){
    DatabaseReference roomRef =
       FirebaseDatabase.instance.ref().child('rooms').child(roomId);
   final snapshot = await roomRef.get();
@@ -59,7 +60,10 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard, int player
     roomRef.update(roomModel.toJson());
   }
  }else{
-  showErrorDialog('Wrong Card', 'Make sure the suit or rank match', context);
+  showErrorDialog('Wrong Card!', 'Make sure the suit or rank match', context);
+ }
+ }else{
+  showErrorDialog('Not Your Turn!', 'Wait for opponent move', context);
  }
 }
 

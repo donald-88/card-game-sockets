@@ -35,6 +35,7 @@ class _GamePageState extends State<GamePage> {
         discardPile = roomModel.discardPile;
         player1 = player1Model;
         player2 = player2Model;
+        turn = roomModel.turnIndex;
       });
     });
   }
@@ -42,6 +43,7 @@ class _GamePageState extends State<GamePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   List<CardModel> discardPile = [];
+  int turn = 0;
   PlayerModel player1 = PlayerModel(playerId: '', roomId: '', hand: []);
   PlayerModel player2 = PlayerModel(playerId: '', roomId: '', hand: []);
 
@@ -74,6 +76,7 @@ class _GamePageState extends State<GamePage> {
                                         ? CardModel(suit: '', rank: '')
                                         : discardPile[discardPile.length - 1],
                                     0,
+                                    turn,
                                     context),
                                 child: PlayingCard(
                                     suit: player1.hand[index].suit,
@@ -119,6 +122,7 @@ class _GamePageState extends State<GamePage> {
                                       ? CardModel(suit: '', rank: '')
                                       : discardPile[discardPile.length - 1],
                                   1,
+                                  turn,
                                   context),
                               child: PlayingCard(
                                   suit: player2.hand[index].suit,
