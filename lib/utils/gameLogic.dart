@@ -1,7 +1,9 @@
 import 'package:card_game_sockets/utils/deck.dart';
 import 'package:card_game_sockets/utils/validator.dart';
 import 'package:card_game_sockets/widgets/errorDialog.dart';
+import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import '../models/cardModel.dart';
 import '../models/playerModel.dart';
 import '../models/roomModel.dart';
@@ -47,19 +49,93 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
     int playerIndex, int turnIndex, context) async {
   if (checkTurn(playerIndex, turnIndex)) {
     if (cardValidator(playedCard, topCard)) {
-      DatabaseReference roomRef =
-          FirebaseDatabase.instance.ref().child('rooms').child(roomId);
-      final snapshot = await roomRef.get();
-      if (snapshot.exists) {
-        Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
-        RoomModel roomModel = RoomModel.fromJson(data);
-        roomModel.discardPile.add(playedCard);
-        roomModel.players[playerIndex]['hand'].removeWhere((card) =>
-            card['suit'] == playedCard.suit && card['rank'] == playedCard.rank);
-        if(playedCard.rank != "8" && playedCard.rank != 'J'){
-          roomModel.turnIndex++;
+      if (checkAce(playedCard)) {
+        DatabaseReference roomRef =
+            FirebaseDatabase.instance.ref().child('rooms').child(roomId);
+        final snapshot = await roomRef.get();
+        if (snapshot.exists) {
+          Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
+          RoomModel roomModel = RoomModel.fromJson(data);
+          roomModel.discardPile.add(playedCard);
+          roomModel.players[playerIndex]['hand'].removeWhere((card) =>
+              card['suit'] == playedCard.suit &&
+              card['rank'] == playedCard.rank);
+          roomRef.set(roomModel.toJson());
         }
-        roomRef.set(roomModel.toJson());
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Pick A Suite"),
+                  ],
+                ),
+                content: Row(
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          playAce(roomId, "♣");
+                          Navigator.of(context).pop();
+                        },
+                        child: const PlayingCard(suit: '♣', value: '')),
+                    GestureDetector(
+                        onTap: () {
+                          playAce(roomId, "♦");
+                          Navigator.of(context).pop();
+                        },
+                        child: const PlayingCard(suit: '♦', value: '')),
+                    GestureDetector(
+                        onTap: () {
+                          playAce(roomId, "♥");
+                          Navigator.of(context).pop();
+                        },
+                        child: const PlayingCard(suit: '♥', value: '')),
+                    GestureDetector(
+                        onTap: () {
+                          playAce(roomId, "♠");
+                          Navigator.of(context).pop();
+                        },
+                        child: const PlayingCard(suit: '♠', value: '')),
+                  ],
+                ),
+              );
+            });
+      } else {
+        DatabaseReference roomRef =
+            FirebaseDatabase.instance.ref().child('rooms').child(roomId);
+        final snapshot = await roomRef.get();
+        if (snapshot.exists) {
+          Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
+          RoomModel roomModel = RoomModel.fromJson(data);
+          roomModel.discardPile.add(playedCard);
+          roomModel.players[playerIndex]['hand'].removeWhere((card) =>
+              card['suit'] == playedCard.suit &&
+              card['rank'] == playedCard.rank);
+
+          
+
+          //pick 2
+          if (playedCard.rank == "2") {
+            int turn = (turnIndex + 1) % 2;
+            CardModel pickedCard1 = roomModel.drawPile.removeLast();
+            CardModel pickedCard2 = roomModel.drawPile.removeLast();
+            roomModel.players[turn]['hand']
+                .add({"suit": pickedCard1.suit, "rank": pickedCard1.rank});
+            roomModel.players[turn]['hand']
+                .add({"suit": pickedCard2.suit, "rank": pickedCard2.rank});
+          }
+          //skip 8 and j
+          if (playedCard.rank != "8" && playedCard.rank != 'J') {
+            roomModel.turnIndex++;
+          }
+          if(roomModel.players[playerIndex]['hand'].length == 0){
+            roomModel.winner = true;
+            roomModel.playerWon = (playerIndex + 1).toString();
+          }
+          roomRef.set(roomModel.toJson());
+        }
       }
     } else {
       showErrorDialog(
@@ -71,7 +147,7 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
 }
 
 void pickCard(String roomId) async {
-  DatabaseReference roomRef = 
+  DatabaseReference roomRef =
       FirebaseDatabase.instance.ref().child('rooms').child(roomId);
   final snapshot = await roomRef.get();
   if (snapshot.exists) {
@@ -81,6 +157,19 @@ void pickCard(String roomId) async {
     CardModel pickedCard = roomModel.drawPile.removeLast();
     roomModel.players[turn]['hand']
         .add({"suit": pickedCard.suit, "rank": pickedCard.rank});
+    roomModel.turnIndex++;
+    roomRef.set(roomModel.toJson());
+  }
+}
+
+void playAce(String roomId, String suite) async {
+  DatabaseReference roomRef =
+      FirebaseDatabase.instance.ref().child('rooms').child(roomId);
+  final snapshot = await roomRef.get();
+  if (snapshot.exists) {
+    Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
+    RoomModel roomModel = RoomModel.fromJson(data);
+    roomModel.discardPile.add(CardModel(suit: suite, rank: ''));
     roomModel.turnIndex++;
     roomRef.set(roomModel.toJson());
   }

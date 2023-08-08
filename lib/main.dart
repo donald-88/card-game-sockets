@@ -1,10 +1,8 @@
 import 'package:card_game_sockets/pages/authentication/authGate.dart';
-import 'package:card_game_sockets/providers/roomProvider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 import 'pages/waitingLobby.dart';
-import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,9 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => RoomProvider(),
-      child: MaterialApp(
+    return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
@@ -33,7 +29,6 @@ class MyApp extends StatelessWidget {
         routes: {
           '/waitingLobby': (context) => const WaitingLobby(),
         },
-      ),
     );
   }
 }

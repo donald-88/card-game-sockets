@@ -8,6 +8,8 @@ class RoomModel {
   List<CardModel> drawPile;
   List<CardModel> discardPile;
   bool canJoin;
+  bool winner;
+  String playerWon;
 
   RoomModel(
       {required this.roomId,
@@ -15,7 +17,9 @@ class RoomModel {
       required this.turnIndex,
       required this.drawPile,
       required this.discardPile,
-      required this.canJoin});
+      required this.canJoin,
+      required this.winner,
+      required this.playerWon});
 
   Map<String, dynamic> toJson() => {
         'roomId': roomId,
@@ -23,7 +27,9 @@ class RoomModel {
         'turnIndex': turnIndex,
         'drawPile': drawPile.map((e) => e.toJson()).toList(),
         'discardPile': discardPile.map((e) => e.toJson()).toList(),
-        'canJoin': canJoin
+        'canJoin': canJoin,
+        'winner': false,
+        'playerWon': playerWon
       };
 
   factory RoomModel.fromJson(Map<String, dynamic> json){
@@ -35,6 +41,8 @@ class RoomModel {
         turnIndex : json['turnIndex'],
         drawPile : List<CardModel>.from(drawPileObj.map((x) => CardModel.fromJson(x))),
         discardPile : List<CardModel>.from(discardPileObj.map((x) => CardModel.fromJson(x))),
-        canJoin : json['canJoin']);
+        canJoin : json['canJoin'],
+        winner: json['winner'],
+        playerWon: json['playerWon']);
   }
 }

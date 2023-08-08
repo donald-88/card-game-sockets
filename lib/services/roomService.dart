@@ -20,7 +20,9 @@ class RoomService {
           drawPile: [],
           discardPile: [],
           turnIndex: 0,
-          canJoin: true);
+          canJoin: true,
+          winner: false,
+          playerWon: 'Player');
 
       PlayerModel playerModel =
           PlayerModel(playerId: playerId, roomId: roomId, hand: []);

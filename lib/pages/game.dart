@@ -36,6 +36,8 @@ class _GamePageState extends State<GamePage> {
         player1 = player1Model;
         player2 = player2Model;
         turn = roomModel.turnIndex;
+        winner = roomModel.winner;
+        playerWon = roomModel.playerWon;
       });
     });
   }
@@ -46,28 +48,89 @@ class _GamePageState extends State<GamePage> {
   int turn = 0;
   PlayerModel player1 = PlayerModel(playerId: '', roomId: '', hand: []);
   PlayerModel player2 = PlayerModel(playerId: '', roomId: '', hand: []);
+  bool winner = false;
+  String playerWon = '';
 
   @override
   Widget build(BuildContext context) {
     User? currentUser = _auth.currentUser;
+    if(winner){
+      showDialog(context: context, builder:(context)=> AlertDialog(
+        title: const Text("Winner"),
+        content: Text("Player $playerWon won!!"),
+      ));
+    }
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/background.png'))
+            ),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text("Player 1"),
+                  SizedBox(
+                      height: 160,
+                      width: double.infinity,
+                      child: Center(
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: player1.hand.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              if (currentUser!.uid == player1.playerId) {
+                                CardModel playedCard = player1.hand[index];
+                                return GestureDetector(
+                                  onTap: () => playCard(
+                                      widget.roomId,
+                                      playedCard,
+                                      discardPile.isEmpty
+                                          ? CardModel(suit: '', rank: '')
+                                          : discardPile[discardPile.length - 1],
+                                      0,
+                                      turn,
+                                      context),
+                                  child: PlayingCard(
+                                      suit: player1.hand[index].suit,
+                                      value: player1.hand[index].rank),
+                                );
+                              } else {
+                                return const Backside();
+                              }
+                            }),
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                          onTap: () => pickCard(widget.roomId),
+                          child: const Backside()),
+                      const SizedBox(width: 100),
+                      PlayingCard(
+                          suit: discardPile.isEmpty
+                              ? ""
+                              : discardPile[discardPile.length - 1].suit,
+                          value: discardPile.isEmpty
+                              ? ""
+                              : discardPile[discardPile.length - 1].rank)
+                    ],
+                  ),
+                  SizedBox(
                     height: 160,
                     width: double.infinity,
                     child: Center(
                       child: ListView.builder(
                           shrinkWrap: true,
-                          itemCount: player1.hand.length,
+                          itemCount: player2.hand.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            if (currentUser!.uid == player1.playerId) {
-                              CardModel playedCard = player1.hand[index];
+                            if (currentUser!.uid == player2.playerId) {
+                              CardModel playedCard = player2.hand[index];
                               return GestureDetector(
                                 onTap: () => playCard(
                                     widget.roomId,
@@ -75,66 +138,22 @@ class _GamePageState extends State<GamePage> {
                                     discardPile.isEmpty
                                         ? CardModel(suit: '', rank: '')
                                         : discardPile[discardPile.length - 1],
-                                    0,
+                                    1,
                                     turn,
                                     context),
                                 child: PlayingCard(
-                                    suit: player1.hand[index].suit,
-                                    value: player1.hand[index].rank),
+                                    suit: player2.hand[index].suit,
+                                    value: player2.hand[index].rank),
                               );
                             } else {
                               return const Backside();
                             }
                           }),
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                        onTap: () => pickCard(widget.roomId),
-                        child: const Backside()),
-                    const SizedBox(width: 100),
-                    PlayingCard(
-                        suit: discardPile.isEmpty
-                            ? ""
-                            : discardPile[discardPile.length - 1].suit,
-                        value: discardPile.isEmpty
-                            ? ""
-                            : discardPile[discardPile.length - 1].rank)
-                  ],
-                ),
-                SizedBox(
-                  height: 160,
-                  width: double.infinity,
-                  child: Center(
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: player2.hand.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          if (currentUser!.uid == player2.playerId) {
-                            CardModel playedCard = player2.hand[index];
-                            return GestureDetector(
-                              onTap: () => playCard(
-                                  widget.roomId,
-                                  playedCard,
-                                  discardPile.isEmpty
-                                      ? CardModel(suit: '', rank: '')
-                                      : discardPile[discardPile.length - 1],
-                                  1,
-                                  turn,
-                                  context),
-                              child: PlayingCard(
-                                  suit: player2.hand[index].suit,
-                                  value: player2.hand[index].rank),
-                            );
-                          } else {
-                            return const Backside();
-                          }
-                        }),
+                    ),
                   ),
-                ),
-              ]),
+                  const Text('Player 2')
+                ]),
+          ),
         ));
   }
 }
