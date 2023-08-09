@@ -67,7 +67,7 @@ class _GamePageState extends State<GamePage> {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage('assets/background.png'))
+                image: AssetImage('assets/background.jpeg'))
             ),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

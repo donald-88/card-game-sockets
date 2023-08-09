@@ -9,11 +9,12 @@ class Backside extends StatelessWidget {
       height: 150,
       width: 100,
       padding: const EdgeInsets.all(8),
+      margin: EdgeInsets.symmetric(horizontal: 2),
       decoration: BoxDecoration(
         image: const DecorationImage(
             filterQuality: FilterQuality.high,
             fit: BoxFit.contain,
-            image: AssetImage('assets/backside.jpg')),
+            image: AssetImage('assets/backside.png')),
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         boxShadow: [

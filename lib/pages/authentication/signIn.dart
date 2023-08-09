@@ -47,26 +47,28 @@ class _SignInState extends State<SignIn> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Sign In',
+                'S i g n  I n',
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall!
-                    .copyWith(fontWeight: FontWeight.bold),
+                    .copyWith(
+                      color: Colors.white70,
+                      fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
               Text(
-                'Enter your email and password to sign in and start playing!',
-                style: Theme.of(context).textTheme.bodyLarge,
+                'Enter phone number or email to sign in and start playing!',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white70),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: emailController,
-                decoration: const InputDecoration(hintText: 'Email'),
+                decoration: const InputDecoration(hintText: 'Phone / Email'),
               ),
               const SizedBox(height: 16),
-              TextField(
+              TextField(obscureText: true,
                 controller: passwordController,
-                decoration: const InputDecoration(hintText: 'Password'),
+                decoration: const InputDecoration(hintText: 'Password', ),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
@@ -77,7 +79,7 @@ class _SignInState extends State<SignIn> {
               const SizedBox(height: 16),
               Row(
                 children: [
-                  const Text('Dont have an account? '),
+                  Text('Dont have an account? ', style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white70)),
                   GestureDetector(
                       onTap: () => widget.toggleView!(),
                       child: Text('Sign Up',
