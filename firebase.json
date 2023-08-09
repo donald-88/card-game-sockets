@@ -1,4 +1,7 @@
 {
+  "database": {
+    "rules": "database.rules.json"
+  },
   "hosting": {
     "public": "build/web",
     "ignore": [
@@ -6,8 +9,5 @@
       "**/.*",
       "**/node_modules/**"
     ]
-  },
-  "database": {
-    "rules": "database.rules.json"
   }
 }

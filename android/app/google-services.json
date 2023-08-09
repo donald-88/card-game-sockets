@@ -1,41 +1,35 @@
 {
   "project_info": {
-    "project_number": "168442241897",
-    "project_id": "card-game-4fe5e",
-    "storage_bucket": "card-game-4fe5e.appspot.com"
+    "project_number": "382237870764",
+    "firebase_url": "https://multiplayer-card-game-mw-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "multiplayer-card-game-mw",
+    "storage_bucket": "multiplayer-card-game-mw.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:168442241897:android:a29b80f570bd751eda13f8",
+        "mobilesdk_app_id": "1:382237870764:android:a91362547aabd43687ad09",
         "android_client_info": {
           "package_name": "com.example.card_game_sockets"
         }
       },
       "oauth_client": [
         {
-          "client_id": "168442241897-u04mggg75l992ifbmip4bim5tool3eq6.apps.googleusercontent.com",
+          "client_id": "382237870764-nc3k618qo42bqlai2ep6q8u0ncpalp04.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBDHMT4G7akJYdk7pGotvEelrHm0FzCprA"
+          "current_key": "AIzaSyDa2jdVIShZSiB1mrUW2sb9B47KCppSpUM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "168442241897-u04mggg75l992ifbmip4bim5tool3eq6.apps.googleusercontent.com",
+              "client_id": "382237870764-nc3k618qo42bqlai2ep6q8u0ncpalp04.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "168442241897-8e33ombsal99pi9brt9b5bgkm57f0ff8.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.cardGameSockets.RunnerTests"
-              }
             }
           ]
         }

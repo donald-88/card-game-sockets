@@ -23,10 +23,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -50,21 +47,33 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBOIefMtGjPzi6b39YE4nGwbEG-aGxHZdo',
-    appId: '1:168442241897:web:c131ab89655b92abda13f8',
-    databaseURL: 'https://card-game-4fe5e-default-rtdb.firebaseio.com/',
-    messagingSenderId: '168442241897',
-    projectId: 'card-game-4fe5e',
-    authDomain: 'card-game-4fe5e.firebaseapp.com',
-    storageBucket: 'card-game-4fe5e.appspot.com',
-    measurementId: 'G-CSXB57BYFD',
+    apiKey: 'AIzaSyDzhL5VxItX5pNCKWm79Y70NYDbMnywGj4',
+    appId: '1:382237870764:web:7c573cc4c9618c6e87ad09',
+    messagingSenderId: '382237870764',
+    projectId: 'multiplayer-card-game-mw',
+    authDomain: 'multiplayer-card-game-mw.firebaseapp.com',
+    databaseURL: 'https://multiplayer-card-game-mw-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'multiplayer-card-game-mw.appspot.com',
+    measurementId: 'G-WY8F3SMQ7K',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBDHMT4G7akJYdk7pGotvEelrHm0FzCprA',
-    appId: '1:168442241897:android:a29b80f570bd751eda13f8',
-    messagingSenderId: '168442241897',
-    projectId: 'card-game-4fe5e',
-    storageBucket: 'card-game-4fe5e.appspot.com',
+    apiKey: 'AIzaSyDa2jdVIShZSiB1mrUW2sb9B47KCppSpUM',
+    appId: '1:382237870764:android:a91362547aabd43687ad09',
+    messagingSenderId: '382237870764',
+    projectId: 'multiplayer-card-game-mw',
+    databaseURL: 'https://multiplayer-card-game-mw-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'multiplayer-card-game-mw.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAo4LTOI7ikGiDNtMcQ-sTz_ktnPFu-h6Y',
+    appId: '1:382237870764:ios:d424f532314d75c087ad09',
+    messagingSenderId: '382237870764',
+    projectId: 'multiplayer-card-game-mw',
+    databaseURL: 'https://multiplayer-card-game-mw-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'multiplayer-card-game-mw.appspot.com',
+    iosClientId: '382237870764-khbn0dmar4al6cs1lo8bsb0rq3m0v2f8.apps.googleusercontent.com',
+    iosBundleId: 'com.example.cardGameSockets',
   );
 }
