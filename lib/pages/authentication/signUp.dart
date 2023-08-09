@@ -1,3 +1,4 @@
+import 'package:card_game_sockets/widgets/errorDialog.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/authService.dart';
@@ -19,6 +20,7 @@ class _SignUpState extends State<SignUp> {
   final AuthService _auth = AuthService();
 
   void signUp() async {
+if(passwordController.text.length > 5){
     Loading(context);
     dynamic result = await _auth.registerWithEmailAndPassword(
         emailController.text, passwordController.text);
@@ -28,6 +30,9 @@ class _SignUpState extends State<SignUp> {
     } else {
       Navigator.of(context).pop();
     }
+}else{
+  showErrorDialog('Password Length Error', "Make sure your password has 6 or more characters", context);
+}
   }
 
   @override
@@ -59,7 +64,7 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(height: 16),
               TextField(
                 controller: emailController,
-                decoration: const InputDecoration(hintText: 'Email'),
+                decoration: const InputDecoration(hintText: 'Phone / Email'),
               ),
               const SizedBox(height: 16),
               TextField(

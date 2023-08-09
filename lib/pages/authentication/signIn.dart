@@ -1,3 +1,4 @@
+import 'package:card_game_sockets/widgets/errorDialog.dart';
 import 'package:flutter/material.dart';
 import '../../services/authService.dart';
 import '../../widgets/loading.dart';
@@ -18,14 +19,14 @@ class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
 
   void signIn() async {
-    Loading(context);
+      Loading(context);
     dynamic result = await _auth.signInWithEmailAndPassword(
         emailController.text, passwordController.text);
 
     if (result == null) {
       Navigator.of(context).pop();
     } else {
-      Navigator.of(context).pop();
+      showErrorDialog('Sign In Error', 'Make sure you place the correct credentials.', context);
     }
   }
 
@@ -47,7 +48,7 @@ class _SignInState extends State<SignIn> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'S i g n  I n',
+                'Sign In',
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall!
