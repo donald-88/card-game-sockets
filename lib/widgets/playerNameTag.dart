@@ -13,16 +13,16 @@ class PlayerNameTag extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Colors.amber.shade800,
+        color: Colors.orangeAccent,
         boxShadow: [
           BoxShadow(
-            color: Colors.amber.withOpacity(0.6),
+            color: Colors.orangeAccent.withOpacity(0.6),
             spreadRadius: 1,
             blurRadius: 16,
             offset: const Offset(-8, 0)
           ),
            BoxShadow(
-            color: Colors.amber.withOpacity(0.6),
+            color: Colors.orangeAccent.withOpacity(0.6),
             spreadRadius: 1,
             blurRadius: 16,
             offset: const Offset(8, 0)

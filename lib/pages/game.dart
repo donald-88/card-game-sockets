@@ -2,6 +2,7 @@ import 'package:card_game_sockets/models/playerModel.dart';
 import 'package:card_game_sockets/models/roomModel.dart';
 import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:card_game_sockets/widgets/backside.dart';
+import 'package:card_game_sockets/widgets/forfeitDialog.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -65,9 +66,22 @@ class _GamePageState extends State<GamePage> {
     }
     return Scaffold(
         backgroundColor: Colors.green.shade800,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.exit_to_app),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        floatingActionButton: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            FloatingActionButton(
+              backgroundColor: Colors.red,
+                onPressed: () => showForfeitDialog(context), child: const Icon(Icons.exit_to_app, color: Colors.white,)),
+            const SizedBox(
+              height: 20,
+            ),
+            FloatingActionButton(
+              backgroundColor: Colors.red,
+                onPressed: () {}, child: Text('15', style: Theme.of(context).textTheme.bodyLarge,)),
+          ],
         ),
         body: Center(
           child: Container(
@@ -159,7 +173,9 @@ class _GamePageState extends State<GamePage> {
                           }),
                     ),
                   ),
-                  const Text('Player 2')
+                  const PlayerNameTag(
+                    name: 'Player2',
+                  ),
                 ]),
           ),
         ));

@@ -29,6 +29,7 @@ class _LobbyState extends State<Lobby> {
   void joinRoom(){
     User? currentUser = _auth.currentUser;
     _roomService.joinRoom(currentUser!.uid, _roomIdController.text, context);
+    Navigator.of(context).pop();
   }
 
   showJoinRoom(){
@@ -52,7 +53,10 @@ class _LobbyState extends State<Lobby> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: signOut, child: const Icon(Icons.logout),),
+      appBar: AppBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: ElevatedButton(
+        onPressed: (){}, child: const Text("Logout"),),
       body: Center(
         child: SizedBox(
           width: 300,
