@@ -63,7 +63,7 @@ class _LobbyState extends State<Lobby> {
             ),
             const SizedBox(height: 16),
             Text(
-              'Create a game server and share the link with your friends or alternatively join a game server by entering the link provided by your friend',
+              'Create a game server and share the link with your friends or alternatively, join a game server by entering the link provided by your friend',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 16),
