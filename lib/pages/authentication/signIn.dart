@@ -19,15 +19,15 @@ class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
 
   void signIn() async {
-      Loading(context);
+    Loading(context);
     dynamic result = await _auth.signInWithEmailAndPassword(
         emailController.text, passwordController.text);
 
     if (result == null) {
-      Navigator.of(context).pop();
-    } else {
-      showErrorDialog('Sign In Error', 'Make sure you place the correct credentials.', context);
+      showErrorDialog('Sign In Error',
+          'Make sure you place the correct credentials.', context);
     }
+    Navigator.of(context).pop();
   }
 
   @override
@@ -49,17 +49,16 @@ class _SignInState extends State<SignIn> {
             children: [
               Text(
                 'Sign In',
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall!
-                    .copyWith(
-                      color: Colors.white70,
-                      fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                    color: Colors.white70, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
               Text(
                 'Enter phone number or email to sign in and start playing!',
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white70),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: Colors.white70),
               ),
               const SizedBox(height: 16),
               TextField(
@@ -67,9 +66,12 @@ class _SignInState extends State<SignIn> {
                 decoration: const InputDecoration(hintText: 'Phone / Email'),
               ),
               const SizedBox(height: 16),
-              TextField(obscureText: true,
+              TextField(
+                obscureText: true,
                 controller: passwordController,
-                decoration: const InputDecoration(hintText: 'Password', ),
+                decoration: const InputDecoration(
+                  hintText: 'Password',
+                ),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
@@ -80,7 +82,11 @@ class _SignInState extends State<SignIn> {
               const SizedBox(height: 16),
               Row(
                 children: [
-                  Text('Dont have an account? ', style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white70)),
+                  Text('Dont have an account? ',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.white70)),
                   GestureDetector(
                       onTap: () => widget.toggleView!(),
                       child: Text('Sign Up',

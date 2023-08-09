@@ -55,26 +55,33 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     User? currentUser = _auth.currentUser;
-    if(winner){
-      showDialog(context: context, builder:(context)=> AlertDialog(
-        title: const Text("Winner"),
-        content: Text("Player $playerWon won!!"),
-      ));
+    if (winner) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: const Text("Winner"),
+                content: Text("Player $playerWon won!!"),
+              ));
     }
     return Scaffold(
         backgroundColor: Colors.green.shade800,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.exit_to_app),
+        ),
         body: Center(
           child: Container(
             decoration: const BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage('assets/background.jpeg'))
-            ),
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/background.jpeg'))),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                   const PlayerNameTag(name: 'Player1',),
+                  const PlayerNameTag(
+                    name: 'Player1',
+                  ),
                   SizedBox(
                       height: 160,
                       width: double.infinity,
@@ -158,4 +165,3 @@ class _GamePageState extends State<GamePage> {
         ));
   }
 }
-
