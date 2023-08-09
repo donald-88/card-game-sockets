@@ -8,6 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../models/cardModel.dart';
+import '../widgets/playerNameTag.dart';
 
 class GamePage extends StatefulWidget {
   final String roomId;
@@ -73,7 +74,7 @@ class _GamePageState extends State<GamePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text("Player 1"),
+                   const PlayerNameTag(name: 'Player1',),
                   SizedBox(
                       height: 160,
                       width: double.infinity,
@@ -157,3 +158,4 @@ class _GamePageState extends State<GamePage> {
         ));
   }
 }
+

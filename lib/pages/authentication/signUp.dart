@@ -13,6 +13,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final AuthService _auth = AuthService();
@@ -50,6 +51,10 @@ class _SignUpState extends State<SignUp> {
               Text(
                 'Enter your email and password to create an account and start playing',
                 style: Theme.of(context).textTheme.bodyLarge,
+              ),
+               TextField(
+                controller: usernameController,
+                decoration: const InputDecoration(hintText: 'Username'),
               ),
               const SizedBox(height: 16),
               TextField(

@@ -43,42 +43,49 @@ class _LobbyState extends State<Lobby> {
     ));
   }
 
+  void signOut(){
+    _auth.signOut();
+  }
+
 
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: 300,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Create or Join a Game Server',
-              style: Theme.of(context)
-                  .textTheme
-                  .displaySmall!
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Create a game server and share the link with your friends or alternatively, join a game server by entering the link provided by your friend',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(minimumSize: const Size(400, 50)),
-                onPressed: createRoom,
-                child: const Text('Create')),
-            const SizedBox(height: 16),
-            ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(minimumSize: const Size(400, 50)),
-                onPressed: showJoinRoom,
-                child: const Text('Join')),
-          ],
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: signOut, child: const Icon(Icons.logout),),
+      body: Center(
+        child: SizedBox(
+          width: 300,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Create or Join a Game Server',
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Create a game server and share the link with your friends or alternatively, join a game server by entering the link provided by your friend',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(minimumSize: const Size(400, 50)),
+                  onPressed: createRoom,
+                  child: const Text('Create')),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(minimumSize: const Size(400, 50)),
+                  onPressed: showJoinRoom,
+                  child: const Text('Join')),
+            ],
+          ),
         ),
       ),
     );
