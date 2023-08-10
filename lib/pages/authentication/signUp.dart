@@ -18,23 +18,26 @@ class _SignUpState extends State<SignUp> {
   final passwordController = TextEditingController();
   final AuthService _auth = AuthService();
 
-  void signUp() async {
+  void signUp(context) async {
     if (passwordController.text.length > 5) {
       Loading(context);
-      dynamic result = await _auth.registerWithEmailAndPassword(
+      await _auth.registerWithEmailAndPassword(
           usernameController.text,
           emailController.text,
           passwordController.text);
-
-      if (result == null) {
-        Navigator.of(context).pop();
-      } else {
-        Navigator.of(context).pop();
-      }
     } else {
       showErrorDialog('Password Length Error',
           "Make sure your password has 6 or more characters", context);
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
   }
 
   @override
@@ -78,7 +81,7 @@ class _SignUpState extends State<SignUp> {
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(400, 50)),
-                  onPressed: signUp,
+                  onPressed: () => signUp(context),
                   child: const Text('Sign Up')),
               const SizedBox(height: 16),
               Row(

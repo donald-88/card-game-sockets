@@ -19,6 +19,7 @@ class _LobbyState extends State<Lobby> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Navigator.of(context).pop();
   }
 
   void createRoom() {

@@ -154,9 +154,8 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
               playedCard.rank != '2') {
             roomModel.turnIndex++;
           }
-          if (roomModel.players[playerIndex]['hand'].length == 0) {
-            roomModel.isWon = true;
-            roomModel.playerWon = (playerIndex + 1).toString();
+          if (roomModel.players[playerIndex]['hand'].length == 1) {
+            roomModel.players[playerIndex]['knock'] = true;
           }
           roomRef.set(roomModel.toJson());
         }

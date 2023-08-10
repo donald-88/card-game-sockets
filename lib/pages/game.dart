@@ -3,6 +3,7 @@ import 'package:card_game_sockets/models/roomModel.dart';
 import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:card_game_sockets/widgets/backside.dart';
 import 'package:card_game_sockets/widgets/forfeitDialog.dart';
+import 'package:card_game_sockets/widgets/knockDialog.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -71,16 +72,16 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     User? currentUser = _auth.currentUser;
-    
-    if(assignTurn(turn)){
-          setState(() {
-            isPlayer1Turn = true;
-          });
-        }else{
-          setState(() {
-            isPlayer1Turn = false;
-          });
-        }
+
+    if (assignTurn(turn)) {
+      setState(() {
+        isPlayer1Turn = true;
+      });
+    } else {
+      setState(() {
+        isPlayer1Turn = false;
+      });
+    }
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,

@@ -18,7 +18,7 @@ class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
 
-  void signIn() async {
+  void signIn(context) async {
     Loading(context);
     dynamic result = await _auth.signInWithEmailAndPassword(
         emailController.text, passwordController.text);
@@ -27,7 +27,6 @@ class _SignInState extends State<SignIn> {
       showErrorDialog('Sign In Error',
           'Make sure you place the correct credentials.', context);
     }
-    Navigator.of(context).pop();
   }
 
   @override
@@ -77,7 +76,7 @@ class _SignInState extends State<SignIn> {
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(400, 50)),
-                  onPressed: signIn,
+                  onPressed: () => signIn(context),
                   child: const Text('Sign In')),
               const SizedBox(height: 16),
               Row(
