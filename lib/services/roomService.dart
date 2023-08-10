@@ -29,6 +29,7 @@ class RoomService {
       PlayerModel playerModel = PlayerModel(
           playerId: playerId,
           roomId: roomId,
+          username: '',
           knock: false,
           pauseCount: 0,
           isturn: true,
@@ -54,6 +55,7 @@ class RoomService {
         roomModel.players.add(PlayerModel(
             playerId: playerId,
             roomId: roomId,
+            username: '',
             knock: false,
             pauseCount: 0,
             isturn: true,

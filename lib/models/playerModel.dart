@@ -3,6 +3,7 @@ import 'package:card_game_sockets/models/cardModel.dart';
 class PlayerModel {
   String playerId;
   String roomId;
+  String username;
   bool knock;
   int pauseCount;
   bool isturn;
@@ -11,6 +12,7 @@ class PlayerModel {
   PlayerModel(
       {required this.playerId,
       required this.roomId,
+      required this.username,
       required this.knock,
       required this.pauseCount,
       required this.isturn,
@@ -19,6 +21,7 @@ class PlayerModel {
   Map<String, dynamic> toJson() => {
         'playerId': playerId,
         'roomId': roomId,
+        'username': username,
         'knock': knock,
         'pauseCount': pauseCount,
         'isturn': isturn,
@@ -30,6 +33,7 @@ class PlayerModel {
     return PlayerModel(
         playerId: json['playerId'],
         roomId: json['roomId'],
+        username: json['username'],
         knock: json['knock'],
         pauseCount: json['pauseCount'],
         isturn: json['isturn'],

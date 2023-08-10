@@ -54,6 +54,7 @@ class _GamePageState extends State<GamePage> {
   PlayerModel player1 = PlayerModel(
       playerId: '',
       roomId: '',
+      username: '',
       knock: false,
       pauseCount: 0,
       isturn: false,
@@ -61,6 +62,7 @@ class _GamePageState extends State<GamePage> {
   PlayerModel player2 = PlayerModel(
       playerId: '',
       roomId: '',
+      username: '',
       knock: false,
       pauseCount: 0,
       isturn: false,
@@ -114,7 +116,7 @@ class _GamePageState extends State<GamePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   PlayerNameTag(
-                    name: 'Player1',
+                    name: player1.username,
                     isTurn: isPlayer1Turn,
                   ),
                   SizedBox(
@@ -195,7 +197,7 @@ class _GamePageState extends State<GamePage> {
                     ),
                   ),
                   PlayerNameTag(
-                    name: 'Player2',
+                    name: player2.username,
                     isTurn: !isPlayer1Turn,
                   ),
                 ]),

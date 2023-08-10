@@ -1,3 +1,4 @@
+import 'package:card_game_sockets/models/userModel.dart';
 import 'package:card_game_sockets/utils/deck.dart';
 import 'package:card_game_sockets/utils/validator.dart';
 import 'package:card_game_sockets/widgets/errorDialog.dart';
@@ -13,11 +14,12 @@ List playerHands = [];
 void initializeGame(String roomId) async {
   DatabaseReference roomRef =
       FirebaseDatabase.instance.ref().child('rooms').child(roomId);
-      DatabaseReference userRef =
-      FirebaseDatabase.instance.ref().child('users');
+  DatabaseReference userRef = FirebaseDatabase.instance.ref().child('users');
   List<CardModel> deck = [];
   deck = buildDeck();
   deck.shuffle();
+
+  //deal cards
   final snapshot = await roomRef.get();
   if (snapshot.exists) {
     Map<String, dynamic> roomData = snapshot.value as Map<String, dynamic>;
@@ -29,6 +31,17 @@ void initializeGame(String roomId) async {
       }
       player.putIfAbsent(
           'hand', () => playerModel.hand.map((e) => e.toJson()).toList());
+
+      //get username
+      String playerId = player['playerId'];
+      final nameSnapshot = await userRef.child(playerId).get();
+      if (nameSnapshot.exists) {
+        Map<String, dynamic> userData =
+            nameSnapshot.value as Map<String, dynamic>;
+        UsersModel usersModel = UsersModel.fromJson(userData);
+        String username = usersModel.username;
+        player['username'] = username;
+      }
     }
     roomModel.discardPile.add(deck.removeLast());
     roomModel.drawPile = deck;
@@ -47,11 +60,11 @@ List dealCards(int numberOfPlayers, List deck) {
   return playerHands;
 }
 
-bool assignTurn(int turnIndex){
+bool assignTurn(int turnIndex) {
   int turn = turnIndex % 2;
-  if(turn == 0){
+  if (turn == 0) {
     return true;
-  }else{
+  } else {
     return false;
   }
 }
@@ -125,8 +138,6 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
               card['suit'] == playedCard.suit &&
               card['rank'] == playedCard.rank);
 
-          
-
           //pick 2
           if (playedCard.rank == "2") {
             int turn = (turnIndex + 1) % 2;
@@ -138,10 +149,12 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
                 .add({"suit": pickedCard2.suit, "rank": pickedCard2.rank});
           }
           //skip 8 and j
-          if (playedCard.rank != "8" && playedCard.rank != 'J' && playedCard.rank != '2') {
+          if (playedCard.rank != "8" &&
+              playedCard.rank != 'J' &&
+              playedCard.rank != '2') {
             roomModel.turnIndex++;
           }
-          if(roomModel.players[playerIndex]['hand'].length == 0){
+          if (roomModel.players[playerIndex]['hand'].length == 0) {
             roomModel.isWon = true;
             roomModel.playerWon = (playerIndex + 1).toString();
           }
