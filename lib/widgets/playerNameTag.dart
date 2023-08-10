@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class PlayerNameTag extends StatelessWidget {
   final String name;
+  final bool isTurn;
   const PlayerNameTag({
     super.key,
-    required this.name
+    required this.name,
+    required this.isTurn
   });
 
   @override
@@ -16,13 +18,13 @@ class PlayerNameTag extends StatelessWidget {
         color: Colors.orangeAccent,
         boxShadow: [
           BoxShadow(
-            color: Colors.orangeAccent.withOpacity(0.6),
+            color: Colors.orangeAccent.withOpacity(isTurn? 0.6: 0),
             spreadRadius: 1,
             blurRadius: 16,
             offset: const Offset(-8, 0)
           ),
            BoxShadow(
-            color: Colors.orangeAccent.withOpacity(0.6),
+            color: Colors.orangeAccent.withOpacity(isTurn? 0.6: 0),
             spreadRadius: 1,
             blurRadius: 16,
             offset: const Offset(8, 0)

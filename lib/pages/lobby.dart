@@ -12,8 +12,8 @@ class Lobby extends StatefulWidget {
 class _LobbyState extends State<Lobby> {
   final TextEditingController _roomIdController = TextEditingController();
 
-   final FirebaseAuth _auth = FirebaseAuth.instance;
-   final RoomService _roomService = RoomService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final RoomService _roomService = RoomService();
 
   @override
   void initState() {
@@ -21,34 +21,34 @@ class _LobbyState extends State<Lobby> {
     super.initState();
   }
 
-  void createRoom(){
+  void createRoom() {
     User? currentUser = _auth.currentUser;
     _roomService.createRoom(currentUser!.uid, context);
   }
 
-  void joinRoom(){
+  void joinRoom() {
     User? currentUser = _auth.currentUser;
     _roomService.joinRoom(currentUser!.uid, _roomIdController.text, context);
     Navigator.of(context).pop();
   }
 
-  showJoinRoom(){
-    showDialog(context: context, builder: (context)=>AlertDialog(
-      title: const Text('Enter Room ID'),
-      content: TextField(
-        controller: _roomIdController,
-      ),
-      actions: [
-        TextButton(onPressed: joinRoom, child: const Text('Join'))
-      ],
-    ));
+  showJoinRoom() {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text('Enter Room ID'),
+              content: TextField(
+                controller: _roomIdController,
+              ),
+              actions: [
+                TextButton(onPressed: joinRoom, child: const Text('Join'))
+              ],
+            ));
   }
 
-  void signOut(){
+  void signOut() {
     _auth.signOut();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,9 @@ class _LobbyState extends State<Lobby> {
       appBar: AppBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: ElevatedButton(
-        onPressed: (){}, child: const Text("Logout"),),
+        onPressed: signOut,
+        child: const Text("Logout"),
+      ),
       body: Center(
         child: SizedBox(
           width: 300,
@@ -78,14 +80,14 @@ class _LobbyState extends State<Lobby> {
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                  style:
-                      ElevatedButton.styleFrom(minimumSize: const Size(400, 50)),
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(400, 50)),
                   onPressed: createRoom,
                   child: const Text('Create')),
               const SizedBox(height: 16),
               ElevatedButton(
-                  style:
-                      ElevatedButton.styleFrom(minimumSize: const Size(400, 50)),
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(400, 50)),
                   onPressed: showJoinRoom,
                   child: const Text('Join')),
             ],

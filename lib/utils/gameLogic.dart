@@ -13,6 +13,8 @@ List playerHands = [];
 void initializeGame(String roomId) async {
   DatabaseReference roomRef =
       FirebaseDatabase.instance.ref().child('rooms').child(roomId);
+      DatabaseReference userRef =
+      FirebaseDatabase.instance.ref().child('users');
   List<CardModel> deck = [];
   deck = buildDeck();
   deck.shuffle();
@@ -43,6 +45,15 @@ List dealCards(int numberOfPlayers, List deck) {
     }
   }
   return playerHands;
+}
+
+bool assignTurn(int turnIndex){
+  int turn = turnIndex % 2;
+  if(turn == 0){
+    return true;
+  }else{
+    return false;
+  }
 }
 
 void playCard(String roomId, CardModel playedCard, CardModel topCard,
@@ -127,11 +138,11 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
                 .add({"suit": pickedCard2.suit, "rank": pickedCard2.rank});
           }
           //skip 8 and j
-          if (playedCard.rank != "8" && playedCard.rank != 'J') {
+          if (playedCard.rank != "8" && playedCard.rank != 'J' && playedCard.rank != '2') {
             roomModel.turnIndex++;
           }
           if(roomModel.players[playerIndex]['hand'].length == 0){
-            roomModel.winner = true;
+            roomModel.isWon = true;
             roomModel.playerWon = (playerIndex + 1).toString();
           }
           roomRef.set(roomModel.toJson());

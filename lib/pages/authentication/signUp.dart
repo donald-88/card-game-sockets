@@ -1,6 +1,5 @@
 import 'package:card_game_sockets/widgets/errorDialog.dart';
 import 'package:flutter/material.dart';
-
 import '../../services/authService.dart';
 import '../../widgets/loading.dart';
 
@@ -20,19 +19,22 @@ class _SignUpState extends State<SignUp> {
   final AuthService _auth = AuthService();
 
   void signUp() async {
-if(passwordController.text.length > 5){
-    Loading(context);
-    dynamic result = await _auth.registerWithEmailAndPassword(
-        emailController.text, passwordController.text);
+    if (passwordController.text.length > 5) {
+      Loading(context);
+      dynamic result = await _auth.registerWithEmailAndPassword(
+          usernameController.text,
+          emailController.text,
+          passwordController.text);
 
-    if (result == null) {
-      Navigator.of(context).pop();
+      if (result == null) {
+        Navigator.of(context).pop();
+      } else {
+        Navigator.of(context).pop();
+      }
     } else {
-      Navigator.of(context).pop();
+      showErrorDialog('Password Length Error',
+          "Make sure your password has 6 or more characters", context);
     }
-}else{
-  showErrorDialog('Password Length Error', "Make sure your password has 6 or more characters", context);
-}
   }
 
   @override
@@ -54,10 +56,10 @@ if(passwordController.text.length > 5){
               ),
               const SizedBox(height: 16),
               Text(
-                'Enter your email and password to create an account and start playing',
+                'Enter your phone or email and password to create an account and start playing',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-               TextField(
+              TextField(
                 controller: usernameController,
                 decoration: const InputDecoration(hintText: 'Username'),
               ),
@@ -68,6 +70,7 @@ if(passwordController.text.length > 5){
               ),
               const SizedBox(height: 16),
               TextField(
+                obscureText: true,
                 controller: passwordController,
                 decoration: const InputDecoration(hintText: 'Password'),
               ),

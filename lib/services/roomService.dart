@@ -21,11 +21,18 @@ class RoomService {
           discardPile: [],
           turnIndex: 0,
           canJoin: true,
-          winner: false,
+          isWon: false,
+          isPaused: false,
+          isForfeitWin: false,
           playerWon: 'Player');
 
-      PlayerModel playerModel =
-          PlayerModel(playerId: playerId, roomId: roomId, hand: []);
+      PlayerModel playerModel = PlayerModel(
+          playerId: playerId,
+          roomId: roomId,
+          knock: false,
+          pauseCount: 0,
+          isturn: true,
+          hand: []);
 
       roomModel.players.add(playerModel.toJson());
       await _roomRef.child(roomId).set(roomModel.toJson());
@@ -44,8 +51,13 @@ class RoomService {
         Map<String, dynamic> roomData = snapshot.value as Map<String, dynamic>;
         RoomModel roomModel = RoomModel.fromJson(roomData);
         roomModel.canJoin = false;
-        roomModel.players.add(
-            PlayerModel(playerId: playerId, roomId: roomId, hand: []).toJson());
+        roomModel.players.add(PlayerModel(
+            playerId: playerId,
+            roomId: roomId,
+            knock: false,
+            pauseCount: 0,
+            isturn: true,
+            hand: []).toJson());
         await roomRef.set(roomModel.toJson());
 
         initializeGame(roomId);

@@ -7,7 +7,6 @@ import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
 import '../models/cardModel.dart';
 import '../widgets/playerNameTag.dart';
 
@@ -38,7 +37,7 @@ class _GamePageState extends State<GamePage> {
         player1 = player1Model;
         player2 = player2Model;
         turn = roomModel.turnIndex;
-        winner = roomModel.winner;
+        winner = roomModel.isWon;
         playerWon = roomModel.playerWon;
       });
     });
@@ -48,22 +47,38 @@ class _GamePageState extends State<GamePage> {
 
   List<CardModel> discardPile = [];
   int turn = 0;
-  PlayerModel player1 = PlayerModel(playerId: '', roomId: '', hand: []);
-  PlayerModel player2 = PlayerModel(playerId: '', roomId: '', hand: []);
+  bool isPlayer1Turn = true;
   bool winner = false;
   String playerWon = '';
+  bool isPaused = false;
+  PlayerModel player1 = PlayerModel(
+      playerId: '',
+      roomId: '',
+      knock: false,
+      pauseCount: 0,
+      isturn: false,
+      hand: []);
+  PlayerModel player2 = PlayerModel(
+      playerId: '',
+      roomId: '',
+      knock: false,
+      pauseCount: 0,
+      isturn: false,
+      hand: []);
 
   @override
   Widget build(BuildContext context) {
     User? currentUser = _auth.currentUser;
-    if (winner) {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: const Text("Winner"),
-                content: Text("Player $playerWon won!!"),
-              ));
-    }
+    
+    if(assignTurn(turn)){
+          setState(() {
+            isPlayer1Turn = true;
+          });
+        }else{
+          setState(() {
+            isPlayer1Turn = false;
+          });
+        }
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
@@ -73,14 +88,19 @@ class _GamePageState extends State<GamePage> {
               height: 20,
             ),
             FloatingActionButton(
-              backgroundColor: Colors.red,
-                onPressed: () => showForfeitDialog(context), child: const Icon(Icons.exit_to_app, color: Colors.white,)),
-            const SizedBox(
-              height: 20,
-            ),
+                backgroundColor: Colors.red,
+                onPressed: () => showForfeitDialog(context),
+                child: const Text('QUIT')),
+            const SizedBox(height: 20),
             FloatingActionButton(
-              backgroundColor: Colors.red,
-                onPressed: () {}, child: Text('15', style: Theme.of(context).textTheme.bodyLarge,)),
+                backgroundColor: Colors.red,
+                onPressed: () {},
+                child: const Icon(Icons.pause)),
+            const SizedBox(height: 20),
+            FloatingActionButton(
+                backgroundColor: Colors.red,
+                onPressed: () {},
+                child: const Icon(Icons.pause))
           ],
         ),
         body: Center(
@@ -93,8 +113,9 @@ class _GamePageState extends State<GamePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const PlayerNameTag(
+                  PlayerNameTag(
                     name: 'Player1',
+                    isTurn: isPlayer1Turn,
                   ),
                   SizedBox(
                       height: 160,
@@ -173,8 +194,9 @@ class _GamePageState extends State<GamePage> {
                           }),
                     ),
                   ),
-                  const PlayerNameTag(
+                  PlayerNameTag(
                     name: 'Player2',
+                    isTurn: !isPlayer1Turn,
                   ),
                 ]),
           ),
