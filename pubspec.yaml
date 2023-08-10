@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/backside.png
     - assets/nxtgen.jpg
+    - assets/nxtgen_tp.png
     - assets/background.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
