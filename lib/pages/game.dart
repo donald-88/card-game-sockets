@@ -93,9 +93,6 @@ class _GamePageState extends State<GamePage> {
         isPlayer1Turn = false;
       });
     }
-
-    print('Player 1 Knock ${player1.knock}');
-    print('Player 2 Knock ${player2.knock}');
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,

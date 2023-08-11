@@ -85,15 +85,16 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
           roomModel.players[playerIndex]['hand'].removeWhere((card) =>
               card['suit'] == playedCard.suit &&
               card['rank'] == playedCard.rank);
-          if (roomModel.players[playerIndex]['hand'].length > 1) {
+          if (roomModel.players[playerIndex]['hand'].length != 1) {
             roomModel.players[playerIndex]['knock'] = false;
           }
 
-           if (roomModel.players[playerIndex]['hand'].length == 1) {
+          if (roomModel.players[playerIndex]['hand'].length == 1) {
             roomModel.players[playerIndex]['knock'] = true;
           }
           roomRef.set(roomModel.toJson());
         }
+
         showDialog(
             context: context,
             builder: (context) {
@@ -134,6 +135,9 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
                 ),
               );
             });
+        final player = AudioPlayer();
+        await player.setAsset('assets/sounds/notify.mp3');
+        await player.play();
       } else {
         DatabaseReference roomRef =
             FirebaseDatabase.instance.ref().child('rooms').child(roomId);
@@ -162,7 +166,7 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
               playedCard.rank != '2') {
             roomModel.turnIndex++;
           }
-          if (roomModel.players[playerIndex]['hand'].length > 1) {
+          if (roomModel.players[playerIndex]['hand'].length != 1) {
             roomModel.players[playerIndex]['knock'] = false;
           }
           if (roomModel.players[playerIndex]['hand'].length == 1) {
@@ -185,9 +189,15 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
     } else {
       showErrorDialog(
           'Wrong Card!', 'Make sure the suit or rank match', context);
+      final player = AudioPlayer();
+      await player.setAsset('assets/sounds/fail.mp3');
+      await player.play();
     }
   } else {
     showErrorDialog('Not Your Turn!', 'Wait for opponent move', context);
+    final player = AudioPlayer();
+    await player.setAsset('assets/sounds/fail.mp3');
+    await player.play();
   }
 }
 
@@ -202,10 +212,13 @@ void pickCard(String roomId) async {
     CardModel pickedCard = roomModel.drawPile.removeLast();
     roomModel.players[turn]['hand']
         .add({"suit": pickedCard.suit, "rank": pickedCard.rank});
-    if(roomModel.players[turn]['hand'].length > 1){
+    if (roomModel.players[turn]['hand'].length != 1) {
       roomModel.players[turn]['knock'] = false;
     }
     roomModel.turnIndex++;
+    final player = AudioPlayer();
+    await player.setAsset('assets/sounds/cardShove1.wav');
+    await player.play();
     roomRef.set(roomModel.toJson());
   }
 }

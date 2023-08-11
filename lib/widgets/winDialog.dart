@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-showWinDialog(
-  BuildContext context,
-  String player
-) {
+showWinDialog(BuildContext context, String player) {
   showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -20,9 +17,11 @@ showWinDialog(
               ],
             ),
             actions: [
-              
               ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
                   child: const Text("Play Again"))
             ],
           ));
