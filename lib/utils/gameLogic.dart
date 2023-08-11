@@ -2,7 +2,6 @@ import 'package:card_game_sockets/models/userModel.dart';
 import 'package:card_game_sockets/utils/deck.dart';
 import 'package:card_game_sockets/utils/validator.dart';
 import 'package:card_game_sockets/widgets/errorDialog.dart';
-import 'package:card_game_sockets/widgets/knockDialog.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -86,6 +85,13 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
           roomModel.players[playerIndex]['hand'].removeWhere((card) =>
               card['suit'] == playedCard.suit &&
               card['rank'] == playedCard.rank);
+          if (roomModel.players[playerIndex]['hand'].length > 1) {
+            roomModel.players[playerIndex]['knock'] = false;
+          }
+
+           if (roomModel.players[playerIndex]['hand'].length == 1) {
+            roomModel.players[playerIndex]['knock'] = true;
+          }
           roomRef.set(roomModel.toJson());
         }
         showDialog(
@@ -156,9 +162,19 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
               playedCard.rank != '2') {
             roomModel.turnIndex++;
           }
+          if (roomModel.players[playerIndex]['hand'].length > 1) {
+            roomModel.players[playerIndex]['knock'] = false;
+          }
           if (roomModel.players[playerIndex]['hand'].length == 1) {
             roomModel.players[playerIndex]['knock'] = true;
-            showKnockDialog(context, roomModel.players[playerIndex]['username']);
+          }
+
+          if (roomModel.players[playerIndex]['hand'].length == 0 &&
+              playedCard.rank != 'J' &&
+              playedCard.rank != '2' &&
+              playedCard.rank != 'A') {
+            roomModel.isWon = true;
+            roomModel.playerWon = roomModel.players[playerIndex]['username'];
           }
           roomRef.set(roomModel.toJson());
         }
@@ -186,6 +202,9 @@ void pickCard(String roomId) async {
     CardModel pickedCard = roomModel.drawPile.removeLast();
     roomModel.players[turn]['hand']
         .add({"suit": pickedCard.suit, "rank": pickedCard.rank});
+    if(roomModel.players[turn]['hand'].length > 1){
+      roomModel.players[turn]['knock'] = false;
+    }
     roomModel.turnIndex++;
     roomRef.set(roomModel.toJson());
   }

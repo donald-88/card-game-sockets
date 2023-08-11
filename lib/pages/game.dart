@@ -5,6 +5,7 @@ import 'package:card_game_sockets/widgets/backside.dart';
 import 'package:card_game_sockets/widgets/forfeitDialog.dart';
 import 'package:card_game_sockets/widgets/knockDialog.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
+import 'package:card_game_sockets/widgets/winDialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -42,14 +43,15 @@ class _GamePageState extends State<GamePage> {
       playerWon = roomModel.playerWon;
 
       if (player1.knock) {
-            showKnockDialog(context, player1.username);
+        showKnockDialog(context, player1.username);
       }
-
       if (player2.knock) {
-            showKnockDialog(context, player2.username);
+        showKnockDialog(context, player2.username);
       }
 
-      if (winner) {}
+      if (winner) {
+        showWinDialog(context, playerWon);
+      }
     });
   }
 
@@ -91,6 +93,9 @@ class _GamePageState extends State<GamePage> {
         isPlayer1Turn = false;
       });
     }
+
+    print('Player 1 Knock ${player1.knock}');
+    print('Player 2 Knock ${player2.knock}');
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
