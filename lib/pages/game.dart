@@ -3,6 +3,7 @@ import 'package:card_game_sockets/models/roomModel.dart';
 import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:card_game_sockets/widgets/backside.dart';
 import 'package:card_game_sockets/widgets/forfeitDialog.dart';
+import 'package:card_game_sockets/widgets/knockDialog.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -32,13 +33,23 @@ class _GamePageState extends State<GamePage> {
       RoomModel roomModel = RoomModel.fromJson(room);
       PlayerModel player1Model = PlayerModel.fromJson(roomModel.players[0]);
       PlayerModel player2Model = PlayerModel.fromJson(roomModel.players[1]);
-     
-        discardPile = roomModel.discardPile;
-        player1 = player1Model;
-        player2 = player2Model;
-        turn = roomModel.turnIndex;
-        winner = roomModel.isWon;
-        playerWon = roomModel.playerWon;
+
+      discardPile = roomModel.discardPile;
+      player1 = player1Model;
+      player2 = player2Model;
+      turn = roomModel.turnIndex;
+      winner = roomModel.isWon;
+      playerWon = roomModel.playerWon;
+
+      if (player1.knock) {
+            showKnockDialog(context, player1.username);
+      }
+
+      if (player2.knock) {
+            showKnockDialog(context, player2.username);
+      }
+
+      if (winner) {}
     });
   }
 
@@ -71,7 +82,6 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     User? currentUser = _auth.currentUser;
 
-   
     if (assignTurn(turn)) {
       setState(() {
         isPlayer1Turn = true;
@@ -113,19 +123,19 @@ class _GamePageState extends State<GamePage> {
             children: [
               Stack(
                 children: [
-                  
                   SizedBox(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: Image.asset("assets/background.jpeg", fit: BoxFit.cover)
-                  ),
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: Image.asset("assets/background.jpeg",
+                          fit: BoxFit.cover)),
                   Positioned(
                     bottom: 0,
                     right: 0,
                     child: SizedBox(
                       width: 200,
-                      height:140,
-                      child: Image.asset('assets/nxtgen_tp.png', fit: BoxFit.contain),
+                      height: 140,
+                      child: Image.asset('assets/nxtgen_tp.png',
+                          fit: BoxFit.contain),
                     ),
                   ),
                 ],
@@ -135,9 +145,7 @@ class _GamePageState extends State<GamePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     PlayerNameTag(
-                      name: player1.username,
-                      isTurn: isPlayer1Turn,
-                    ),
+                        name: player1.username, isTurn: isPlayer1Turn),
                     SizedBox(
                         height: 160,
                         width: double.infinity,
@@ -155,7 +163,8 @@ class _GamePageState extends State<GamePage> {
                                         playedCard,
                                         discardPile.isEmpty
                                             ? CardModel(suit: '', rank: '')
-                                            : discardPile[discardPile.length - 1],
+                                            : discardPile[
+                                                discardPile.length - 1],
                                         0,
                                         turn,
                                         context),
@@ -216,9 +225,7 @@ class _GamePageState extends State<GamePage> {
                       ),
                     ),
                     PlayerNameTag(
-                      name: player2.username,
-                      isTurn: !isPlayer1Turn,
-                    ),
+                        name: player2.username, isTurn: !isPlayer1Turn),
                   ]),
             ],
           ),

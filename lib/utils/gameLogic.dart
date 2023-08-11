@@ -2,9 +2,11 @@ import 'package:card_game_sockets/models/userModel.dart';
 import 'package:card_game_sockets/utils/deck.dart';
 import 'package:card_game_sockets/utils/validator.dart';
 import 'package:card_game_sockets/widgets/errorDialog.dart';
+import 'package:card_game_sockets/widgets/knockDialog.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import '../models/cardModel.dart';
 import '../models/playerModel.dart';
 import '../models/roomModel.dart';
@@ -156,9 +158,13 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
           }
           if (roomModel.players[playerIndex]['hand'].length == 1) {
             roomModel.players[playerIndex]['knock'] = true;
+            showKnockDialog(context, roomModel.players[playerIndex]['username']);
           }
           roomRef.set(roomModel.toJson());
         }
+        final player = AudioPlayer();
+        await player.setAsset('assets/sounds/cardSlide1.wav');
+        await player.play();
       }
     } else {
       showErrorDialog(

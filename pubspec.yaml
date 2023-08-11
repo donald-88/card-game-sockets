@@ -42,6 +42,7 @@ dependencies:
   firebase_database: ^10.2.4
   uuid: ^3.0.7
   google_fonts: ^5.1.0
+  just_audio: ^0.9.34
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,10 @@ flutter:
     - assets/nxtgen.jpg
     - assets/nxtgen_tp.png
     - assets/background.jpeg
+
+  #sounds
+    - assets/sounds/cardSlide1.wav
+    - assets/sounds/cardShuffle.wav
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
