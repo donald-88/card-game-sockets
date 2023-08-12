@@ -45,8 +45,12 @@ void initializeGame(String roomId) async {
       }
     }
 
-    for(int i = deck.length -1;  i >= 0; i--){
-      if(deck[i].rank != "J" && deck[i].rank != "A" && deck[i].rank != "2"){
+    for (int i = deck.length - 1; i >= 0; i--) {
+      if (deck[i].rank != "J" &&
+          deck[i].rank != "A" &&
+          deck[i].rank != "2" &&
+          deck[i].rank != "8" &&
+          deck[1].rank != "JOKER") {
         roomModel.discardPile.add(deck.removeAt(i));
         break;
       }
@@ -157,6 +161,23 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
               card['suit'] == playedCard.suit &&
               card['rank'] == playedCard.rank);
 
+          //pick Joker
+          if (playedCard.rank == "JOKER") {
+            int turn = (turnIndex + 1) % 2;
+            CardModel pickedCard1 = roomModel.drawPile.removeLast();
+            CardModel pickedCard2 = roomModel.drawPile.removeLast();
+            CardModel pickedCard3 = roomModel.drawPile.removeLast();
+            CardModel pickedCard4 = roomModel.drawPile.removeLast();
+            roomModel.players[turn]['hand']
+                .add({"suit": pickedCard1.suit, "rank": pickedCard1.rank});
+            roomModel.players[turn]['hand']
+                .add({"suit": pickedCard2.suit, "rank": pickedCard2.rank});
+            roomModel.players[turn]['hand']
+                .add({"suit": pickedCard2.suit, "rank": pickedCard3.rank});
+            roomModel.players[turn]['hand']
+                .add({"suit": pickedCard2.suit, "rank": pickedCard4.rank});
+          }
+
           //pick 2
           if (playedCard.rank == "2") {
             int turn = (turnIndex + 1) % 2;
@@ -170,7 +191,8 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
           //skip 8 and j
           if (playedCard.rank != "8" &&
               playedCard.rank != 'J' &&
-              playedCard.rank != '2') {
+              playedCard.rank != '2' &&
+              playedCard.rank != "JOKER") {
             roomModel.turnIndex++;
           }
           if (roomModel.players[playerIndex]['hand'].length != 1) {

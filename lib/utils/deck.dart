@@ -24,5 +24,10 @@ List<CardModel> buildDeck() {
       deck.add(CardModel(suit: suit, rank: rank));
     }
   }
+
+  CardModel joker = CardModel(suit: "", rank: "JOKER");
+
+  deck.add(joker);
+  deck.add(joker);
   return deck;
 }
