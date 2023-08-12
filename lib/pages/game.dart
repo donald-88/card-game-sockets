@@ -55,6 +55,15 @@ class _GamePageState extends State<GamePage> {
     });
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    onGameExit(widget.roomId);
+    
+    super.dispose();
+  }
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   List<CardModel> discardPile = [];

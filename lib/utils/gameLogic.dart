@@ -50,7 +50,7 @@ void initializeGame(String roomId) async {
           deck[i].rank != "A" &&
           deck[i].rank != "2" &&
           deck[i].rank != "8" &&
-          deck[1].rank != "JOKER") {
+          deck[i].rank != "JOKER") {
         roomModel.discardPile.add(deck.removeAt(i));
         break;
       }
@@ -244,6 +244,17 @@ void pickCard(String roomId) async {
     if (roomModel.players[turn]['hand'].length != 1) {
       roomModel.players[turn]['knock'] = false;
     }
+    if(roomModel.drawPile.length == 1){
+      List<CardModel> tempDeck = [];
+      for(int i = 0; i < roomModel.discardPile.length; i++){
+        
+        tempDeck.add(roomModel.discardPile.removeAt(1));
+        tempDeck.shuffle();
+      }
+      for(int j = 0; j <= tempDeck.length; j++){
+        roomModel.drawPile.add(tempDeck[j]);
+      }
+    }
     roomModel.turnIndex++;
     roomRef.set(roomModel.toJson());
   }
@@ -258,6 +269,19 @@ void playAce(String roomId, String suite) async {
     RoomModel roomModel = RoomModel.fromJson(data);
     roomModel.discardPile.add(CardModel(suit: suite, rank: ''));
     roomModel.turnIndex++;
+    roomRef.set(roomModel.toJson());
+  }
+}
+
+
+void onGameExit(String roomId)async{
+  DatabaseReference roomRef =
+      FirebaseDatabase.instance.ref().child('rooms').child(roomId);
+  final snapshot = await roomRef.get();
+  if(snapshot.exists){
+    Map<String, dynamic> roomData = snapshot.value as Map<String, dynamic>;
+    RoomModel roomModel = RoomModel.fromJson(roomData);
+    roomModel.canJoin = true;
     roomRef.set(roomModel.toJson());
   }
 }

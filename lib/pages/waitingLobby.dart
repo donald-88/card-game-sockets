@@ -23,6 +23,9 @@ class _WaitingLobbyState extends State<WaitingLobby> {
       setState(() {
         join = data['canJoin'];
       });
+      if(data['isWon']){
+        Navigator.of(context).pushNamed('/lobby');
+      }
     });
     return join ? Scaffold(
         body: Column(
