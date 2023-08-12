@@ -44,7 +44,14 @@ void initializeGame(String roomId) async {
         player['username'] = username;
       }
     }
-    roomModel.discardPile.add(deck.removeLast());
+
+    for(int i = deck.length -1;  i >= 0; i--){
+      if(deck[i].rank != "J" && deck[i].rank != "A" && deck[i].rank != "2"){
+        roomModel.discardPile.add(deck.removeAt(i));
+        break;
+      }
+    }
+
     roomModel.drawPile = deck;
     roomRef.set(roomModel.toJson());
   } else {
@@ -216,9 +223,6 @@ void pickCard(String roomId) async {
       roomModel.players[turn]['knock'] = false;
     }
     roomModel.turnIndex++;
-    final player = AudioPlayer();
-    await player.setAsset('assets/sounds/cardShove1.wav');
-    await player.play();
     roomRef.set(roomModel.toJson());
   }
 }
