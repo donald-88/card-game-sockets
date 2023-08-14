@@ -21,10 +21,13 @@ class _SignUpState extends State<SignUp> {
   void signUp(context) async {
     if (passwordController.text.length > 5) {
       Loading(context);
-      await _auth.registerWithEmailAndPassword(
-          usernameController.text,
-          emailController.text,
-          passwordController.text);
+      if (emailController.text.startsWith('+265')) {
+        await _auth.registerWithPhoneNumber(
+            emailController.text, passwordController.text, context);
+      } else {
+        await _auth.registerWithEmailAndPassword(usernameController.text,
+            emailController.text, passwordController.text);
+      }
     } else {
       showErrorDialog('Password Length Error',
           "Make sure your password has 6 or more characters", context);

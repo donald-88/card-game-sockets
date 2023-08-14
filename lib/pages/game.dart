@@ -60,7 +60,7 @@ class _GamePageState extends State<GamePage> {
     // TODO: implement dispose
 
     onGameExit(widget.roomId);
-    
+
     super.dispose();
   }
 
