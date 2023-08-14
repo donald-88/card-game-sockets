@@ -36,13 +36,13 @@ class PlayingCard extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: suit == '♥' || suit == '♦'
+                          color: suit == '♥' || suit == '♦' || suit == '🂿'
                               ? Colors.red
                               : Colors.black)),
                   Text(suit,
                       style: TextStyle(
                           height: 1,
-                          color: suit == '♥' || suit == '♦'
+                          color: suit == '♥' || suit == '♦' || suit == '🂿'
                               ? Colors.red
                               : Colors.black)),
                 ],
@@ -54,7 +54,7 @@ class PlayingCard extends StatelessWidget {
             style: TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
-                color: suit == '♥' || suit == '♦' ? Colors.red : Colors.black),
+                color: suit == '♥' || suit == '♦' || suit == "🂿" ? Colors.red : Colors.black),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -68,14 +68,14 @@ class PlayingCard extends StatelessWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         height: 1.2,
-                        color: suit == '♥' || suit == '♦'
+                        color: suit == '♥' || suit == '♦' || suit == "🂿"
                             ? Colors.red
                             : Colors.black),
                   ),
                   Text(
                     suit,
                     style: TextStyle(
-                        color: suit == '♥' || suit == '♦'
+                        color: suit == '♥' || suit == '♦' || suit == "🂿"
                             ? Colors.red
                             : Colors.black),
                   ),

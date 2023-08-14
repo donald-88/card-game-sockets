@@ -150,8 +150,8 @@ class _GamePageState extends State<GamePage> {
                     bottom: 0,
                     right: 0,
                     child: SizedBox(
-                      width: 200,
-                      height: 140,
+                      width: 150,
+                      height: 100,
                       child: Image.asset('assets/nxtgen_tp.png',
                           fit: BoxFit.contain),
                     ),
