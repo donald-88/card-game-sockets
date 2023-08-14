@@ -188,6 +188,7 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
             roomModel.players[turn]['hand']
                 .add({"suit": pickedCard2.suit, "rank": pickedCard2.rank});
           }
+
           //skip 8 and j
           if (playedCard.rank != "8" &&
               playedCard.rank != 'J' &&
@@ -195,17 +196,17 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
               playedCard.rank != "JOKER") {
             roomModel.turnIndex++;
           }
+
           if (roomModel.players[playerIndex]['hand'].length != 1) {
             roomModel.players[playerIndex]['knock'] = false;
           }
+
           if (roomModel.players[playerIndex]['hand'].length == 1) {
             roomModel.players[playerIndex]['knock'] = true;
           }
 
-          if (roomModel.players[playerIndex]['hand'].length == 0 &&
-              playedCard.rank != 'J' &&
-              playedCard.rank != '2' &&
-              playedCard.rank != 'A') {
+          //check for winner
+          if (roomModel.players[playerIndex]['hand'].length == 0) {
             roomModel.isWon = true;
             roomModel.playerWon = roomModel.players[playerIndex]['username'];
           }
@@ -244,14 +245,13 @@ void pickCard(String roomId) async {
     if (roomModel.players[turn]['hand'].length != 1) {
       roomModel.players[turn]['knock'] = false;
     }
-    if(roomModel.drawPile.length == 1){
+    if (roomModel.drawPile.length == 1) {
       List<CardModel> tempDeck = [];
-      for(int i = 0; i < roomModel.discardPile.length; i++){
-        
+      for (int i = 0; i < roomModel.discardPile.length; i++) {
         tempDeck.add(roomModel.discardPile.removeAt(1));
         tempDeck.shuffle();
       }
-      for(int j = 0; j <= tempDeck.length; j++){
+      for (int j = 0; j <= tempDeck.length; j++) {
         roomModel.drawPile.add(tempDeck[j]);
       }
     }
@@ -273,15 +273,42 @@ void playAce(String roomId, String suite) async {
   }
 }
 
-
-void onGameExit(String roomId)async{
+void onGameExit(String roomId) async {
   DatabaseReference roomRef =
       FirebaseDatabase.instance.ref().child('rooms').child(roomId);
   final snapshot = await roomRef.get();
-  if(snapshot.exists){
+  if (snapshot.exists) {
     Map<String, dynamic> roomData = snapshot.value as Map<String, dynamic>;
     RoomModel roomModel = RoomModel.fromJson(roomData);
     roomModel.canJoin = true;
+    roomRef.set(roomModel.toJson());
+  }
+}
+
+void onGamePause(String roomId) async {
+  DatabaseReference roomRef =
+      FirebaseDatabase.instance.ref().child('rooms').child(roomId);
+  final snapshot = await roomRef.get();
+  if (snapshot.exists) {
+    Map<String, dynamic> roomData = snapshot.value as Map<String, dynamic>;
+    RoomModel roomModel = RoomModel.fromJson(roomData);
+    roomModel.isPaused = true;
+    roomRef.set(roomModel.toJson());
+
+    Future.delayed(const Duration(seconds: 60), () {
+      onGameResume(roomId);
+    });
+  }
+}
+
+void onGameResume(String roomId) async {
+  DatabaseReference roomRef =
+      FirebaseDatabase.instance.ref().child('rooms').child(roomId);
+  final snapshot = await roomRef.get();
+  if (snapshot.exists) {
+    Map<String, dynamic> roomData = snapshot.value as Map<String, dynamic>;
+    RoomModel roomModel = RoomModel.fromJson(roomData);
+    roomModel.isPaused = false;
     roomRef.set(roomModel.toJson());
   }
 }

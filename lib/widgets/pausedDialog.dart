@@ -1,29 +1,30 @@
+import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:flutter/material.dart';
 
-showWinDialog(BuildContext context, String player) {
+showPausedDialog(BuildContext context, String roomId) {
   showDialog(
-    barrierDismissible: false,
+      barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
             title: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('W I N N E R ! !'),
+                Text('G A M E  P A U S E D'),
               ],
             ),
-            content: Row(
+            content: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('$player won the game!'),
+                Text('The game was paused. Wait for 1 minute to resume')
               ],
             ),
             actions: [
               ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
+                    onGameResume(roomId);
+                    Navigator.pop(context);
                   },
-                  child: const Text("Play Again"))
+                  child: const Text("Resume"))
             ],
           ));
 }

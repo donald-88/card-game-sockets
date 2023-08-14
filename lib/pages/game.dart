@@ -4,6 +4,7 @@ import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:card_game_sockets/widgets/backside.dart';
 import 'package:card_game_sockets/widgets/forfeitDialog.dart';
 import 'package:card_game_sockets/widgets/knockDialog.dart';
+import 'package:card_game_sockets/widgets/pausedDialog.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:card_game_sockets/widgets/winDialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,16 +42,20 @@ class _GamePageState extends State<GamePage> {
       turn = roomModel.turnIndex;
       winner = roomModel.isWon;
       playerWon = roomModel.playerWon;
+      isPaused = roomModel.isPaused;
 
-      if (player1.knock) {
+      if (player1Model.knock) {
         showKnockDialog(context, player1.username);
       }
-      if (player2.knock) {
+      if (player2Model.knock) {
         showKnockDialog(context, player2.username);
       }
 
-      if (winner) {
+      if (roomModel.isWon) {
         showWinDialog(context, playerWon);
+      }
+      if (roomModel.isPaused) {
+        showPausedDialog(context, widget.roomId);
       }
     });
   }
@@ -119,7 +124,9 @@ class _GamePageState extends State<GamePage> {
             FloatingActionButton(
                 heroTag: 2,
                 backgroundColor: Colors.red,
-                onPressed: () {},
+                onPressed: () {
+                  onGamePause(widget.roomId);
+                },
                 child: const Icon(Icons.pause)),
             const SizedBox(height: 20),
             FloatingActionButton(
