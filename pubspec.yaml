@@ -71,7 +71,7 @@ flutter:
     - assets/backside.png
     - assets/nxtgen.jpg
     - assets/nxtgen_tp.png
-    - assets/background.jpeg
+    - assets/background.jpg
 
   #sounds
     - assets/sounds/cardSlide1.wav

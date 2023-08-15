@@ -12,7 +12,7 @@ import '../models/roomModel.dart';
 
 List playerHands = [];
 
-void initializeGame(String roomId) async {
+void initializeGame(String roomId) async { 
   DatabaseReference roomRef =
       FirebaseDatabase.instance.ref().child('rooms').child(roomId);
   DatabaseReference userRef = FirebaseDatabase.instance.ref().child('users');
@@ -293,10 +293,6 @@ void onGamePause(String roomId) async {
     RoomModel roomModel = RoomModel.fromJson(roomData);
     roomModel.isPaused = true;
     roomRef.set(roomModel.toJson());
-
-    Future.delayed(const Duration(seconds: 60), () {
-      onGameResume(roomId);
-    });
   }
 }
 
