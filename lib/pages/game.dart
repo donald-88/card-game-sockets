@@ -144,14 +144,14 @@ class _GamePageState extends State<GamePage> {
                   SizedBox(
                       width: double.infinity,
                       height: double.infinity,
-                      child: Image.asset("assets/background.jpeg",
+                      child: Image.asset("assets/background.jpg",
                           fit: BoxFit.cover)),
                   Positioned(
                     bottom: 0,
                     right: 0,
                     child: SizedBox(
-                      width: 150,
-                      height: 100,
+                      width: 120,
+                      height: 80,
                       child: Image.asset('assets/nxtgen_tp.png',
                           fit: BoxFit.contain),
                     ),
