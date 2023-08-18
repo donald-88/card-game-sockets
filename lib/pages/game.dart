@@ -45,10 +45,8 @@ class _GamePageState extends State<GamePage> {
         winner = roomModel.isWon;
         playerWon = roomModel.playerWon;
         isPaused = roomModel.isPaused;
+        isResume = roomModel.isResume;
       });
-
-      
-     
 
       if (player1Model.knock) {
         showKnockDialog(context, player1.username);
@@ -60,13 +58,29 @@ class _GamePageState extends State<GamePage> {
       if (roomModel.isWon) {
         showWinDialog(context, playerWon);
       }
-      if(isPaused) {
-        showPausedDialog(context, widget.roomId, CountdownWidget(seconds: timeRemaining, onCountdownComplete: ()=> Navigator.pop(context)));
+      if (isPaused) {
+        showPausedDialog(
+            context,
+            widget.roomId,
+            CountdownWidget(
+                seconds: timeRemaining,
+                onCountdownComplete: () => Navigator.pop(context)), handleResume);
+      }
+
+      if(isResume){
+        setState(() {
+          timeRemaining = 0;
+        });
       }
     });
   }
 
   int timeRemaining = 60;
+
+  void handleResume(){
+    onGameResume(widget.roomId);
+    Navigator.pop(context);
+  }
 
   @override
   void dispose() {
@@ -85,6 +99,7 @@ class _GamePageState extends State<GamePage> {
   bool winner = false;
   String playerWon = '';
   bool isPaused = false;
+  bool isResume = false;
   PlayerModel player1 = PlayerModel(
       playerId: '',
       roomId: '',

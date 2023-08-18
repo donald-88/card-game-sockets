@@ -300,6 +300,7 @@ void onGamePause(String roomId, int playerIndex) async {
     Map<String, dynamic> roomData = snapshot.value as Map<String, dynamic>;
     RoomModel roomModel = RoomModel.fromJson(roomData);
     roomModel.isPaused = true;
+    roomModel.isResume = false;
     roomModel.players[playerIndex]['pauseCount']--;
     
     roomRef.set(roomModel.toJson());
@@ -314,6 +315,7 @@ void onGameResume(String roomId) async {
     Map<String, dynamic> roomData = snapshot.value as Map<String, dynamic>;
     RoomModel roomModel = RoomModel.fromJson(roomData);
     roomModel.isPaused = false;
+    roomModel.isResume = true;
     roomRef.set(roomModel.toJson());
   }
 }

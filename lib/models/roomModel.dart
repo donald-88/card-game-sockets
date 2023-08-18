@@ -9,6 +9,7 @@ class RoomModel {
   bool canJoin;
   bool isWon;
   bool isPaused;
+  bool isResume;
   bool isForfeitWin;
   String playerWon;
 
@@ -21,6 +22,7 @@ class RoomModel {
     required this.canJoin,
     required this.isWon,
     required this.isPaused,
+    required this.isResume,
     required this.isForfeitWin,
     required this.playerWon,
   });
@@ -34,6 +36,7 @@ class RoomModel {
         'canJoin': canJoin,
         'isWon': isWon,
         'isPaused': isPaused,
+        'isResume': isResume,
         'isForfeitWin': isForfeitWin,
         'playerWon': playerWon,
       };
@@ -53,6 +56,7 @@ class RoomModel {
         canJoin: json['canJoin'],
         isWon: json['isWon'],
         isPaused: json['isPaused'],
+        isResume: json['isResume'],
         isForfeitWin: json['isForfeitWin'],
         playerWon: json['playerWon'],);
   }

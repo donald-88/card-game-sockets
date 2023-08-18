@@ -1,7 +1,6 @@
-import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:flutter/material.dart';
 
-showPausedDialog(BuildContext context, String roomId, Widget timer) {
+showPausedDialog(BuildContext context, String roomId, Widget timer, Function() onResume) {
   showDialog(
       barrierDismissible: false,
       context: context,
@@ -20,10 +19,7 @@ showPausedDialog(BuildContext context, String roomId, Widget timer) {
             ),
             actions: [
               ElevatedButton(
-                  onPressed: () {
-                    onGameResume(roomId);
-                    Navigator.pop(context);
-                  },
+                  onPressed: onResume,
                   child: const Text("Resume"))
             ],
           ));
