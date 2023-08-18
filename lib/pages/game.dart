@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:card_game_sockets/models/playerModel.dart';
 import 'package:card_game_sockets/models/roomModel.dart';
+import 'package:card_game_sockets/utils/countdown.dart';
 import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:card_game_sockets/widgets/backside.dart';
 import 'package:card_game_sockets/widgets/forfeitDialog.dart';
@@ -23,13 +22,10 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  late StreamController<int> events;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    events = new StreamController<int>();
-    events.add(60);
     FirebaseDatabase.instance
         .ref()
         .child('rooms')
@@ -65,24 +61,12 @@ class _GamePageState extends State<GamePage> {
         showWinDialog(context, playerWon);
       }
       if(isPaused) {
-        startCountdown();
-        showPausedDialog(context, events,widget.roomId);
+        showPausedDialog(context, widget.roomId, CountdownWidget(seconds: timeRemaining, onCountdownComplete: ()=> Navigator.pop(context)));
       }
     });
   }
 
   int timeRemaining = 60;
-
-   void startCountdown() {
-        Timer.periodic(const Duration(seconds: 1), (timer) {
-          if (timeRemaining > 0) {
-              timeRemaining--;
-              events.add(timeRemaining);
-          } else {
-            timer.cancel();
-          }
-        });
-      }
 
   @override
   void dispose() {
