@@ -82,7 +82,7 @@ class _GamePageState extends State<GamePage> {
       roomId: '',
       username: '',
       knock: false,
-      pauseCount: 0,
+      pauseCount: 2,
       isturn: false,
       hand: []);
   PlayerModel player2 = PlayerModel(
@@ -90,7 +90,7 @@ class _GamePageState extends State<GamePage> {
       roomId: '',
       username: '',
       knock: false,
-      pauseCount: 0,
+      pauseCount: 2,
       isturn: false,
       hand: []);
 
@@ -127,13 +127,16 @@ class _GamePageState extends State<GamePage> {
                 onPressed: () => showForfeitDialog(context),
                 child: const Text('QUIT')),
             const SizedBox(height: 20),
-            FloatingActionButton(
-                heroTag: 2,
-                backgroundColor: Colors.red,
-                onPressed: () {
-                  onGamePause(widget.roomId);
-                },
-                child: const Icon(Icons.pause))
+            Column(
+              children: List.generate(
+                  currentPlayer.pauseCount,
+                  (index) => Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: FloatingActionButton(
+                      backgroundColor: Colors.red,
+                        onPressed: () => onGamePause(widget.roomId, playerTurn), child: const Icon(Icons.pause)),
+                  )).toList(),
+            )
           ],
         ),
         body: Center(
@@ -208,9 +211,10 @@ class _GamePageState extends State<GamePage> {
                           children:
                               List.generate(currentPlayer.hand.length, (index) {
                             final playedCard = currentPlayer.hand[index];
-                            final fanAngle =
-                                (index - currentPlayer.hand.length / 2) * 0.3;
-                            final fanOffsetX = index * 20.0;
+                            final fanAngle = (index -
+                                    ((currentPlayer.hand.length - 1) / 2)) *
+                                0.3;
+                            final fanOffsetX = index * 15.0;
                             return Transform.translate(
                               offset: Offset(fanOffsetX, 0),
                               child: Transform.rotate(

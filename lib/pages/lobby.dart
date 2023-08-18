@@ -72,7 +72,7 @@ class _LobbyState extends State<Lobby> {
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall!
-                    .copyWith(fontWeight: FontWeight.bold),
+                    .copyWith(fontWeight: FontWeight.bold)
               ),
               const SizedBox(height: 16),
               Text(

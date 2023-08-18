@@ -43,6 +43,8 @@ void initializeGame(String roomId) async {
         String username = usersModel.username;
         player['username'] = username;
       }
+
+      player['pauseCount'] = 2;
     }
 
     for (int i = deck.length - 1; i >= 0; i--) {
@@ -174,6 +176,7 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
                 "suit": tempJokerList[j].suit,
                 "rank": tempJokerList[j].rank
               });
+              print((tempJokerList[j].suit, tempJokerList[j].rank));
             }
           }
 
@@ -289,7 +292,7 @@ void onGameExit(String roomId) async {
   }
 }
 
-void onGamePause(String roomId) async {
+void onGamePause(String roomId, int playerIndex) async {
   DatabaseReference roomRef =
       FirebaseDatabase.instance.ref().child('rooms').child(roomId);
   final snapshot = await roomRef.get();
@@ -297,6 +300,8 @@ void onGamePause(String roomId) async {
     Map<String, dynamic> roomData = snapshot.value as Map<String, dynamic>;
     RoomModel roomModel = RoomModel.fromJson(roomData);
     roomModel.isPaused = true;
+    roomModel.players[playerIndex]['pauseCount']--;
+    
     roomRef.set(roomModel.toJson());
   }
 }

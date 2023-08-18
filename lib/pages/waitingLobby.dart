@@ -26,13 +26,11 @@ class _WaitingLobbyState extends State<WaitingLobby> {
     });
     return join
         ? Scaffold(
+            appBar: AppBar(),
             floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
             floatingActionButton: ElevatedButton(
-              child: const Text("Home"),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
+                child: const Text("Home"),
+                onPressed: () => Navigator.pop(context)),
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
