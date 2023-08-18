@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:card_game_sockets/models/playerModel.dart';
 import 'package:card_game_sockets/models/roomModel.dart';
 import 'package:card_game_sockets/utils/gameLogic.dart';
@@ -21,10 +23,13 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
+  late StreamController<int> events;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    events = new StreamController<int>();
+    events.add(60);
     FirebaseDatabase.instance
         .ref()
         .child('rooms')
@@ -36,13 +41,18 @@ class _GamePageState extends State<GamePage> {
       PlayerModel player1Model = PlayerModel.fromJson(roomModel.players[0]);
       PlayerModel player2Model = PlayerModel.fromJson(roomModel.players[1]);
 
-      discardPile = roomModel.discardPile;
-      player1 = player1Model;
-      player2 = player2Model;
-      turn = roomModel.turnIndex;
-      winner = roomModel.isWon;
-      playerWon = roomModel.playerWon;
-      isPaused = roomModel.isPaused;
+      setState(() {
+        discardPile = roomModel.discardPile;
+        player1 = player1Model;
+        player2 = player2Model;
+        turn = roomModel.turnIndex;
+        winner = roomModel.isWon;
+        playerWon = roomModel.playerWon;
+        isPaused = roomModel.isPaused;
+      });
+
+      
+     
 
       if (player1Model.knock) {
         showKnockDialog(context, player1.username);
@@ -54,11 +64,25 @@ class _GamePageState extends State<GamePage> {
       if (roomModel.isWon) {
         showWinDialog(context, playerWon);
       }
-      if (roomModel.isPaused) {
-        showPausedDialog(context, widget.roomId);
+      if(isPaused) {
+        startCountdown();
+        showPausedDialog(context, events,widget.roomId);
       }
     });
   }
+
+  int timeRemaining = 60;
+
+   void startCountdown() {
+        Timer.periodic(const Duration(seconds: 1), (timer) {
+          if (timeRemaining > 0) {
+              timeRemaining--;
+              events.add(timeRemaining);
+          } else {
+            timer.cancel();
+          }
+        });
+      }
 
   @override
   void dispose() {
@@ -131,11 +155,13 @@ class _GamePageState extends State<GamePage> {
               children: List.generate(
                   currentPlayer.pauseCount,
                   (index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: FloatingActionButton(
-                      backgroundColor: Colors.red,
-                        onPressed: () => onGamePause(widget.roomId, playerTurn), child: const Icon(Icons.pause)),
-                  )).toList(),
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: FloatingActionButton(
+                            backgroundColor: Colors.red,
+                            onPressed: () =>
+                                onGamePause(widget.roomId, playerTurn),
+                            child: const Icon(Icons.pause)),
+                      )).toList(),
             )
           ],
         ),
