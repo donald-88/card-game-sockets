@@ -107,6 +107,12 @@ class _GamePageState extends State<GamePage> {
         isPlayer1Turn = false;
       });
     }
+
+    final currentPlayer =
+        currentUser!.uid == player1.playerId ? player1 : player2;
+    final opponent = currentUser.uid == player1.playerId ? player2 : player1;
+
+    int playerTurn = currentUser.uid == player1.playerId ? 0 : 1;
     return Scaffold(
         backgroundColor: Colors.green.shade800,
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
@@ -127,12 +133,6 @@ class _GamePageState extends State<GamePage> {
                 onPressed: () {
                   onGamePause(widget.roomId);
                 },
-                child: const Icon(Icons.pause)),
-            const SizedBox(height: 20),
-            FloatingActionButton(
-                heroTag: 3,
-                backgroundColor: Colors.red,
-                onPressed: () {},
                 child: const Icon(Icons.pause))
           ],
         ),
@@ -163,43 +163,32 @@ class _GamePageState extends State<GamePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     PlayerNameTag(
-                        name: player1.username, isTurn: isPlayer1Turn),
+                        name: opponent.username,
+                        isTurn: currentUser.uid == player1.playerId
+                            ? !isPlayer1Turn
+                            : isPlayer1Turn),
                     SizedBox(
-                        height: 160,
-                        width: double.infinity,
-                        child: Center(
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: player1.hand.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                if (currentUser!.uid == player1.playerId) {
-                                  CardModel playedCard = player1.hand[index];
-                                  return GestureDetector(
-                                    onTap: () => playCard(
-                                        widget.roomId,
-                                        playedCard,
-                                        discardPile.isEmpty
-                                            ? CardModel(suit: '', rank: '')
-                                            : discardPile[
-                                                discardPile.length - 1],
-                                        0,
-                                        turn,
-                                        context),
-                                    child: PlayingCard(
-                                        suit: player1.hand[index].suit,
-                                        value: player1.hand[index].rank),
-                                  );
-                                } else {
-                                  return const Backside();
-                                }
-                              }),
-                        )),
+                      height: 160,
+                      width: double.infinity,
+                      child: Center(
+                        child: Stack(
+                          children:
+                              List.generate(opponent.hand.length, (index) {
+                            final fanOffsetX = index * 20.0;
+                            return Transform.translate(
+                              offset: Offset(fanOffsetX, 0),
+                              child: const Backside(),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                            onTap: () => pickCard(widget.roomId),
+                            onTap: () => pickCard(
+                                widget.roomId, turn, playerTurn, context),
                             child: const Backside()),
                         const SizedBox(width: 100),
                         PlayingCard(
@@ -215,35 +204,47 @@ class _GamePageState extends State<GamePage> {
                       height: 160,
                       width: double.infinity,
                       child: Center(
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: player2.hand.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              if (currentUser!.uid == player2.playerId) {
-                                CardModel playedCard = player2.hand[index];
-                                return GestureDetector(
-                                  onTap: () => playCard(
-                                      widget.roomId,
-                                      playedCard,
-                                      discardPile.isEmpty
+                        child: Stack(
+                          children:
+                              List.generate(currentPlayer.hand.length, (index) {
+                            final playedCard = currentPlayer.hand[index];
+                            final fanAngle =
+                                (index - currentPlayer.hand.length / 2) * 0.3;
+                            final fanOffsetX = index * 20.0;
+                            return Transform.translate(
+                              offset: Offset(fanOffsetX, 0),
+                              child: Transform.rotate(
+                                  angle: fanAngle,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      CardModel discardCard = discardPile
+                                              .isEmpty
                                           ? CardModel(suit: '', rank: '')
-                                          : discardPile[discardPile.length - 1],
-                                      1,
-                                      turn,
-                                      context),
-                                  child: PlayingCard(
-                                      suit: player2.hand[index].suit,
-                                      value: player2.hand[index].rank),
-                                );
-                              } else {
-                                return const Backside();
-                              }
-                            }),
+                                          : discardPile[discardPile.length - 1];
+                                      playCard(
+                                        widget.roomId,
+                                        playedCard,
+                                        discardCard,
+                                        playerTurn,
+                                        turn,
+                                        context,
+                                      );
+                                    },
+                                    child: PlayingCard(
+                                      suit: playedCard.suit,
+                                      value: playedCard.rank,
+                                    ),
+                                  )),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
                     PlayerNameTag(
-                        name: player2.username, isTurn: !isPlayer1Turn),
+                        name: currentPlayer.username,
+                        isTurn: currentUser.uid == player1.playerId
+                            ? isPlayer1Turn
+                            : !isPlayer1Turn),
                   ]),
             ],
           ),

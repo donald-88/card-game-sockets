@@ -12,7 +12,7 @@ import '../models/roomModel.dart';
 
 List playerHands = [];
 
-void initializeGame(String roomId) async { 
+void initializeGame(String roomId) async {
   DatabaseReference roomRef =
       FirebaseDatabase.instance.ref().child('rooms').child(roomId);
   DatabaseReference userRef = FirebaseDatabase.instance.ref().child('users');
@@ -230,32 +230,37 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
   }
 }
 
-void pickCard(String roomId) async {
-  DatabaseReference roomRef =
-      FirebaseDatabase.instance.ref().child('rooms').child(roomId);
-  final snapshot = await roomRef.get();
-  if (snapshot.exists) {
-    Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
-    RoomModel roomModel = RoomModel.fromJson(data);
-    int turn = roomModel.turnIndex % 2;
-    CardModel pickedCard = roomModel.drawPile.removeLast();
-    roomModel.players[turn]['hand']
-        .add({"suit": pickedCard.suit, "rank": pickedCard.rank});
-    if (roomModel.players[turn]['hand'].length != 1) {
-      roomModel.players[turn]['knock'] = false;
-    }
-    if (roomModel.drawPile.length == 1) {
-      List<CardModel> tempDeck = [];
-      for (int i = 0; i < roomModel.discardPile.length; i++) {
-        tempDeck.add(roomModel.discardPile.removeAt(1));
-        tempDeck.shuffle();
+void pickCard(String roomId, int turn, int playerIndex, context) async {
+  if (checkTurn(playerIndex, turn)) {
+    DatabaseReference roomRef =
+        FirebaseDatabase.instance.ref().child('rooms').child(roomId);
+    final snapshot = await roomRef.get();
+
+    if (snapshot.exists) {
+      Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
+      RoomModel roomModel = RoomModel.fromJson(data);
+      int turn = roomModel.turnIndex % 2;
+      CardModel pickedCard = roomModel.drawPile.removeLast();
+      roomModel.players[turn]['hand']
+          .add({"suit": pickedCard.suit, "rank": pickedCard.rank});
+      if (roomModel.players[turn]['hand'].length != 1) {
+        roomModel.players[turn]['knock'] = false;
       }
-      for (int j = 0; j <= tempDeck.length; j++) {
-        roomModel.drawPile.add(tempDeck[j]);
+      if (roomModel.drawPile.length == 1) {
+        List<CardModel> tempDeck = [];
+        for (int i = 0; i < roomModel.discardPile.length; i++) {
+          tempDeck.add(roomModel.discardPile.removeAt(1));
+          tempDeck.shuffle();
+        }
+        for (int j = 0; j <= tempDeck.length; j++) {
+          roomModel.drawPile.add(tempDeck[j]);
+        }
       }
+      roomModel.turnIndex++;
+      roomRef.set(roomModel.toJson());
     }
-    roomModel.turnIndex++;
-    roomRef.set(roomModel.toJson());
+  } else {
+    showErrorDialog('Not Your Turn!', 'Wait for opponent move', context);
   }
 }
 
