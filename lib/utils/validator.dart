@@ -1,7 +1,7 @@
 import 'package:card_game_sockets/models/cardModel.dart';
 
 bool cardValidator(CardModel card, CardModel topCard) {
-  if (card.suit == topCard.suit || card.rank == topCard.rank || topCard.rank == 'JOKER' || card.rank == 'JOKER') {
+  if (card.suit == topCard.suit || card.rank == topCard.rank || topCard.rank == 'JOKER' || card.rank == 'JOKER'|| (topCard.rank == "" && card.rank == "A")) {
     return true;
   }else{
     return false;
