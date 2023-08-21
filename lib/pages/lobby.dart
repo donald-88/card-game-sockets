@@ -54,11 +54,9 @@ class _LobbyState extends State<Lobby> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      floatingActionButton: ElevatedButton(
-        onPressed: signOut,
-        child: const Text("Logout"),
+      appBar: AppBar(
+        leading: IconButton(onPressed: ()=>
+          Navigator.of(context).pushNamed('/menu'), icon: const Icon(Icons.menu)),
       ),
       body: Center(
         child: SizedBox(

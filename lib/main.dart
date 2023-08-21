@@ -1,5 +1,6 @@
 import 'package:card_game_sockets/pages/authentication/authGate.dart';
 import 'package:card_game_sockets/pages/lobby.dart';
+import 'package:card_game_sockets/widgets/menu.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         ),
         home: const AuthGate(),
         routes: {
+          '/menu':(context) => Menu(),
           '/lobby': (context) => const Lobby(),
           '/waitingLobby': (context) => const WaitingLobby(),
         },
