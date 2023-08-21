@@ -36,6 +36,8 @@ class _SignInState extends State<SignIn> {
     super.dispose();
   }
 
+  bool obscureText = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,11 +68,17 @@ class _SignInState extends State<SignIn> {
               ),
               const SizedBox(height: 16),
               TextField(
-                obscureText: true,
+                obscureText: obscureText,
                 controller: passwordController,
-                decoration: const InputDecoration(
-                  hintText: 'Password',
-                ),
+                decoration: InputDecoration(
+                    hintText: 'Password',
+                    suffix: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            obscureText = !obscureText;
+                          });
+                        },
+                        icon: const Icon(Icons.remove_red_eye))),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
