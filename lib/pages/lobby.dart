@@ -55,8 +55,9 @@ class _LobbyState extends State<Lobby> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: ()=>
-          Navigator.of(context).pushNamed('/menu'), icon: const Icon(Icons.menu)),
+        leading: IconButton(
+            onPressed: () => Navigator.of(context).pushNamed('/menu'),
+            icon: const Icon(Icons.menu)),
       ),
       body: Center(
         child: SizedBox(
@@ -65,13 +66,11 @@ class _LobbyState extends State<Lobby> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Create or Join a Game Server',
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall!
-                    .copyWith(fontWeight: FontWeight.bold)
-              ),
+              Text('Create or Join a Game Server',
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(fontWeight: FontWeight.bold)),
               const SizedBox(height: 16),
               Text(
                 'Create a game server and share the link with your friends or alternatively, join a game server by entering the link provided by your friend',
