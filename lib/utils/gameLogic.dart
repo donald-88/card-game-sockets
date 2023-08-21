@@ -210,7 +210,7 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
           //check for winner
           if (roomModel.players[playerIndex]['hand'].length == 0) {
             roomModel.isWon = true;
-            roomModel.playerWon = roomModel.players[playerIndex]['username'];
+            roomModel.playerWon = roomModel.players[playerIndex]['playerId'];
           }
           roomRef.set(roomModel.toJson());
         }

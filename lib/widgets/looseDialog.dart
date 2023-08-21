@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-showWinDialog(BuildContext context) {
+showLooseDialog(BuildContext context) {
   showDialog(
     barrierDismissible: false,
       context: context,
@@ -8,13 +8,13 @@ showWinDialog(BuildContext context) {
             title: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('W I N N E R ! !'),
+                Text('L O S E R ! !'),
               ],
             ),
             content: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Congratualations, you won the game!'),
+                Text('You lost the game!'),
               ],
             ),
             actions: [

@@ -5,6 +5,7 @@ import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:card_game_sockets/widgets/backside.dart';
 import 'package:card_game_sockets/widgets/forfeitDialog.dart';
 import 'package:card_game_sockets/widgets/knockDialog.dart';
+import 'package:card_game_sockets/widgets/looseDialog.dart';
 import 'package:card_game_sockets/widgets/pausedDialog.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:card_game_sockets/widgets/winDialog.dart';
@@ -22,6 +23,7 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
+
   @override
   void initState() {
     // TODO: implement initState
@@ -56,7 +58,13 @@ class _GamePageState extends State<GamePage> {
       }
 
       if (roomModel.isWon) {
-        showWinDialog(context, playerWon);
+        if(playerWon == _auth.currentUser?.uid)
+        {
+          showWinDialog(context);
+        }
+        else{
+          showLooseDialog(context);
+        }
       }
       if (isPaused) {
         showPausedDialog(
