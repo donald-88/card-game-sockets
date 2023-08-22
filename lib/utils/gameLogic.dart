@@ -158,18 +158,20 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
         if (snapshot.exists) {
           Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
           RoomModel roomModel = RoomModel.fromJson(data);
-          roomModel.discardPile.add(playedCard);
           roomModel.players[playerIndex]['hand'].removeWhere((card) =>
               card['suit'] == playedCard.suit &&
               card['rank'] == playedCard.rank);
+          roomModel.discardPile.add(playedCard);
+          
 
           //pick Joker
           if (playedCard.rank == "JOKER") {
             int turn = (turnIndex + 1) % 2;
             for (int i = 0; i < 4; i++) {
+              CardModel toPickCard = roomModel.drawPile.removeLast();
               roomModel.players[turn]['hand'].add({
-                "suit": roomModel.drawPile.removeLast().suit,
-                "rank": roomModel.drawPile.removeLast().rank
+                "suit": toPickCard.suit,
+                "rank": toPickCard.rank
               });
             }
           }
@@ -178,9 +180,10 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
           if (playedCard.rank == "2") {
             int turn = (turnIndex + 1) % 2;
             for (int i = 0; i < 2; i++) {
+              CardModel toPickCard = roomModel.drawPile.removeLast();
               roomModel.players[turn]['hand'].add({
-                "suit": roomModel.drawPile.removeLast().suit,
-                "rank": roomModel.drawPile.removeLast().rank
+                "suit": toPickCard.suit,
+                "rank": toPickCard.rank
               });
             }
           }
