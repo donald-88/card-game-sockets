@@ -3,7 +3,6 @@ import 'package:card_game_sockets/models/playerModel.dart';
 import 'package:card_game_sockets/models/roomModel.dart';
 import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:card_game_sockets/widgets/backside.dart';
-import 'package:card_game_sockets/widgets/forfeitDialog.dart';
 import 'package:card_game_sockets/widgets/knockDialog.dart';
 import 'package:card_game_sockets/widgets/looseDialog.dart';
 import 'package:card_game_sockets/widgets/pauseScreen.dart';
@@ -127,14 +126,6 @@ class _GamePageState extends State<GamePage> {
             floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
             floatingActionButton: Column(
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                FloatingActionButton(
-                    heroTag: 1,
-                    backgroundColor: Colors.red,
-                    onPressed: () => showForfeitDialog(context),
-                    child: const Text('QUIT')),
                 const SizedBox(height: 20),
                 Column(
                   children: List.generate(
@@ -142,6 +133,7 @@ class _GamePageState extends State<GamePage> {
                       (index) => Padding(
                             padding: const EdgeInsets.only(bottom: 20),
                             child: FloatingActionButton(
+                                heroTag: index,
                                 backgroundColor: Colors.red,
                                 onPressed: () =>
                                     onGamePause(widget.roomId, playerTurn),

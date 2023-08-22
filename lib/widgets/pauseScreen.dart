@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:card_game_sockets/utils/gameLogic.dart';
+import 'package:card_game_sockets/widgets/forfeitDialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -62,8 +63,11 @@ class _PauseMenuState extends State<PauseMenu> {
                     child: Text("R E S U M E",
                         style: Theme.of(context).textTheme.headlineMedium)),
                 const SizedBox(height: 20),
-                Text("F O R F E I T",
-                    style: Theme.of(context).textTheme.headlineMedium),
+                TextButton(
+                  onPressed: () => showForfeitDialog(context),
+                  child: Text("F O R F E I T",
+                      style: Theme.of(context).textTheme.headlineMedium),
+                ),
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {},
