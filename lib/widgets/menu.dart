@@ -24,20 +24,15 @@ class Menu extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineMedium),
                 const SizedBox(height: 20),
                 TextButton(
-                    onPressed: () {
-                      auth.signOut();
-                      Navigator.pop(context);
-                    },
+                    onPressed: () {},
                     child: Text("YOUR RECORD",
                         style: Theme.of(context).textTheme.headlineMedium)),
                 const SizedBox(height: 20),
                 TextButton(
-                    onPressed: () {
-                      auth.signOut();
-                      Navigator.pop(context);
-                    },
+                    onPressed: () {},
                     child: Text("WITHDRAWS",
                         style: Theme.of(context).textTheme.headlineMedium)),
+                const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {
                       auth.signOut();
@@ -53,7 +48,7 @@ class Menu extends StatelessWidget {
               right: 32,
               child: IconButton(
                 onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.close),
+                icon: const Icon(Icons.close, size: 32),
               ))
         ],
       ),

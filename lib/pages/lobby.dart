@@ -49,7 +49,7 @@ class _LobbyState extends State<Lobby> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () => Navigator.of(context).pushNamed('/menu'),
-            icon: const Icon(Icons.menu)),
+            icon: const Icon(Icons.menu, size: 32)),
       ),
       body: Center(
         child: SizedBox(

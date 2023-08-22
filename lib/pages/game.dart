@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:card_game_sockets/models/playerModel.dart';
 import 'package:card_game_sockets/models/roomModel.dart';
 import 'package:card_game_sockets/utils/countdown.dart';
@@ -23,12 +24,13 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
+  StreamSubscription<DatabaseEvent>? roomSubscription;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    FirebaseDatabase.instance
+    roomSubscription = FirebaseDatabase.instance
         .ref()
         .child('rooms')
         .child(widget.roomId)
@@ -39,16 +41,14 @@ class _GamePageState extends State<GamePage> {
       PlayerModel player1Model = PlayerModel.fromJson(roomModel.players[0]);
       PlayerModel player2Model = PlayerModel.fromJson(roomModel.players[1]);
 
-      setState(() {
-        discardPile = roomModel.discardPile;
-        player1 = player1Model;
-        player2 = player2Model;
-        turn = roomModel.turnIndex;
-        winner = roomModel.isWon;
-        playerWon = roomModel.playerWon;
-        isPaused = roomModel.isPaused;
-        isResume = roomModel.isResume;
-      });
+      discardPile = roomModel.discardPile;
+      player1 = player1Model;
+      player2 = player2Model;
+      turn = roomModel.turnIndex;
+      winner = roomModel.isWon;
+      playerWon = roomModel.playerWon;
+      isPaused = roomModel.isPaused;
+      isResume = roomModel.isResume;
 
       if (player1Model.knock) {
         showKnockDialog(context, player1.username);
@@ -58,11 +58,9 @@ class _GamePageState extends State<GamePage> {
       }
 
       if (roomModel.isWon) {
-        if(playerWon == _auth.currentUser?.uid)
-        {
+        if (playerWon == _auth.currentUser?.uid) {
           showWinDialog(context);
-        }
-        else{
+        } else {
           showLooseDialog(context);
         }
       }
@@ -72,10 +70,11 @@ class _GamePageState extends State<GamePage> {
             widget.roomId,
             CountdownWidget(
                 seconds: timeRemaining,
-                onCountdownComplete: () => Navigator.pop(context)), handleResume);
+                onCountdownComplete: () => Navigator.pop(context)),
+            handleResume);
       }
 
-      if(isResume){
+      if (isResume) {
         setState(() {
           timeRemaining = 0;
         });
@@ -85,7 +84,7 @@ class _GamePageState extends State<GamePage> {
 
   int timeRemaining = 60;
 
-  void handleResume(){
+  void handleResume() {
     onGameResume(widget.roomId);
     Navigator.pop(context);
   }
@@ -93,7 +92,7 @@ class _GamePageState extends State<GamePage> {
   @override
   void dispose() {
     // TODO: implement dispose
-
+    roomSubscription?.cancel();
     onGameExit(widget.roomId);
 
     super.dispose();
