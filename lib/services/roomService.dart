@@ -23,7 +23,7 @@ class RoomService {
           canJoin: true,
           isWon: false,
           isPaused: false,
-          isResume: false,
+          playerPauseId: '',
           isForfeitWin: false,
           playerWon: 'Player');
 

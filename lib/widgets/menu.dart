@@ -17,20 +17,20 @@ class Menu extends StatelessWidget {
               children: [
                 TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text("HOME",
+                    child: Text("H O M E",
                         style: Theme.of(context).textTheme.headlineMedium)),
                 const SizedBox(height: 20),
-                Text("PROFILE",
+                Text("P R O F I L E",
                     style: Theme.of(context).textTheme.headlineMedium),
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {},
-                    child: Text("YOUR RECORD",
+                    child: Text("Y O U R  R E C O R D",
                         style: Theme.of(context).textTheme.headlineMedium)),
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {},
-                    child: Text("WITHDRAWS",
+                    child: Text("W I T H D R A W S",
                         style: Theme.of(context).textTheme.headlineMedium)),
                 const SizedBox(height: 20),
                 TextButton(
@@ -38,7 +38,7 @@ class Menu extends StatelessWidget {
                       auth.signOut();
                       Navigator.pop(context);
                     },
-                    child: Text("LOGOUT",
+                    child: Text("L O G O U T",
                         style: Theme.of(context).textTheme.headlineMedium))
               ],
             ),

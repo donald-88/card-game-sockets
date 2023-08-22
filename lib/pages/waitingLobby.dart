@@ -12,17 +12,17 @@ class WaitingLobby extends StatefulWidget {
 
 class _WaitingLobbyState extends State<WaitingLobby> {
   bool join = true;
-  @override         
+  @override
   Widget build(BuildContext context) {
     final String roomId = ModalRoute.of(context)!.settings.arguments as String;
     final DatabaseReference roomRef =
         FirebaseDatabase.instance.ref().child('rooms/$roomId');
     roomRef.onValue.listen((event) {
       Map<String, dynamic> data = event.snapshot.value as Map<String, dynamic>;
-      if(mounted){
+      if (mounted) {
         setState(() {
-        join = data['canJoin'];
-      });
+          join = data['canJoin'];
+        });
       }
     });
     return join
