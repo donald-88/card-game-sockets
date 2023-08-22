@@ -15,13 +15,6 @@ class _LobbyState extends State<Lobby> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final RoomService _roomService = RoomService();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Navigator.of(context).pop();
-  }
-
   void createRoom() {
     User? currentUser = _auth.currentUser;
     _roomService.createRoom(currentUser!.uid, context);
@@ -30,7 +23,6 @@ class _LobbyState extends State<Lobby> {
   void joinRoom() {
     User? currentUser = _auth.currentUser;
     _roomService.joinRoom(currentUser!.uid, _roomIdController.text, context);
-    Navigator.of(context).pop();
   }
 
   showJoinRoom() {

@@ -164,31 +164,25 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
               card['rank'] == playedCard.rank);
 
           //pick Joker
-          List<CardModel> tempJokerList = [];
           if (playedCard.rank == "JOKER") {
             int turn = (turnIndex + 1) % 2;
             for (int i = 0; i < 4; i++) {
-              tempJokerList.add(roomModel.drawPile.removeLast());
-            }
-
-            for (int j = 0; j < tempJokerList.length; j++) {
               roomModel.players[turn]['hand'].add({
-                "suit": tempJokerList[j].suit,
-                "rank": tempJokerList[j].rank
+                "suit": roomModel.drawPile.removeLast().suit,
+                "rank": roomModel.drawPile.removeLast().rank
               });
-              print((tempJokerList[j].suit, tempJokerList[j].rank));
             }
           }
 
           //pick 2
           if (playedCard.rank == "2") {
             int turn = (turnIndex + 1) % 2;
-            CardModel pickedCard1 = roomModel.drawPile.removeLast();
-            CardModel pickedCard2 = roomModel.drawPile.removeLast();
-            roomModel.players[turn]['hand']
-                .add({"suit": pickedCard1.suit, "rank": pickedCard1.rank});
-            roomModel.players[turn]['hand']
-                .add({"suit": pickedCard2.suit, "rank": pickedCard2.rank});
+            for (int i = 0; i < 2; i++) {
+              roomModel.players[turn]['hand'].add({
+                "suit": roomModel.drawPile.removeLast().suit,
+                "rank": roomModel.drawPile.removeLast().rank
+              });
+            }
           }
 
           //skip 8 and j
@@ -302,7 +296,7 @@ void onGamePause(String roomId, int playerIndex) async {
     roomModel.isPaused = true;
     roomModel.isResume = false;
     roomModel.players[playerIndex]['pauseCount']--;
-    
+
     roomRef.set(roomModel.toJson());
   }
 }

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
         home: const AuthGate(),
         routes: {
-          '/menu':(context) => Menu(),
+          '/menu':(context) => const Menu(),
           '/lobby': (context) => const Lobby(),
           '/waitingLobby': (context) => const WaitingLobby(),
         },

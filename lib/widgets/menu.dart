@@ -28,6 +28,21 @@ class Menu extends StatelessWidget {
                       auth.signOut();
                       Navigator.pop(context);
                     },
+                    child: Text("YOUR RECORD",
+                        style: Theme.of(context).textTheme.headlineMedium)),
+                const SizedBox(height: 20),
+                TextButton(
+                    onPressed: () {
+                      auth.signOut();
+                      Navigator.pop(context);
+                    },
+                    child: Text("WITHDRAWS",
+                        style: Theme.of(context).textTheme.headlineMedium)),
+                TextButton(
+                    onPressed: () {
+                      auth.signOut();
+                      Navigator.pop(context);
+                    },
                     child: Text("LOGOUT",
                         style: Theme.of(context).textTheme.headlineMedium))
               ],

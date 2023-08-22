@@ -8,8 +8,7 @@ class AuthGate extends StatelessWidget {
 
   @override
  Widget build(BuildContext context) {
-    return Scaffold(
-        body: StreamBuilder(
+    return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -18,6 +17,6 @@ class AuthGate extends StatelessWidget {
           return const AuthWrapper();
         }
       },
-    ));
+    );
   }
 }
