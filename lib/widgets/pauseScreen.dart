@@ -43,52 +43,41 @@ class _PauseMenuState extends State<PauseMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                    'The game will automatically resume in $timeLeft seconds.'),
-                const SizedBox(height: 20),
-                TextButton(
-                    onPressed: (){
-                      if(widget.playerPauseId == _auth.currentUser?.uid){
-                        onGameResume(widget.roomId);
-                      }
-                    },
-                    child: Text("R E S U M E",
-                        style: Theme.of(context).textTheme.headlineMedium)),
-                const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () => showForfeitDialog(context),
-                  child: Text("F O R F E I T",
-                      style: Theme.of(context).textTheme.headlineMedium),
-                ),
-                const SizedBox(height: 20),
-                TextButton(
-                    onPressed: () {},
-                    child: Text("S T A K E",
-                        style: Theme.of(context).textTheme.headlineMedium)),
-                const SizedBox(height: 20),
-                TextButton(
-                    onPressed: () {},
-                    child: Text("H E L P",
-                        style: Theme.of(context).textTheme.headlineMedium))
-              ],
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+                'The game will automatically resume in $timeLeft seconds.'),
+            const SizedBox(height: 20),
+            TextButton(
+                onPressed: (){
+                  if(widget.playerPauseId == _auth.currentUser?.uid){
+                    onGameResume(widget.roomId);
+                  }
+                },
+                child: Text("R E S U M E",
+                    style: Theme.of(context).textTheme.headlineMedium)),
+            const SizedBox(height: 20),
+            TextButton(
+              onPressed: () => showForfeitDialog(context),
+              child: Text("F O R F E I T",
+                  style: Theme.of(context).textTheme.headlineMedium),
             ),
-          ),
-          Positioned(
-              top: 32,
-              right: 32,
-              child: IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.close, size: 32),
-              ))
-        ],
+            const SizedBox(height: 20),
+            TextButton(
+                onPressed: () {},
+                child: Text("S T A K E",
+                    style: Theme.of(context).textTheme.headlineMedium)),
+            const SizedBox(height: 20),
+            TextButton(
+                onPressed: () {},
+                child: Text("H E L P",
+                    style: Theme.of(context).textTheme.headlineMedium))
+          ],
+        ),
       ),
     );
   }

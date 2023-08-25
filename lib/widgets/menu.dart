@@ -25,12 +25,12 @@ class Menu extends StatelessWidget {
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {},
-                    child: Text("Y O U R  R E C O R D",
+                    child: Text("R E C O R D",
                         style: Theme.of(context).textTheme.headlineMedium)),
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {},
-                    child: Text("W I T H D R A W S",
+                    child: Text("W I T H D R A W A L S",
                         style: Theme.of(context).textTheme.headlineMedium)),
                 const SizedBox(height: 20),
                 TextButton(

@@ -2,13 +2,12 @@ import 'package:card_game_sockets/models/userModel.dart';
 import 'package:card_game_sockets/utils/deck.dart';
 import 'package:card_game_sockets/utils/validator.dart';
 import 'package:card_game_sockets/widgets/errorDialog.dart';
-import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import '../models/cardModel.dart';
 import '../models/playerModel.dart';
 import '../models/roomModel.dart';
+import '../widgets/aceDialog.dart';
 
 List playerHands = [];
 
@@ -108,46 +107,7 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
           roomRef.set(roomModel.toJson());
         }
 
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Pick A Suite"),
-                  ],
-                ),
-                content: Row(
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          playAce(roomId, "♣");
-                          Navigator.of(context).pop();
-                        },
-                        child: const PlayingCard(suit: '♣', value: '')),
-                    GestureDetector(
-                        onTap: () {
-                          playAce(roomId, "♦");
-                          Navigator.of(context).pop();
-                        },
-                        child: const PlayingCard(suit: '♦', value: '')),
-                    GestureDetector(
-                        onTap: () {
-                          playAce(roomId, "♥");
-                          Navigator.of(context).pop();
-                        },
-                        child: const PlayingCard(suit: '♥', value: '')),
-                    GestureDetector(
-                        onTap: () {
-                          playAce(roomId, "♠");
-                          Navigator.of(context).pop();
-                        },
-                        child: const PlayingCard(suit: '♠', value: '')),
-                  ],
-                ),
-              );
-            });
+        showAceDialog(context, roomId);
         final player = AudioPlayer();
         await player.setAsset('assets/sounds/notify.mp3');
         await player.play();
@@ -229,6 +189,7 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
     await player.play();
   }
 }
+
 
 void pickCard(String roomId, int turn, int playerIndex, context) async {
   if (checkTurn(playerIndex, turn)) {
