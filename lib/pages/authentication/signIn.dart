@@ -1,4 +1,5 @@
 import 'package:card_game_sockets/widgets/errorDialog.dart';
+import 'package:card_game_sockets/widgets/slideFadeInPage.dart';
 import 'package:flutter/material.dart';
 import '../../services/authService.dart';
 import '../../widgets/loading.dart';
@@ -44,15 +45,13 @@ class _SignInState extends State<SignIn> {
       body: Center(
         child: SizedBox(
           width: 300,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: SlideFadeInPage(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Sign In',
-                style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                    color: Colors.white70, fontWeight: FontWeight.bold),
-              ),
+              Text('Sign In',
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                      color: Colors.white70, fontWeight: FontWeight.bold)),
               const SizedBox(height: 16),
               Text(
                 'Enter phone number or email to sign in and start playing!',

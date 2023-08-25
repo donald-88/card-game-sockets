@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:card_game_sockets/widgets/forfeitDialog.dart';
+import 'package:card_game_sockets/widgets/slideFadeInPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +46,7 @@ class _PauseMenuState extends State<PauseMenu> {
     return Scaffold(
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: Column(
+        child: SlideFadeInPage(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

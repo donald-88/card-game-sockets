@@ -1,4 +1,5 @@
 import 'package:card_game_sockets/services/roomService.dart';
+import 'package:card_game_sockets/widgets/slideFadeInPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -54,9 +55,9 @@ class _LobbyState extends State<Lobby> {
       body: Center(
         child: SizedBox(
           width: 300,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: SlideFadeInPage(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Create or Join a Game Server',
                   style: Theme.of(context)

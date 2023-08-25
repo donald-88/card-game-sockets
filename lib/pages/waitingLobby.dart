@@ -1,4 +1,5 @@
 import 'package:card_game_sockets/pages/game.dart';
+import 'package:card_game_sockets/widgets/slideFadeInPage.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,9 +29,9 @@ class _WaitingLobbyState extends State<WaitingLobby> {
     return join
         ? Scaffold(
             appBar: AppBar(),
-            body: Column(
+            body: SlideFadeInPage(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(width: double.infinity),
                 const CircularProgressIndicator(),

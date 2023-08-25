@@ -215,8 +215,7 @@ class _GamePageState extends State<GamePage> {
                                   (index) {
                                 final playedCard = currentPlayer.hand[index];
                                 final fanOffsetX = index * 30.0;
-                                final deckSize =
-                                    currentPlayer.hand.length * 33;
+                                final deckSize = currentPlayer.hand.length * 33;
                                 final double width =
                                     MediaQuery.of(context).size.width;
                                 return Positioned(

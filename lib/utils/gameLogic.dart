@@ -3,7 +3,6 @@ import 'package:card_game_sockets/utils/deck.dart';
 import 'package:card_game_sockets/utils/validator.dart';
 import 'package:card_game_sockets/widgets/errorDialog.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:just_audio/just_audio.dart';
 import '../models/cardModel.dart';
 import '../models/playerModel.dart';
 import '../models/roomModel.dart';
@@ -108,9 +107,6 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
         }
 
         showAceDialog(context, roomId);
-        final player = AudioPlayer();
-        await player.setAsset('assets/sounds/notify.mp3');
-        await player.play();
       } else {
         DatabaseReference roomRef =
             FirebaseDatabase.instance.ref().child('rooms').child(roomId);
@@ -171,22 +167,13 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
           }
           roomRef.set(roomModel.toJson());
         }
-        final player = AudioPlayer();
-        await player.setAsset('assets/sounds/cardSlide1.wav');
-        await player.play();
       }
     } else {
       showErrorDialog(
           'Wrong Card!', 'Make sure the suit or rank match', context);
-      final player = AudioPlayer();
-      await player.setAsset('assets/sounds/fail.mp3');
-      await player.play();
     }
   } else {
     showErrorDialog('Not Your Turn!', 'Wait for opponent move', context);
-    final player = AudioPlayer();
-    await player.setAsset('assets/sounds/fail.mp3');
-    await player.play();
   }
 }
 
