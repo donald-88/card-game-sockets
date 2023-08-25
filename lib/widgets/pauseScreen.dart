@@ -60,7 +60,7 @@ class _PauseMenuState extends State<PauseMenu> {
                   }
                 },
                 child: Text("R E S U M E",
-                    style: Theme.of(context).textTheme.headlineMedium)),
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.white.withOpacity(widget.playerPauseId == _auth.currentUser?.uid? 1: .5)))),
             const SizedBox(height: 20),
             TextButton(
               onPressed: () => showForfeitDialog(context),

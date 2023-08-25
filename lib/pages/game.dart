@@ -3,7 +3,6 @@ import 'package:card_game_sockets/models/playerModel.dart';
 import 'package:card_game_sockets/models/roomModel.dart';
 import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:card_game_sockets/widgets/backside.dart';
-import 'package:card_game_sockets/widgets/knockDialog.dart';
 import 'package:card_game_sockets/widgets/looseDialog.dart';
 import 'package:card_game_sockets/widgets/pauseScreen.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
@@ -11,6 +10,7 @@ import 'package:card_game_sockets/widgets/winDialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../models/cardModel.dart';
 import '../widgets/forfeitDialog.dart';
 import '../widgets/playerNameTag.dart';
@@ -49,11 +49,21 @@ class _GamePageState extends State<GamePage> {
       isPaused = roomModel.isPaused;
       playerPauseId = roomModel.playerPauseId;
 
-      if (player1Model.knock) {
-        showKnockDialog(context, player1.username);
+      if (player1Model.knock && _auth.currentUser!.uid != player1.playerId) {
+        Fluttertoast.showToast(
+          timeInSecForIosWeb: 2,
+            webBgColor: "FireBrick",
+            webPosition: "left",
+            msg: "${player1.username} has one card left",
+            gravity: ToastGravity.TOP);
       }
-      if (player2Model.knock) {
-        showKnockDialog(context, player2.username);
+      if (player2Model.knock && _auth.currentUser!.uid != player2.playerId) {
+        Fluttertoast.showToast(
+          timeInSecForIosWeb: 2,
+            webBgColor: "FireBrick",
+            webPosition: "left",
+            msg: "${player2.username} has one card left",
+            gravity: ToastGravity.TOP);
       }
 
       if (roomModel.isWon) {
@@ -130,7 +140,9 @@ class _GamePageState extends State<GamePage> {
                 const SizedBox(height: 20),
                 FloatingActionButton(
                   backgroundColor: Colors.red,
-                  onPressed:() => showForfeitDialog(context), child: const Text("QUIT"),),
+                  onPressed: () => showForfeitDialog(context),
+                  child: const Text("QUIT"),
+                ),
                 const SizedBox(height: 20),
                 Column(
                   children: List.generate(
