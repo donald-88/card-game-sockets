@@ -42,7 +42,7 @@ void initializeGame(String roomId) async {
         player['username'] = username;
       }
 
-      player['pauseCount'] = 2;
+      player['pauseCount'] = 1;
     }
 
     for (int i = deck.length - 1; i >= 0; i--) {

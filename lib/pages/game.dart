@@ -12,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../models/cardModel.dart';
+import '../widgets/forfeitDialog.dart';
 import '../widgets/playerNameTag.dart';
 
 class GamePage extends StatefulWidget {
@@ -126,6 +127,10 @@ class _GamePageState extends State<GamePage> {
             floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
             floatingActionButton: Column(
               children: [
+                const SizedBox(height: 20),
+                FloatingActionButton(
+                  backgroundColor: Colors.red,
+                  onPressed:() => showForfeitDialog(context), child: const Text("QUIT"),),
                 const SizedBox(height: 20),
                 Column(
                   children: List.generate(
