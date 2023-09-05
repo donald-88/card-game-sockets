@@ -118,17 +118,14 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
               card['suit'] == playedCard.suit &&
               card['rank'] == playedCard.rank);
           roomModel.discardPile.add(playedCard);
-          
 
           //pick Joker
           if (playedCard.rank == "JOKER") {
             int turn = (turnIndex + 1) % 2;
             for (int i = 0; i < 4; i++) {
               CardModel toPickCard = roomModel.drawPile.removeLast();
-              roomModel.players[turn]['hand'].add({
-                "suit": toPickCard.suit,
-                "rank": toPickCard.rank
-              });
+              roomModel.players[turn]['hand']
+                  .add({"suit": toPickCard.suit, "rank": toPickCard.rank});
             }
           }
 
@@ -137,10 +134,8 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
             int turn = (turnIndex + 1) % 2;
             for (int i = 0; i < 2; i++) {
               CardModel toPickCard = roomModel.drawPile.removeLast();
-              roomModel.players[turn]['hand'].add({
-                "suit": toPickCard.suit,
-                "rank": toPickCard.rank
-              });
+              roomModel.players[turn]['hand']
+                  .add({"suit": toPickCard.suit, "rank": toPickCard.rank});
             }
           }
 
@@ -177,7 +172,6 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
   }
 }
 
-
 void pickCard(String roomId, int turn, int playerIndex, context) async {
   if (checkTurn(playerIndex, turn)) {
     DatabaseReference roomRef =
@@ -197,7 +191,7 @@ void pickCard(String roomId, int turn, int playerIndex, context) async {
       if (roomModel.drawPile.length == 1) {
         List<CardModel> tempDeck = [];
         for (int i = 0; i < roomModel.discardPile.length; i++) {
-          tempDeck.add(roomModel.discardPile.removeAt(1));
+          tempDeck.add(roomModel.discardPile.removeAt(0));
           tempDeck.shuffle();
         }
         for (int j = 0; j <= tempDeck.length; j++) {
