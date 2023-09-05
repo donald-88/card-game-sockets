@@ -155,6 +155,15 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
             roomModel.players[playerIndex]['knock'] = true;
           }
 
+          if (roomModel.players[playerIndex]['hand'].length == 1 &&
+              playedCard.rank != "JOKER" &&
+              playedCard.rank != "2" &&
+              playedCard.rank != "8" &&
+              playedCard.rank != "J" &&
+              playedCard.rank != "A") {
+          }
+          
+
           //check for winner
           if (roomModel.players[playerIndex]['hand'].length == 0 &&
               playedCard.rank != "JOKER" &&
@@ -196,7 +205,7 @@ void pickCard(String roomId, int turn, int playerIndex, context) async {
       if (roomModel.drawPile.length == 1) {
         List<CardModel> tempDeck = [];
         for (int i = 0; i < roomModel.discardPile.length; i++) {
-          tempDeck.add(roomModel.discardPile.removeAt(0));
+          tempDeck.add(roomModel.discardPile.removeAt(i));
           tempDeck.shuffle();
         }
         for (int j = 0; j <= tempDeck.length; j++) {
