@@ -156,7 +156,12 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
           }
 
           //check for winner
-          if (roomModel.players[playerIndex]['hand'].length == 0) {
+          if (roomModel.players[playerIndex]['hand'].length == 0 &&
+              playedCard.rank != "JOKER" &&
+              playedCard.rank != "2" &&
+              playedCard.rank != "8" &&
+              playedCard.rank != "J" &&
+              playedCard.rank != "A") {
             roomModel.isWon = true;
             roomModel.playerWon = roomModel.players[playerIndex]['playerId'];
           }
