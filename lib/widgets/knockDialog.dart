@@ -5,6 +5,7 @@ showKnockDialog(
   String player
 ) {
   showDialog(
+    barrierDismissible: false,
       context: context,
       builder: (context) {
         Future.delayed(const Duration(seconds: 1), (){

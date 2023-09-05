@@ -92,6 +92,16 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
         if (snapshot.exists) {
           Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
           RoomModel roomModel = RoomModel.fromJson(data);
+
+          //avoid finishing game with an Ace
+          if (roomModel.players[playerIndex]['hand'].length == 1 &&
+              playedCard.rank == "A") {
+            CardModel toPickCard = roomModel.drawPile.removeLast();
+            roomModel.players[playerIndex]['hand']
+                .add({"suit": toPickCard.suit, "rank": toPickCard.rank});
+            roomModel.turnIndex++;
+          }
+
           roomModel.discardPile.add(playedCard);
           roomModel.players[playerIndex]['hand'].removeWhere((card) =>
               card['suit'] == playedCard.suit &&
@@ -114,6 +124,19 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
         if (snapshot.exists) {
           Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
           RoomModel roomModel = RoomModel.fromJson(data);
+
+          //avoid finishing game with a wildcard
+          if (roomModel.players[playerIndex]['hand'].length == 1 &&
+              (playedCard.rank == "JOKER" ||
+                  playedCard.rank == "2" ||
+                  playedCard.rank == "8" ||
+                  playedCard.rank == "J")) {
+            CardModel toPickCard = roomModel.drawPile.removeLast();
+            roomModel.players[playerIndex]['hand']
+                .add({"suit": toPickCard.suit, "rank": toPickCard.rank});
+            roomModel.turnIndex++;
+          }
+
           roomModel.players[playerIndex]['hand'].removeWhere((card) =>
               card['suit'] == playedCard.suit &&
               card['rank'] == playedCard.rank);
@@ -154,15 +177,6 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
           if (roomModel.players[playerIndex]['hand'].length == 1) {
             roomModel.players[playerIndex]['knock'] = true;
           }
-
-          if (roomModel.players[playerIndex]['hand'].length == 1 &&
-              playedCard.rank != "JOKER" &&
-              playedCard.rank != "2" &&
-              playedCard.rank != "8" &&
-              playedCard.rank != "J" &&
-              playedCard.rank != "A") {
-          }
-          
 
           //check for winner
           if (roomModel.players[playerIndex]['hand'].length == 0 &&
