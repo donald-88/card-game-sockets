@@ -1,7 +1,7 @@
-import 'package:card_game_sockets/widgets/errorDialog.dart';
 import 'package:card_game_sockets/widgets/slideFadeInPage.dart';
 import 'package:flutter/material.dart';
 import '../../services/authService.dart';
+import '../../widgets/customDialog.dart';
 import '../../widgets/loading.dart';
 
 class SignUp extends StatefulWidget {
@@ -30,8 +30,8 @@ class _SignUpState extends State<SignUp> {
             emailController.text, passwordController.text);
       }
     } else {
-      showErrorDialog('Password Length Error',
-          "Make sure your password has 6 or more characters", context);
+      showCustomDialog(context,'error' ,'Password Length Error',
+          "Make sure your password has 6 or more characters");
     }
   }
 

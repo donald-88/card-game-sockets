@@ -1,12 +1,12 @@
 import 'package:card_game_sockets/models/userModel.dart';
 import 'package:card_game_sockets/utils/deck.dart';
 import 'package:card_game_sockets/utils/validator.dart';
-import 'package:card_game_sockets/widgets/errorDialog.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../models/cardModel.dart';
 import '../models/playerModel.dart';
 import '../models/roomModel.dart';
 import '../widgets/aceDialog.dart';
+import '../widgets/customDialog.dart';
 
 List playerHands = [];
 
@@ -192,11 +192,12 @@ void playCard(String roomId, CardModel playedCard, CardModel topCard,
         }
       }
     } else {
-      showErrorDialog(
-          'Wrong Card!', 'Make sure the suit or rank match', context);
+      showCustomDialog(
+          context, 'error', 'Wrong Card!', 'Make sure the suit or rank match');
     }
   } else {
-    showErrorDialog('Not Your Turn!', 'Wait for opponent move', context);
+    showCustomDialog(
+        context, 'error', 'Not Your Turn!', 'Wait for opponent move');
   }
 }
 
@@ -230,7 +231,8 @@ void pickCard(String roomId, int turn, int playerIndex, context) async {
       roomRef.set(roomModel.toJson());
     }
   } else {
-    showErrorDialog('Not Your Turn!', 'Wait for opponent move', context);
+    showCustomDialog(
+        context, 'error', 'Not Your Turn!', 'Wait for opponent move');
   }
 }
 

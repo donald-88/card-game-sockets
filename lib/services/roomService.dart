@@ -1,10 +1,9 @@
 import 'package:card_game_sockets/models/playerModel.dart';
 import 'package:card_game_sockets/models/roomModel.dart';
-import 'package:card_game_sockets/widgets/errorDialog.dart';
+import 'package:card_game_sockets/widgets/customDialog.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
 import 'package:uuid/uuid.dart';
-
 import '../utils/gameLogic.dart';
 
 class RoomService {
@@ -67,10 +66,11 @@ class RoomService {
         initializeGame(roomId);
         Navigator.pushNamed(context, '/waitingLobby', arguments: roomId);
       } else {
-        showErrorDialog('Error', 'No room available.', context);
+        showCustomDialog(context, 'error', 'Room not found',
+            'The room you are trying to join does not exist');
       }
     } catch (e) {
-      showErrorDialog("Error", e.toString(), context);
+      showCustomDialog(context,'error', "Error", e.toString());
     }
   }
 }

@@ -191,8 +191,8 @@ class _GamePageState extends State<GamePage> {
                             width: double.infinity,
                             child: Center(
                               child: Stack(
-                                children:
-                                    List.generate(opponent.hand.length, (index) {
+                                children: List.generate(opponent.hand.length,
+                                    (index) {
                                   final fanOffsetX = index * 20.0;
                                   return Transform.translate(
                                     offset: Offset(fanOffsetX, 0),
@@ -213,10 +213,12 @@ class _GamePageState extends State<GamePage> {
                               PlayingCard(
                                   suit: discardPile.isEmpty
                                       ? ""
-                                      : discardPile[discardPile.length - 1].suit,
+                                      : discardPile[discardPile.length - 1]
+                                          .suit,
                                   value: discardPile.isEmpty
                                       ? ""
-                                      : discardPile[discardPile.length - 1].rank)
+                                      : discardPile[discardPile.length - 1]
+                                          .rank)
                             ],
                           ),
                           SizedBox(
@@ -224,11 +226,12 @@ class _GamePageState extends State<GamePage> {
                             width: double.infinity,
                             child: Center(
                               child: Stack(
-                                children: List.generate(currentPlayer.hand.length,
-                                    (index) {
+                                children: List.generate(
+                                    currentPlayer.hand.length, (index) {
                                   final playedCard = currentPlayer.hand[index];
                                   final fanOffsetX = index * 30.0;
-                                  final deckSize = currentPlayer.hand.length * 33;
+                                  final deckSize =
+                                      currentPlayer.hand.length * 33;
                                   final double width =
                                       MediaQuery.of(context).size.width;
                                   return Positioned(
@@ -236,10 +239,11 @@ class _GamePageState extends State<GamePage> {
                                         fanOffsetX,
                                     child: GestureDetector(
                                       onTap: () {
-                                        CardModel discardCard = discardPile
-                                                .isEmpty
-                                            ? CardModel(suit: '', rank: '')
-                                            : discardPile[discardPile.length - 1];
+                                        CardModel discardCard =
+                                            discardPile.isEmpty
+                                                ? CardModel(suit: '', rank: '')
+                                                : discardPile[
+                                                    discardPile.length - 1];
                                         playCard(
                                           widget.roomId,
                                           playedCard,

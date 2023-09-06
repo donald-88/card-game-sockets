@@ -1,7 +1,7 @@
-import 'package:card_game_sockets/widgets/errorDialog.dart';
 import 'package:card_game_sockets/widgets/slideFadeInPage.dart';
 import 'package:flutter/material.dart';
 import '../../services/authService.dart';
+import '../../widgets/customDialog.dart';
 import '../../widgets/loading.dart';
 
 class SignIn extends StatefulWidget {
@@ -25,8 +25,8 @@ class _SignInState extends State<SignIn> {
         emailController.text, passwordController.text);
 
     if (result == null) {
-      showErrorDialog('Sign In Error',
-          'Make sure you place the correct credentials.', context);
+      showCustomDialog(context,'error', 'Sign In Error',
+          'Make sure your credentials are correct.');
     }
   }
 
