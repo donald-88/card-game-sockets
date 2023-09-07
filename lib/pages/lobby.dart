@@ -32,7 +32,9 @@ class _LobbyState extends State<Lobby> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text('Enter Room ID'),
+              backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+              title: Text('Enter Room ID',
+                  style: Theme.of(context).textTheme.titleMedium),
               content: TextField(
                 controller: _roomIdController,
               ),
@@ -48,6 +50,7 @@ class _LobbyState extends State<Lobby> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -62,27 +65,42 @@ class _LobbyState extends State<Lobby> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Create or Join a Game Server',
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall!
-                      .copyWith(fontWeight: FontWeight.bold)),
+                  style: width > 375
+                      ? Theme.of(context)
+                          .textTheme
+                          .headlineLarge!
+                          .copyWith(fontWeight: FontWeight.bold)
+                      : Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(fontWeight: FontWeight.bold)),
               const SizedBox(height: 16),
               Text(
                 'Create a game server and share the link with your friends or alternatively, join a game server by entering the link provided by your friend',
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: width > 375
+                    ? Theme.of(context).textTheme.bodyLarge
+                    : Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(400, 50)),
                   onPressed: createRoom,
-                  child: const Text('Create')),
+                  child: Text(
+                    'Create',
+                    style: width > 375
+                        ? Theme.of(context).textTheme.labelLarge
+                        : Theme.of(context).textTheme.labelMedium,
+                  )),
               const SizedBox(height: 16),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(400, 50)),
                   onPressed: showJoinRoom,
-                  child: const Text('Join')),
+                  child: Text('Join',
+                      style: width > 375
+                          ? Theme.of(context).textTheme.labelLarge
+                          : Theme.of(context).textTheme.labelMedium)),
             ],
           ),
         ),

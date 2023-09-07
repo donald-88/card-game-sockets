@@ -145,10 +145,18 @@ class _GamePageState extends State<GamePage> {
               children: [
                 const SizedBox(height: 20),
                 FloatingActionButton(
+                  heroTag: 'quit',
                   backgroundColor: Colors.red,
-                  onPressed: () => showCustomDialog(context, 'forfeit', 'F O R F E I T ! !',
+                  onPressed: () => showCustomDialog(
+                      context,
+                      'forfeit',
+                      'F O R F E I T ! !',
                       'Are you sure you want to forfeit the match?'),
-                  child: const Text("QUIT"),
+                  child: Text("QUIT",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: Colors.white)),
                 ),
                 const SizedBox(height: 20),
                 Column(
@@ -161,14 +169,22 @@ class _GamePageState extends State<GamePage> {
                                 backgroundColor: Colors.red,
                                 onPressed: () =>
                                     onGamePause(widget.roomId, playerTurn),
-                                child: const Icon(Icons.pause)),
+                                child: const Icon(
+                                  Icons.pause,
+                                  color: Colors.white,
+                                )),
                           )).toList(),
                 ),
                 showTimer
                     ? FloatingActionButton(
+                        heroTag: 'timer',
                         backgroundColor: Colors.red,
                         onPressed: () {},
-                        child: Text(timeLeft.toString()))
+                        child: Text(timeLeft.toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.white)))
                     : const SizedBox()
               ],
             ),

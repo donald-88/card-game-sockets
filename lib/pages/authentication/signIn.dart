@@ -23,9 +23,10 @@ class _SignInState extends State<SignIn> {
     Loading(context);
     dynamic result = await _auth.signInWithEmailAndPassword(
         emailController.text, passwordController.text);
+    Navigator.of(context).pop();
 
     if (result == null) {
-      showCustomDialog(context,'error', 'Sign In Error',
+      showCustomDialog(context, 'error', 'Sign In Error',
           'Make sure your credentials are correct.');
     }
   }
@@ -41,6 +42,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -50,20 +52,35 @@ class _SignInState extends State<SignIn> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Sign In',
-                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                      color: Colors.white70, fontWeight: FontWeight.bold)),
+                  style: width > 375
+                      ? Theme.of(context)
+                          .textTheme
+                          .headlineLarge!
+                          .copyWith(fontWeight: FontWeight.bold)
+                      : Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(fontWeight: FontWeight.bold)),
               const SizedBox(height: 16),
-              Text(
-                'Enter phone number or email to sign in and start playing!',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: Colors.white70),
-              ),
+              Text('Enter phone number or email to sign in and start playing!',
+                  style: width > 375
+                      ? Theme.of(context).textTheme.bodyLarge
+                      : Theme.of(context).textTheme.bodyMedium),
               const SizedBox(height: 16),
               TextField(
                 controller: emailController,
-                decoration: const InputDecoration(hintText: 'Phone / Email'),
+                decoration: InputDecoration(
+                  hintText: 'Phone / Email',
+                  hintStyle: width > 375
+                      ? Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.grey.shade500)
+                      : Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.grey.shade500),
+                ),
               ),
               const SizedBox(height: 16),
               TextField(
@@ -71,6 +88,15 @@ class _SignInState extends State<SignIn> {
                 controller: passwordController,
                 decoration: InputDecoration(
                     hintText: 'Password',
+                    hintStyle: width > 375
+                        ? Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: Colors.grey.shade500)
+                        : Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: Colors.grey.shade500),
                     suffix: IconButton(
                         onPressed: () {
                           setState(() {
@@ -84,15 +110,14 @@ class _SignInState extends State<SignIn> {
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(400, 50)),
                   onPressed: () => signIn(context),
-                  child: const Text('Sign In')),
+                  child: Text('Sign In',
+                      style: width > 375
+                          ? Theme.of(context).textTheme.labelLarge
+                          : Theme.of(context).textTheme.labelMedium)),
               const SizedBox(height: 16),
               Row(
                 children: [
-                  Text('Dont have an account? ',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .copyWith(color: Colors.white70)),
+                  const Text('Dont have an account? '),
                   GestureDetector(
                       onTap: () => widget.toggleView!(),
                       child: Text('Sign Up',

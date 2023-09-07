@@ -15,6 +15,7 @@ class _WaitingLobbyState extends State<WaitingLobby> {
   bool join = true;
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
     final String roomId = ModalRoute.of(context)!.settings.arguments as String;
     final DatabaseReference roomRef =
         FirebaseDatabase.instance.ref().child('rooms/$roomId');
@@ -31,23 +32,32 @@ class _WaitingLobbyState extends State<WaitingLobby> {
             appBar: AppBar(),
             body: SlideFadeInPage(
               mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(width: double.infinity),
                 const CircularProgressIndicator(),
                 const SizedBox(height: 20),
                 Text('Waiting for other players to join...',
-                    style: Theme.of(context).textTheme.headlineMedium),
+                    textAlign: TextAlign.center,
+                    style: width > 375
+                        ? Theme.of(context).textTheme.titleLarge
+                        : Theme.of(context).textTheme.titleSmall),
                 const SizedBox(height: 16),
                 Text('RoomId: $roomId',
-                    style: Theme.of(context).textTheme.headlineSmall),
+                    textAlign: TextAlign.center,
+                    style: width > 375
+                        ? Theme.of(context).textTheme.bodyLarge
+                        : Theme.of(context).textTheme.bodySmall),
                 const SizedBox(height: 16),
                 ElevatedButton(
                     onPressed: () {
                       ClipboardData data = ClipboardData(text: roomId);
                       Clipboard.setData(data);
                     },
-                    child: const Text('Copy Room ID'))
+                    child: Text('Copy Room ID',
+                        style: width > 375
+                            ? Theme.of(context).textTheme.labelLarge
+                            : Theme.of(context).textTheme.labelMedium))
               ],
             ))
         : GamePage(

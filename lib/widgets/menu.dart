@@ -6,6 +6,7 @@ class Menu extends StatelessWidget {
   const Menu({super.key});
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
     final FirebaseAuth auth = FirebaseAuth.instance;
     return Scaffold(
       body: Stack(
@@ -19,20 +20,28 @@ class Menu extends StatelessWidget {
                 TextButton(
                     onPressed: () => Navigator.pop(context),
                     child: Text("H O M E",
-                        style: Theme.of(context).textTheme.headlineMedium)),
+                        style: width > 375
+                            ? Theme.of(context).textTheme.headlineLarge
+                            : Theme.of(context).textTheme.headlineSmall)),
                 const SizedBox(height: 20),
                 Text("P R O F I L E",
-                    style: Theme.of(context).textTheme.headlineMedium),
+                    style: width > 375
+                            ? Theme.of(context).textTheme.headlineLarge
+                            : Theme.of(context).textTheme.headlineSmall),
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {},
                     child: Text("R E C O R D",
-                        style: Theme.of(context).textTheme.headlineMedium)),
+                        style: width > 375
+                            ? Theme.of(context).textTheme.headlineLarge
+                            : Theme.of(context).textTheme.headlineSmall)),
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {},
                     child: Text("W I T H D R A W A L S",
-                        style: Theme.of(context).textTheme.headlineMedium)),
+                        style: width > 375
+                            ? Theme.of(context).textTheme.headlineLarge
+                            : Theme.of(context).textTheme.headlineSmall)),
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {
@@ -40,7 +49,9 @@ class Menu extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     child: Text("L O G O U T",
-                        style: Theme.of(context).textTheme.headlineMedium))
+                        style: width > 375
+                            ? Theme.of(context).textTheme.headlineLarge
+                            : Theme.of(context).textTheme.headlineSmall))
               ],
             ),
           ),

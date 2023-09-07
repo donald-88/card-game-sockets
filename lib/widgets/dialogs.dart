@@ -73,14 +73,22 @@ class CustomDialog extends StatelessWidget {
       case 'forfeit':
         return [
           TextButton(
+              key: const Key('forfeit'),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
-              child: const Text("Yes")),
+              child: Text(
+                "Yes",
+                style: TextStyle(color: getContentColor(context)),
+              )),
           TextButton(
+              key: const Key('Cancel'),
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text("Yes"))
+              child: Text(
+                "Cancel",
+                style: TextStyle(color: getContentColor(context)),
+              ))
         ];
       case 'knock':
         return [const SizedBox()];

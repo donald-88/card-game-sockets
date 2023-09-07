@@ -22,7 +22,8 @@ class _SignUpState extends State<SignUp> {
   void signUp(context) async {
     if (passwordController.text.length > 5) {
       Loading(context);
-      if (emailController.text.startsWith('+265') || emailController.text.startsWith("0")) {
+      if (emailController.text.startsWith('+265') ||
+          emailController.text.startsWith("0")) {
         await _auth.registerWithPhoneNumber(
             emailController.text, passwordController.text, context);
       } else {
@@ -30,7 +31,7 @@ class _SignUpState extends State<SignUp> {
             emailController.text, passwordController.text);
       }
     } else {
-      showCustomDialog(context,'error' ,'Password Length Error',
+      showCustomDialog(context, 'error', 'Password Length Error',
           "Make sure your password has 6 or more characters");
     }
   }
@@ -46,6 +47,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -56,37 +58,79 @@ class _SignUpState extends State<SignUp> {
             children: [
               Text(
                 'Sign Up',
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall!
-                    .copyWith(fontWeight: FontWeight.bold),
+                style: width > 375
+                    ? Theme.of(context)
+                        .textTheme
+                        .headlineLarge!
+                        .copyWith(fontWeight: FontWeight.bold)
+                    : Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
               Text(
-                'Enter your phone or email and password to create an account and start playing',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
+                  'Enter your phone or email and password to create an account and start playing',
+                  style: width > 375
+                      ? Theme.of(context).textTheme.bodyLarge
+                      : Theme.of(context).textTheme.bodyMedium),
               TextField(
                 controller: usernameController,
-                decoration: const InputDecoration(hintText: 'Username'),
+                decoration: InputDecoration(
+                  hintText: 'Username',
+                  hintStyle: width > 375
+                      ? Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.grey.shade500)
+                      : Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.grey.shade500),
+                ),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: emailController,
-                decoration: const InputDecoration(hintText: 'Phone / Email'),
+                decoration: InputDecoration(
+                  hintText: 'Phone / Email',
+                  hintStyle: width > 375
+                      ? Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.grey.shade500)
+                      : Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.grey.shade500),
+                ),
               ),
               const SizedBox(height: 16),
               TextField(
                 obscureText: true,
                 controller: passwordController,
-                decoration: const InputDecoration(hintText: 'Password'),
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                  hintStyle: width > 375
+                      ? Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.grey.shade500)
+                      : Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.grey.shade500),
+                ),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(400, 50)),
                   onPressed: () => signUp(context),
-                  child: const Text('Sign Up')),
+                  child: Text('Sign Up',
+                      style: width > 375
+                          ? Theme.of(context).textTheme.labelLarge
+                          : Theme.of(context).textTheme.labelMedium)),
               const SizedBox(height: 16),
               Row(
                 children: [

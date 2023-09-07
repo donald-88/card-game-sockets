@@ -4,6 +4,8 @@ import 'package:card_game_sockets/widgets/slideFadeInPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'customDialog.dart';
+
 class PauseMenu extends StatefulWidget {
   final String roomId;
   final String playerPauseId;
@@ -43,6 +45,7 @@ class _PauseMenuState extends State<PauseMenu> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -59,21 +62,37 @@ class _PauseMenuState extends State<PauseMenu> {
                   }
                 },
                 child: Text("R E S U M E",
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                        color: Colors.white.withOpacity(
-                            widget.playerPauseId == _auth.currentUser?.uid
-                                ? 1
-                                : .5)))),
+                    style: width > 375
+                        ? Theme.of(context).textTheme.headlineLarge!.copyWith(
+                            color:
+                                widget.playerPauseId == _auth.currentUser?.uid
+                                    ? Theme.of(context).colorScheme.onSurface
+                                    : Colors.grey)
+                        : Theme.of(context).textTheme.headlineSmall!.copyWith(
+                            color:
+                                widget.playerPauseId == _auth.currentUser?.uid
+                                    ? Theme.of(context).colorScheme.onSurface
+                                    : Colors.grey))),
             const SizedBox(height: 20),
             TextButton(
                 onPressed: () {},
                 child: Text("S T A K E",
-                    style: Theme.of(context).textTheme.headlineMedium)),
+                    style: width > 375
+                        ? Theme.of(context).textTheme.headlineLarge
+                        : Theme.of(context).textTheme.headlineSmall)),
             const SizedBox(height: 20),
             TextButton(
                 onPressed: () {},
                 child: Text("H E L P",
-                    style: Theme.of(context).textTheme.headlineMedium))
+                    style: Theme.of(context).textTheme.headlineMedium)),
+                    const SizedBox(height: 20),
+            TextButton(
+                onPressed: () => showCustomDialog(context, "Forfeit",'F O R F E I T', "Are you sure you want to forfeit the game?"),
+                child: Text("F O R F E I T",
+                    style: width > 375
+                        ? Theme.of(context).textTheme.headlineLarge
+                        : Theme.of(context).textTheme.headlineSmall)),
+            
           ],
         ),
       ),
