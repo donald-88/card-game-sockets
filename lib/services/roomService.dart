@@ -70,7 +70,7 @@ class RoomService {
             'The room you are trying to join does not exist');
       }
     } catch (e) {
-      showCustomDialog(context,'error', "Error", e.toString());
+      showCustomDialog(context, 'error', "Error", e.toString());
     }
   }
 }

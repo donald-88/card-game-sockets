@@ -4,16 +4,14 @@ import 'package:card_game_sockets/models/roomModel.dart';
 import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:card_game_sockets/utils/sessionTimeOutListener.dart';
 import 'package:card_game_sockets/widgets/backside.dart';
+import 'package:card_game_sockets/widgets/customDialog.dart';
 import 'package:card_game_sockets/widgets/knockDialog.dart';
-import 'package:card_game_sockets/widgets/looseDialog.dart';
 import 'package:card_game_sockets/widgets/pauseScreen.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
-import 'package:card_game_sockets/widgets/winDialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../models/cardModel.dart';
-import '../widgets/forfeitDialog.dart';
 import '../widgets/playerNameTag.dart';
 
 class GamePage extends StatefulWidget {
@@ -59,9 +57,11 @@ class _GamePageState extends State<GamePage> {
 
       if (roomModel.isWon) {
         if (playerWon == _auth.currentUser?.uid) {
-          showWinDialog(context);
+          showCustomDialog(
+              context, 'success', 'W I N N E R ! !', 'You won the game!');
         } else {
-          showLooseDialog(context);
+          showCustomDialog(
+              context, 'error', 'L O S E R ! !', 'You lost the game!');
         }
       }
     });
@@ -102,6 +102,21 @@ class _GamePageState extends State<GamePage> {
       isturn: false,
       hand: []);
 
+  bool showTimer = false;
+  int timeLeft = 10;
+  void _startCountDown() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (timeLeft > 0) {
+        setState(() {
+          timeLeft--;
+        });
+      } else {
+        timer.cancel();
+        
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     User? currentUser = _auth.currentUser;
@@ -131,7 +146,8 @@ class _GamePageState extends State<GamePage> {
                 const SizedBox(height: 20),
                 FloatingActionButton(
                   backgroundColor: Colors.red,
-                  onPressed: () => showForfeitDialog(context),
+                  onPressed: () => showCustomDialog(context, 'forfeit', 'F O R F E I T ! !',
+                      'Are you sure you want to forfeit the match?'),
                   child: const Text("QUIT"),
                 ),
                 const SizedBox(height: 20),
@@ -147,13 +163,22 @@ class _GamePageState extends State<GamePage> {
                                     onGamePause(widget.roomId, playerTurn),
                                 child: const Icon(Icons.pause)),
                           )).toList(),
-                )
+                ),
+                showTimer
+                    ? FloatingActionButton(
+                        backgroundColor: Colors.red,
+                        onPressed: () {},
+                        child: Text(timeLeft.toString()))
+                    : const SizedBox()
               ],
             ),
             body: SessionTimeoutListener(
               duration: const Duration(seconds: 30),
               onTimeOut: () {
-                onGamePause(widget.roomId, playerTurn);
+                setState(() {
+                  showTimer = true;
+                });
+                _startCountDown();
               },
               child: Center(
                 child: Stack(

@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 showCustomDialog(
     BuildContext context, String type, String title, String content) {
   showDialog(
-      barrierDismissible: true,
+      barrierDismissible: false,
       context: context,
-      builder: (context) => CustomDialog(type: type, title: title,content: content,));
+      builder: (context) => CustomDialog(
+            type: type,
+            title: title,
+            content: content,
+          ));
 }

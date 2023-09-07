@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:card_game_sockets/utils/gameLogic.dart';
-import 'package:card_game_sockets/widgets/forfeitDialog.dart';
 import 'package:card_game_sockets/widgets/slideFadeInPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +7,8 @@ import 'package:flutter/material.dart';
 class PauseMenu extends StatefulWidget {
   final String roomId;
   final String playerPauseId;
-  const PauseMenu({super.key, required this.roomId, required this.playerPauseId});
+  const PauseMenu(
+      {super.key, required this.roomId, required this.playerPauseId});
 
   @override
   State<PauseMenu> createState() => _PauseMenuState();
@@ -39,6 +38,7 @@ class _PauseMenuState extends State<PauseMenu> {
       }
     });
   }
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -50,23 +50,20 @@ class _PauseMenuState extends State<PauseMenu> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-                'The game will automatically resume in $timeLeft seconds.'),
+            Text('The game will automatically resume in $timeLeft seconds.'),
             const SizedBox(height: 20),
             TextButton(
-                onPressed: (){
-                  if(widget.playerPauseId == _auth.currentUser?.uid){
+                onPressed: () {
+                  if (widget.playerPauseId == _auth.currentUser?.uid) {
                     onGameResume(widget.roomId);
                   }
                 },
                 child: Text("R E S U M E",
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.white.withOpacity(widget.playerPauseId == _auth.currentUser?.uid? 1: .5)))),
-            const SizedBox(height: 20),
-            TextButton(
-              onPressed: () => showForfeitDialog(context),
-              child: Text("F O R F E I T",
-                  style: Theme.of(context).textTheme.headlineMedium),
-            ),
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                        color: Colors.white.withOpacity(
+                            widget.playerPauseId == _auth.currentUser?.uid
+                                ? 1
+                                : .5)))),
             const SizedBox(height: 20),
             TextButton(
                 onPressed: () {},

@@ -1,10 +1,11 @@
 import 'package:card_game_sockets/models/userModel.dart';
 import 'package:card_game_sockets/pages/authentication/otp.dart';
-import 'package:card_game_sockets/widgets/mySnackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_web/firebase_auth_web.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/customDialog.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -30,7 +31,7 @@ class AuthService {
               size: RecaptchaVerifierSize.compact,
               theme: RecaptchaVerifierTheme.dark));
 
-          return confirmationResult;
+      return confirmationResult;
     } catch (e) {
       return null;
     }
@@ -44,10 +45,11 @@ class AuthService {
         },
         verificationFailed: (e) {
           if (e.code == 'invalid-phone-number') {
-            showSnackBar(context, e.code);
+            showCustomDialog(context, 'error', 'Invalid Phone Number', e.code);
           } else {
             Navigator.pop(context);
-            showSnackBar(context, "Error, something went wrong try again");
+            showCustomDialog(context, 'error', 'Error',
+                "Error, something went wrong try again");
           }
         },
         codeSent: (verificationId, resendToken) {
