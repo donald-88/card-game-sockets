@@ -2,7 +2,6 @@ import 'package:card_game_sockets/pages/authentication/otp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_web/firebase_auth_web.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/customDialog.dart';
 
 class AuthService {
@@ -35,7 +34,8 @@ class AuthService {
     }
   }
 
-  Future registerWithPhoneNumber(String phone, String password, context) async {
+  Future registerWithPhoneNumber(String username, String phone, String password, context) async {
+
     await _auth.verifyPhoneNumber(
         phoneNumber: phone,
         verificationCompleted: (credential) async {
@@ -67,7 +67,7 @@ class AuthService {
           verificationId: verificationId, smsCode: userOTP);
 
       User user = (await _auth.signInWithCredential(creds)).user!;
-
+      
       return user;
     } catch (e) {
       return null;

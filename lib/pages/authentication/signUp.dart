@@ -24,7 +24,7 @@ class _SignUpState extends State<SignUp> {
       Loading(context);
       if (emailController.text.startsWith('+265') ||
           emailController.text.startsWith("0")) {
-        await _auth.registerWithPhoneNumber(
+        await _auth.registerWithPhoneNumber(usernameController.text,
             emailController.text, passwordController.text, context);
         Navigator.pop(context);
       } else {

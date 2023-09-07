@@ -29,8 +29,6 @@ void initializeGame(String roomId) async {
       player.putIfAbsent(
           'hand', () => playerModel.hand.map((e) => e.toJson()).toList());
 
-      
-
       player['pauseCount'] = 1;
     }
 

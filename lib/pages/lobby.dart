@@ -23,7 +23,7 @@ class _LobbyState extends State<Lobby> {
 
   void joinRoom() {
     User? currentUser = _auth.currentUser;
-    _roomService.joinRoom(currentUser!.uid, _roomIdController.text, context);
+    _roomService.joinRoom(currentUser!, _roomIdController.text, context);
     _roomIdController.clear();
     Navigator.pop(context);
   }

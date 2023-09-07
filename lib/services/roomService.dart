@@ -1,6 +1,7 @@
 import 'package:card_game_sockets/models/playerModel.dart';
 import 'package:card_game_sockets/models/roomModel.dart';
 import 'package:card_game_sockets/widgets/customDialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
 import 'package:uuid/uuid.dart';
@@ -45,7 +46,7 @@ class RoomService {
   }
 
   Future<void> joinRoom(
-      String playerId, String roomId, BuildContext context) async {
+      User user, String roomId, BuildContext context) async {
     try {
       DatabaseReference roomRef = _roomRef.child(roomId);
       final snapshot = await roomRef.get();
@@ -54,9 +55,9 @@ class RoomService {
         RoomModel roomModel = RoomModel.fromJson(roomData);
         roomModel.canJoin = false;
         roomModel.players.add(PlayerModel(
-            playerId: playerId,
+            playerId: user.uid,
             roomId: roomId,
-            username: '',
+            username: user.displayName as String,
             knock: false,
             pauseCount: 0,
             isturn: true,
