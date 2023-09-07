@@ -58,7 +58,7 @@ class _PauseMenuState extends State<PauseMenu> {
             TextButton(
                 onPressed: () {
                   if (widget.playerPauseId == _auth.currentUser?.uid) {
-                    onGameResume(widget.roomId);
+                       onGameResume(widget.roomId);
                   }
                 },
                 child: Text("R E S U M E",

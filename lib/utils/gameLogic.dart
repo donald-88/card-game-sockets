@@ -1,4 +1,3 @@
-import 'package:card_game_sockets/models/userModel.dart';
 import 'package:card_game_sockets/utils/deck.dart';
 import 'package:card_game_sockets/utils/validator.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -13,7 +12,6 @@ List playerHands = [];
 void initializeGame(String roomId) async {
   DatabaseReference roomRef =
       FirebaseDatabase.instance.ref().child('rooms').child(roomId);
-  DatabaseReference userRef = FirebaseDatabase.instance.ref().child('users');
   List<CardModel> deck = [];
   deck = buildDeck();
   deck.shuffle();
@@ -31,16 +29,7 @@ void initializeGame(String roomId) async {
       player.putIfAbsent(
           'hand', () => playerModel.hand.map((e) => e.toJson()).toList());
 
-      //get username
-      String playerId = player['playerId'];
-      final nameSnapshot = await userRef.child(playerId).get();
-      if (nameSnapshot.exists) {
-        Map<String, dynamic> userData =
-            nameSnapshot.value as Map<String, dynamic>;
-        UsersModel usersModel = UsersModel.fromJson(userData);
-        String username = usersModel.username;
-        player['username'] = username;
-      }
+      
 
       player['pauseCount'] = 1;
     }

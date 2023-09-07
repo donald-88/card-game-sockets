@@ -1,8 +1,6 @@
-import 'package:card_game_sockets/models/userModel.dart';
 import 'package:card_game_sockets/pages/authentication/otp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_web/firebase_auth_web.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/customDialog.dart';
@@ -79,14 +77,10 @@ class AuthService {
   // register with email and password
   Future registerWithEmailAndPassword(
       String username, String email, String password) async {
-    final DatabaseReference userRef =
-        FirebaseDatabase.instance.ref().child('users');
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      await userRef.child(_auth.currentUser!.uid).set(
-          UsersModel(username: username, userId: _auth.currentUser!.uid)
-              .toJson());
+      result.user!.updateDisplayName(username);
       return result.user;
     } catch (e) {
       return null;

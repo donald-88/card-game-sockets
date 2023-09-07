@@ -1,8 +1,8 @@
+import 'package:card_game_sockets/widgets/loading.dart';
 import 'package:card_game_sockets/widgets/slideFadeInPage.dart';
 import 'package:flutter/material.dart';
 import '../../services/authService.dart';
 import '../../widgets/customDialog.dart';
-import '../../widgets/loading.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key, this.toggleView});
@@ -26,6 +26,7 @@ class _SignUpState extends State<SignUp> {
           emailController.text.startsWith("0")) {
         await _auth.registerWithPhoneNumber(
             emailController.text, passwordController.text, context);
+        Navigator.pop(context);
       } else {
         await _auth.registerWithEmailAndPassword(usernameController.text,
             emailController.text, passwordController.text);

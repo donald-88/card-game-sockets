@@ -28,6 +28,7 @@ class OTPPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -37,13 +38,12 @@ class OTPPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Verification Code',
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall!
-                      .copyWith(fontWeight: FontWeight.bold)),
+                  style: width > 375
+                    ? Theme.of(context).textTheme.titleLarge
+                    : Theme.of(context).textTheme.titleMedium),
               Text(
                 "Enter the verfication code sent to your numeber below",
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,10 +57,13 @@ class OTPPage extends StatelessWidget {
                 ],
               ),
               ElevatedButton(
-                  onPressed: () {
-                    onVerify(context);
-                  },
-                  child: const Text('Verify'))
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(400, 50)),
+                  onPressed: () => onVerify(context),
+                  child: Text('Verify',
+                      style: width > 375
+                          ? Theme.of(context).textTheme.labelLarge
+                          : Theme.of(context).textTheme.labelMedium)),
             ],
           ),
         ),

@@ -23,19 +23,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.green, brightness: Brightness.dark),
-          useMaterial3: true,
-        ),
-        home: const AuthGate(),
-        routes: {
-          '/menu':(context) => const Menu(),
-          '/lobby': (context) => const Lobby(),
-          '/waitingLobby': (context) => const WaitingLobby(),
-          '/pauseMenu':(context) => const PauseMenu(roomId: '',playerPauseId: ''),
-        },
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.green, brightness: Brightness.dark),
+        useMaterial3: true,
+      ),
+      home: const AuthGate(),
+      routes: {
+        '/menu': (context) => const Menu(),
+        '/lobby': (context) => const Lobby(),
+        '/waitingLobby': (context) => const WaitingLobby(),
+        '/pauseMenu': (context) =>
+            const PauseMenu(roomId: '', playerPauseId: ''),
+      },
     );
   }
 }
