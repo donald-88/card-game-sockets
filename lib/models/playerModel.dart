@@ -4,6 +4,7 @@ class PlayerModel {
   String playerId;
   String roomId;
   String username;
+  String avatar;
   bool knock;
   int pauseCount;
   bool isturn;
@@ -13,6 +14,7 @@ class PlayerModel {
       {required this.playerId,
       required this.roomId,
       required this.username,
+      required this.avatar,
       required this.knock,
       required this.pauseCount,
       required this.isturn,
@@ -22,6 +24,7 @@ class PlayerModel {
         'playerId': playerId,
         'roomId': roomId,
         'username': username,
+        'avatar': avatar,
         'knock': knock,
         'pauseCount': pauseCount,
         'isturn': isturn,
@@ -34,6 +37,7 @@ class PlayerModel {
         playerId: json['playerId'],
         roomId: json['roomId'],
         username: json['username'],
+        avatar: json['avatar'],
         knock: json['knock'],
         pauseCount: json['pauseCount'],
         isturn: json['isturn'],

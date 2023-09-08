@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:card_game_sockets/pages/authentication/otp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_web/firebase_auth_web.dart';
@@ -6,6 +8,24 @@ import '../widgets/customDialog.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String pickAvatar() {
+    List<String> avatars = [
+      'assets/avatars/avatar_1.png',
+      'assets/avatars/avatar_2.png',
+      'assets/avatars/avatar_3.png',
+      'assets/avatars/avatar_4.png',
+      'assets/avatars/avatar_5.png',
+      'assets/avatars/avatar_6.png',
+      'assets/avatars/avatar_7.png',
+      'assets/avatars/avatar_8.png',
+      'assets/avatars/avatar_9.png',
+      'assets/avatars/avatar_10.png',
+      'assets/avatars/avatar_11.png'
+    ];
+
+    return avatars[Random().nextInt(avatars.length)];
+  }
 
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
@@ -34,8 +54,8 @@ class AuthService {
     }
   }
 
-  Future registerWithPhoneNumber(String username, String phone, String password, context) async {
-
+  Future registerWithPhoneNumber(
+      String username, String phone, String password, context) async {
     await _auth.verifyPhoneNumber(
         phoneNumber: phone,
         verificationCompleted: (credential) async {
@@ -67,7 +87,7 @@ class AuthService {
           verificationId: verificationId, smsCode: userOTP);
 
       User user = (await _auth.signInWithCredential(creds)).user!;
-      
+
       return user;
     } catch (e) {
       return null;
@@ -81,6 +101,8 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       result.user!.updateDisplayName(username);
+      String photoURL = pickAvatar();
+      result.user!.updatePhotoURL(photoURL);
       return result.user;
     } catch (e) {
       return null;

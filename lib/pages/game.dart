@@ -89,6 +89,7 @@ class _GamePageState extends State<GamePage> {
       playerId: '',
       roomId: '',
       username: '',
+      avatar: '',
       knock: false,
       pauseCount: 2,
       isturn: false,
@@ -97,6 +98,7 @@ class _GamePageState extends State<GamePage> {
       playerId: '',
       roomId: '',
       username: '',
+      avatar: '',
       knock: false,
       pauseCount: 2,
       isturn: false,
@@ -112,7 +114,6 @@ class _GamePageState extends State<GamePage> {
         });
       } else {
         timer.cancel();
-        
       }
     });
   }
@@ -222,11 +223,34 @@ class _GamePageState extends State<GamePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          PlayerNameTag(
-                              name: opponent.username,
-                              isTurn: currentUser.uid == player1.playerId
-                                  ? !isPlayer1Turn
-                                  : isPlayer1Turn),
+                          Column(
+                            children: [
+                              PlayerNameTag(
+                                  name: opponent.username,
+                                  isTurn: currentUser.uid == player1.playerId
+                                      ? !isPlayer1Turn
+                                      : isPlayer1Turn),
+                              const SizedBox(height: 10),
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: Colors.orangeAccent),
+                                padding: const EdgeInsets.all(4),
+                                child: CircleAvatar(
+                                  radius: 32,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Image.asset(
+                                      opponent.avatar != ''
+                                          ? opponent.avatar
+                                          : 'assets/avatars/placeholder.png',
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           SizedBox(
                             height: 160,
                             width: double.infinity,
@@ -304,11 +328,33 @@ class _GamePageState extends State<GamePage> {
                               ),
                             ),
                           ),
-                          PlayerNameTag(
-                              name: currentPlayer.username,
-                              isTurn: currentUser.uid == player1.playerId
-                                  ? isPlayer1Turn
-                                  : !isPlayer1Turn),
+                          Column(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: Colors.orangeAccent),
+                                padding: const EdgeInsets.all(4),
+                                child: CircleAvatar(
+                                  radius: 32,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Image.asset(
+                                        currentPlayer.avatar != ''
+                                            ? currentPlayer.avatar
+                                            : 'assets/avatars/placeholder.png',
+                                        fit: BoxFit.contain),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              PlayerNameTag(
+                                  name: currentPlayer.username,
+                                  isTurn: currentUser.uid == player1.playerId
+                                      ? isPlayer1Turn
+                                      : !isPlayer1Turn),
+                            ],
+                          ),
                         ]),
                   ],
                 ),

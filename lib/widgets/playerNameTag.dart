@@ -9,9 +9,9 @@ class PlayerNameTag extends StatelessWidget {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     return AnimatedContainer(
-        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(10),
             color: Colors.orangeAccent,
             boxShadow: [
               BoxShadow(
@@ -28,7 +28,7 @@ class PlayerNameTag extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         child: Text(name,
             style: width > 375
-                ? Theme.of(context).textTheme.bodyLarge
-                : Theme.of(context).textTheme.bodyMedium));
+                ? Theme.of(context).textTheme.labelMedium
+                : Theme.of(context).textTheme.labelSmall));
   }
 }

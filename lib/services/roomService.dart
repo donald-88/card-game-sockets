@@ -11,7 +11,7 @@ class RoomService {
   final DatabaseReference _roomRef =
       FirebaseDatabase.instance.ref().child('rooms');
 
-  Future<void> createRoom(String playerId, BuildContext context) async {
+  Future<void> createRoom(User user, BuildContext context) async {
     const uuid = Uuid();
     String roomId = uuid.v1();
     try {
@@ -29,9 +29,10 @@ class RoomService {
           playerWon: 'Player');
 
       PlayerModel playerModel = PlayerModel(
-          playerId: playerId,
+          playerId: user.uid,
           roomId: roomId,
-          username: '',
+          username: user.displayName as String,
+          avatar: user.photoURL as String,
           knock: false,
           pauseCount: 0,
           isturn: true,
@@ -58,6 +59,7 @@ class RoomService {
             playerId: user.uid,
             roomId: roomId,
             username: user.displayName as String,
+            avatar: user.photoURL as String,
             knock: false,
             pauseCount: 0,
             isturn: true,

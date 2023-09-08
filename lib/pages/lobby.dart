@@ -18,7 +18,7 @@ class _LobbyState extends State<Lobby> {
 
   void createRoom() {
     User? currentUser = _auth.currentUser;
-    _roomService.createRoom(currentUser!.uid, context);
+    _roomService.createRoom(currentUser!, context);
   }
 
   void joinRoom() {
