@@ -16,7 +16,7 @@ class PlayingCard extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.symmetric(horizontal: 2),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFFFAFAFA),
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
