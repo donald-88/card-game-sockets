@@ -23,7 +23,7 @@ class _SlideFadeInPageState extends State<SlideFadeInPage>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 600),
     );
 
     _slideAnimations = List.generate(

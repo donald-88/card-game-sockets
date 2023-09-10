@@ -106,6 +106,13 @@ class _SignInState extends State<SignIn> {
                         icon: const Icon(Icons.remove_red_eye))),
               ),
               const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(onPressed: ()=> Navigator.pushNamed(context, 'passwordReset'), child: const Text('Forgot Password?')),
+                ],
+              ),
+              const SizedBox(height: 16),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(400, 50)),

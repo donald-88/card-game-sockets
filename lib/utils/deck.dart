@@ -1,6 +1,6 @@
 import 'package:card_game_sockets/models/cardModel.dart';
 
-List<String> suits = ["♣", "♦", "♥", "♠"];
+List<String> suits = ["w", "e", "r", "q"];
 List<String> ranks = [
   "2",
   "3",
@@ -12,8 +12,8 @@ List<String> ranks = [
   "9",
   "10",
   "J",
-  "Q",
   "K",
+  "Q",
   "A",
 ];
 List<CardModel> deck = [];
@@ -25,8 +25,8 @@ List<CardModel> buildDeck() {
     }
   }
 
-  CardModel joker1 = CardModel(suit: "🂿", rank: "JOKER");
-  CardModel joker2 = CardModel(suit: "🃏", rank: "JOKER");
+  CardModel joker1 = CardModel(suit: "z", rank: "JOKER");
+  CardModel joker2 = CardModel(suit: "c", rank: "JOKER");
 
   deck.add(joker1);
   deck.add(joker2);

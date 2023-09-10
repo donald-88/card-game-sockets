@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class PlayingCard extends StatelessWidget {
@@ -18,7 +20,7 @@ class PlayingCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withOpacity(0.3),
             blurRadius: 2,
             offset: const Offset(0, 2),
           ),
@@ -36,13 +38,17 @@ class PlayingCard extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: suit == '♥' || suit == '♦' || suit == '🂿'
+                          color: suit == 'r' || suit == 'e' || suit == 'c'
                               ? Colors.red
                               : Colors.black)),
                   Text(suit,
                       style: TextStyle(
-                          height: 1,
-                          color: suit == '♥' || suit == '♦' || suit == '🂿'
+                          height: .8,
+                          fontSize: 24,
+                          wordSpacing: 1,
+                          fontFamily: 'Hoyle',
+                          textBaseline: TextBaseline.ideographic,
+                          color: suit == 'r' || suit == 'e' || suit == 'c'
                               ? Colors.red
                               : Colors.black)),
                 ],
@@ -52,36 +58,44 @@ class PlayingCard extends StatelessWidget {
           Text(
             suit,
             style: TextStyle(
-                fontSize: 40,
+                fontSize: 52,
+                height: .8,
+                fontFamily: 'Hoyle',
                 fontWeight: FontWeight.bold,
-                color: suit == '♥' || suit == '♦' || suit == "🂿" ? Colors.red : Colors.black),
+                color: suit == 'r' || suit == 'e' || suit == "c"
+                    ? Colors.red
+                    : Colors.black),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    value,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        height: 1.2,
-                        color: suit == '♥' || suit == '♦' || suit == "🂿"
-                            ? Colors.red
-                            : Colors.black),
-                  ),
-                  Text(
-                    suit,
-                    style: TextStyle(
-                        color: suit == '♥' || suit == '♦' || suit == "🂿"
-                            ? Colors.red
-                            : Colors.black),
-                  ),
-                ],
-              ),
-            ],
+          Transform.rotate(
+            angle: pi,
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      value,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          height: 1.2,
+                          color: suit == 'r' || suit == 'e' || suit == "c"
+                              ? Colors.red
+                              : Colors.black),
+                    ),
+                    Text(
+                      suit,
+                      style: TextStyle(
+                          height: .8,
+                          fontSize: 24,
+                          fontFamily: 'Hoyle',
+                          color: suit == 'r' || suit == 'e' || suit == "c"
+                              ? Colors.red
+                              : Colors.black),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
