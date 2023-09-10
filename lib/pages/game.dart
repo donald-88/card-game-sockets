@@ -22,11 +22,8 @@ class GamePage extends StatefulWidget {
   State<GamePage> createState() => _GamePageState();
 }
 
-class _GamePageState extends State<GamePage>
-    with SingleTickerProviderStateMixin {
+class _GamePageState extends State<GamePage>{
   StreamSubscription<DatabaseEvent>? roomSubscription;
-  AnimationController? _controller;
-  Animation<Offset>? _animation;
 
   @override
   void initState() {
@@ -69,13 +66,6 @@ class _GamePageState extends State<GamePage>
         }
       }
     });
-
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 3));
-    _animation = Tween<Offset>(
-      begin: const Offset(0, 1),
-      end: const Offset(0, 0),
-    ).animate(_controller!);
   }
 
   @override
@@ -144,11 +134,6 @@ class _GamePageState extends State<GamePage>
         isPlayer1Turn = false;
       });
     }
-
-
-    double cardX = 0;
-    double cardY = 0;
-
     final currentPlayer =
         currentUser!.uid == player1.playerId ? player1 : player2;
     final opponent = currentUser.uid == player1.playerId ? player2 : player1;
@@ -296,35 +281,25 @@ class _GamePageState extends State<GamePage>
                                     return Positioned(
                                       left: ((width / 2) - (deckSize / 2)) +
                                           fanOffsetX,
-                                      child: AnimatedContainer(
-                                        duration: const Duration(seconds: 1),
-                                        alignment: Alignment(cardX, cardY),
-                                        height: 160,
-                                        width: 100,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              cardX = 0;
-                                              cardY = .3;
-                                            });
-                                            CardModel discardCard = discardPile
-                                                    .isEmpty
-                                                ? CardModel(suit: '', rank: '')
-                                                : discardPile[
-                                                    discardPile.length - 1];
-                                            playCard(
-                                              widget.roomId,
-                                              playedCard,
-                                              discardCard,
-                                              playerTurn,
-                                              turn,
-                                              context,
-                                            );
-                                          },
-                                          child: PlayingCard(
-                                            suit: playedCard.suit,
-                                            value: playedCard.rank,
-                                          ),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          CardModel discardCard = discardPile
+                                                  .isEmpty
+                                              ? CardModel(suit: '', rank: '')
+                                              : discardPile[
+                                                  discardPile.length - 1];
+                                          playCard(
+                                            widget.roomId,
+                                            playedCard,
+                                            discardCard,
+                                            playerTurn,
+                                            turn,
+                                            context,
+                                          );
+                                        },
+                                        child: PlayingCard(
+                                          suit: playedCard.suit,
+                                          value: playedCard.rank,
                                         ),
                                       ),
                                     );
