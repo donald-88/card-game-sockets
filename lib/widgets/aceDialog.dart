@@ -1,7 +1,7 @@
 import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:flutter/material.dart';
 
-List<String> pickCard = ["♣", "♦", "♥", "♠"];
+List<String> pickCard = ["w", "e", "r", "q"];
 
 Future<dynamic> showAceDialog(context, String roomId) {
   return showDialog(
@@ -23,11 +23,12 @@ Future<dynamic> showAceDialog(context, String roomId) {
                     itemCount: 4,
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 1.7,
-                        crossAxisCount: 1,
-                        mainAxisSpacing: 5,
-                        crossAxisSpacing: 5),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 1.7,
+                            crossAxisCount: 1,
+                            mainAxisSpacing: 5,
+                            crossAxisSpacing: 5),
                     itemBuilder: (context, index) {
                       return GestureDetector(
                           onTap: () {
@@ -55,8 +56,8 @@ Future<dynamic> showAceDialog(context, String roomId) {
                                       .headlineLarge
                                       ?.copyWith(
                                           fontSize: 32,
-                                          color: pickCard[index] == '♥' ||
-                                                  pickCard[index] == '♦'
+                                          color: pickCard[index] == 'r' ||
+                                                  pickCard[index] == 'e'
                                               ? Colors.red
                                               : Colors.black)),
                             ),

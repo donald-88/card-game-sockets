@@ -35,7 +35,6 @@ class RoomService {
           avatar: user.photoURL as String,
           knock: false,
           pauseCount: 0,
-          isturn: true,
           hand: []);
 
       roomModel.players.add(playerModel.toJson());
@@ -62,7 +61,6 @@ class RoomService {
             avatar: user.photoURL as String,
             knock: false,
             pauseCount: 0,
-            isturn: true,
             hand: []).toJson());
         await roomRef.set(roomModel.toJson());
 

@@ -6,7 +6,7 @@ import 'package:card_game_sockets/utils/sessionTimeOutListener.dart';
 import 'package:card_game_sockets/widgets/backside.dart';
 import 'package:card_game_sockets/widgets/customDialog.dart';
 import 'package:card_game_sockets/widgets/knockDialog.dart';
-import 'package:card_game_sockets/widgets/pauseScreen.dart';
+import 'package:card_game_sockets/pages/menu/pauseScreen.dart';
 import 'package:card_game_sockets/widgets/playingCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -93,7 +93,6 @@ class _GamePageState extends State<GamePage>{
       avatar: '',
       knock: false,
       pauseCount: 2,
-      isturn: false,
       hand: []);
   PlayerModel player2 = PlayerModel(
       playerId: '',
@@ -102,7 +101,6 @@ class _GamePageState extends State<GamePage>{
       avatar: '',
       knock: false,
       pauseCount: 2,
-      isturn: false,
       hand: []);
 
   bool showTimer = false;

@@ -3,8 +3,7 @@ import 'package:card_game_sockets/utils/gameLogic.dart';
 import 'package:card_game_sockets/widgets/slideFadeInPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'customDialog.dart';
+import '../../widgets/customDialog.dart';
 
 class PauseMenu extends StatefulWidget {
   final String roomId;

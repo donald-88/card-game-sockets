@@ -1,6 +1,8 @@
+import 'package:card_game_sockets/providers/themeProvider.dart';
 import 'package:card_game_sockets/widgets/slideFadeInPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Menu extends StatelessWidget {
   const Menu({super.key});
@@ -26,12 +28,12 @@ class Menu extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text("P R O F I L E",
                     style: width > 375
-                            ? Theme.of(context).textTheme.headlineLarge
-                            : Theme.of(context).textTheme.headlineSmall),
+                        ? Theme.of(context).textTheme.headlineLarge
+                        : Theme.of(context).textTheme.headlineSmall),
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {},
-                    child: Text("R E C O R D",
+                    child: Text("L E A D E R B O A R D",
                         style: width > 375
                             ? Theme.of(context).textTheme.headlineLarge
                             : Theme.of(context).textTheme.headlineSmall)),
@@ -61,6 +63,17 @@ class Menu extends StatelessWidget {
               child: IconButton(
                 onPressed: () => Navigator.pop(context),
                 icon: const Icon(Icons.close, size: 32),
+              )),
+          Positioned(
+              top: 32,
+              left: 32,
+              child: IconButton(
+                onPressed: () => context.read<ThemeProvider>().changeTheme(),
+                icon: Icon(
+                    context.read<ThemeProvider>().isDarkMode
+                        ? Icons.light_mode
+                        : Icons.dark_mode,
+                    size: 32),
               ))
         ],
       ),

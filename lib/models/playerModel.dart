@@ -7,7 +7,6 @@ class PlayerModel {
   String avatar;
   bool knock;
   int pauseCount;
-  bool isturn;
   List<CardModel> hand;
 
   PlayerModel(
@@ -17,7 +16,6 @@ class PlayerModel {
       required this.avatar,
       required this.knock,
       required this.pauseCount,
-      required this.isturn,
       required this.hand});
 
   Map<String, dynamic> toJson() => {
@@ -27,7 +25,6 @@ class PlayerModel {
         'avatar': avatar,
         'knock': knock,
         'pauseCount': pauseCount,
-        'isturn': isturn,
         'hand': hand.map((e) => e.toJson()).toList(),
       };
 
@@ -40,7 +37,6 @@ class PlayerModel {
         avatar: json['avatar'],
         knock: json['knock'],
         pauseCount: json['pauseCount'],
-        isturn: json['isturn'],
         hand: List<CardModel>.from(handObj.map((x) => CardModel.fromJson(x))));
   }
 }
