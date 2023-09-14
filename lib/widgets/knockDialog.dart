@@ -10,7 +10,7 @@ showKnockDialog(BuildContext context, String player) {
           Navigator.of(context).pop(true);
         });
         return CustomDialog(
-            type: '',
+            type: 'knock',
             title: 'K N O C K ! !',
             content: '$player has 1 card left.');
       });

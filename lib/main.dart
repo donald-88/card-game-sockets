@@ -1,7 +1,6 @@
 import 'package:card_game_sockets/pages/authentication/authGate.dart';
 import 'package:card_game_sockets/pages/authentication/forgotPassword.dart';
 import 'package:card_game_sockets/pages/lobby.dart';
-import 'package:card_game_sockets/pages/menu/profile.dart';
 import 'package:card_game_sockets/providers/gameStateProvider.dart';
 import 'package:card_game_sockets/pages/menu/menu.dart';
 import 'package:card_game_sockets/pages/menu/pauseScreen.dart';
@@ -57,7 +56,6 @@ class MyApp extends StatelessWidget {
         '/pauseMenu': (context) =>
             const PauseMenu(roomId: '', playerPauseId: ''),
         'passwordReset': (context) => const ForgotPassword(),
-        'profile': (context) => const Profile()
       },
     );
   }

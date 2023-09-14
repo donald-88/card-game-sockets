@@ -27,11 +27,11 @@ class Menu extends StatelessWidget {
                             : Theme.of(context).textTheme.headlineSmall)),
                 const SizedBox(height: 20),
                 TextButton(
-                  child: Text("P R O F I L E",
+                  child: Text("R E C O R D",
                       style: width > 375
                           ? Theme.of(context).textTheme.headlineLarge
                           : Theme.of(context).textTheme.headlineSmall),
-                  onPressed: () => Navigator.pushNamed(context, 'profile'),
+                  onPressed: () {},
                 ),
                 const SizedBox(height: 20),
                 TextButton(

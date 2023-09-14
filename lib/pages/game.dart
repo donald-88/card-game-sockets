@@ -22,7 +22,7 @@ class GamePage extends StatefulWidget {
   State<GamePage> createState() => _GamePageState();
 }
 
-class _GamePageState extends State<GamePage>{
+class _GamePageState extends State<GamePage> {
   StreamSubscription<DatabaseEvent>? roomSubscription;
 
   @override
@@ -228,7 +228,7 @@ class _GamePageState extends State<GamePage>{
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const SizedBox(height: 50),
+                              SizedBox(height: height > 400? 50 : 10),
                               Column(
                                 children: [
                                   PlayerNameTag(
@@ -265,6 +265,7 @@ class _GamePageState extends State<GamePage>{
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
+                              const Spacer(),
                               SizedBox(
                                 height: 160,
                                 child: Stack(
@@ -317,7 +318,7 @@ class _GamePageState extends State<GamePage>{
                                               : !isPlayer1Turn),
                                 ],
                               ),
-                              const SizedBox(height: 50)
+                               SizedBox(height: height > 400? 50 : 10)
                             ],
                           ),
                         ),

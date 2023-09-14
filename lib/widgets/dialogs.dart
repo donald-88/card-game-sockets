@@ -37,7 +37,7 @@ class CustomDialog extends StatelessWidget {
       case 'error' || 'forfeit':
         return Icon(Icons.error, color: getContentColor(context), size: 32);
       case 'success' || 'knock':
-        return Icon(Icons.check_circle_outline,
+        return Icon(Icons.check_circle,
             color: getContentColor(context), size: 32);
       default:
         return Icon(Icons.info, color: getContentColor(context), size: 32);
