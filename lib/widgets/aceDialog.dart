@@ -56,6 +56,7 @@ Future<dynamic> showAceDialog(context, String roomId) {
                                       .headlineLarge
                                       ?.copyWith(
                                           fontSize: 32,
+                                          fontFamily: 'Hoyle',
                                           color: pickCard[index] == 'r' ||
                                                   pickCard[index] == 'e'
                                               ? Colors.red

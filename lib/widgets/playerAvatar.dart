@@ -14,9 +14,8 @@ class PlayerAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          color: Colors.orangeAccent),
-      padding: const EdgeInsets.all(4),
+          borderRadius: BorderRadius.circular(100), color: Colors.orangeAccent),
+      padding: const EdgeInsets.all(3),
       child: CircleAvatar(
         radius: 24,
         child: Padding(
