@@ -10,9 +10,10 @@ class PlayingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Container(
-      height: 150,
-      width: 100,
+      height: height > 400 ? 150 : 120,
+      width: height > 400 ? 100 : 80,
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.symmetric(horizontal: 2),
       decoration: BoxDecoration(

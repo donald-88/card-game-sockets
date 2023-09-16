@@ -218,118 +218,44 @@ class _GamePageState extends State<GamePage> {
                       ),
                     ],
                   ),
-                  Stack(children: [
-                    Column(
-                      children: [
-                        //opponent hand
-                        SizedBox(
-                          height: height / 2,
-                          width: width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //opponent hand
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Column(
                             children: [
-                              SizedBox(height: height > 400? 50 : 10),
-                              Column(
-                                children: [
-                                  PlayerNameTag(
-                                      name: opponent.username,
-                                      isTurn:
-                                          currentUser.uid == player1.playerId
-                                              ? !isPlayer1Turn
-                                              : isPlayer1Turn),
-                                  const SizedBox(height: 10),
-                                  PlayerAvatar(currentPlayer: opponent)
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Stack(
-                                alignment: Alignment.center,
-                                children: List.generate(opponent.hand.length,
-                                    (index) {
-                                  final fanOffsetX = index * 20.0;
-                                  return Transform.translate(
-                                    offset: Offset(fanOffsetX, 0),
-                                    child: const Backside(),
-                                  );
-                                }).toList(),
-                              )
+                              PlayerNameTag(
+                                  name: opponent.username,
+                                  isTurn: currentUser.uid == player1.playerId
+                                      ? !isPlayer1Turn
+                                      : isPlayer1Turn),
+                              const SizedBox(height: 10),
+                              PlayerAvatar(currentPlayer: opponent)
                             ],
                           ),
-                        ),
-
-                        //player hand
-                        SizedBox(
-                          height: height / 2,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              const Spacer(),
-                              SizedBox(
-                                height: 160,
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: List.generate(
-                                      currentPlayer.hand.length, (index) {
-                                    final playedCard =
-                                        currentPlayer.hand[index];
-                                    final fanOffsetX = index * 30.0;
-                                    final deckSize =
-                                        currentPlayer.hand.length * 33;
-                                    return Positioned(
-                                      left: ((width / 2) - (deckSize / 2)) +
-                                          fanOffsetX,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          CardModel discardCard = discardPile
-                                                  .isEmpty
-                                              ? CardModel(suit: '', rank: '')
-                                              : discardPile[
-                                                  discardPile.length - 1];
-                                          playCard(
-                                            widget.roomId,
-                                            playedCard,
-                                            discardCard,
-                                            playerTurn,
-                                            turn,
-                                            context,
-                                          );
-                                        },
-                                        child: PlayingCard(
-                                          suit: playedCard.suit,
-                                          value: playedCard.rank,
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              Column(
-                                children: [
-                                  PlayerAvatar(currentPlayer: currentPlayer),
-                                  const SizedBox(height: 10),
-                                  PlayerNameTag(
-                                      name: currentPlayer.username,
-                                      isTurn:
-                                          currentUser.uid == player1.playerId
-                                              ? isPlayer1Turn
-                                              : !isPlayer1Turn),
-                                ],
-                              ),
-                               SizedBox(height: height > 400? 50 : 10)
-                            ],
+                          const SizedBox(
+                            height: 20,
                           ),
-                        ),
-                      ],
-                    ),
+                          Stack(
+                            alignment: Alignment.center,
+                            children:
+                                List.generate(opponent.hand.length, (index) {
+                              final fanOffsetX = index * 20.0;
+                              return Transform.translate(
+                                offset: Offset(fanOffsetX, 0),
+                                child: const Backside(),
+                              );
+                            }).toList(),
+                          )
+                        ],
+                      ),
 
-                    //draw pile && discard pile
-                    Align(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        height: 160,
+                      //draw pile and discard pile
+                      SizedBox(
+                        height: 150,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -341,15 +267,74 @@ class _GamePageState extends State<GamePage> {
                             PlayingCard(
                                 suit: discardPile.isEmpty
                                     ? ""
-                                    : discardPile[discardPile.length - 1].suit,
+                                    : discardPile[discardPile.length - 1]
+                                        .suit,
                                 value: discardPile.isEmpty
                                     ? ""
-                                    : discardPile[discardPile.length - 1].rank)
+                                    : discardPile[discardPile.length - 1]
+                                        .rank)
                           ],
                         ),
                       ),
-                    ),
-                  ]),
+
+                      //player hand
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            height: 160,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: List.generate(
+                                  currentPlayer.hand.length, (index) {
+                                final playedCard = currentPlayer.hand[index];
+                                final fanOffsetX = index * 30.0;
+                                final deckSize =
+                                    currentPlayer.hand.length * 33;
+                                return Positioned(
+                                  left: ((width / 2) - (deckSize / 2)) +
+                                      fanOffsetX,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      CardModel discardCard =
+                                          discardPile.isEmpty
+                                              ? CardModel(suit: '', rank: '')
+                                              : discardPile[
+                                                  discardPile.length - 1];
+                                      playCard(
+                                        widget.roomId,
+                                        playedCard,
+                                        discardCard,
+                                        playerTurn,
+                                        turn,
+                                        context,
+                                      );
+                                    },
+                                    child: PlayingCard(
+                                      suit: playedCard.suit,
+                                      value: playedCard.rank,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Column(
+                            children: [
+                              PlayerAvatar(currentPlayer: currentPlayer),
+                              const SizedBox(height: 10),
+                              PlayerNameTag(
+                                  name: currentPlayer.username,
+                                  isTurn: currentUser.uid == player1.playerId
+                                      ? isPlayer1Turn
+                                      : !isPlayer1Turn),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ));
